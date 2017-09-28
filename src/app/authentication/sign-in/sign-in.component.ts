@@ -71,5 +71,8 @@ export class SignInComponent implements OnInit {
                     error => console.error(error));
         });
     }
+    onGGLLogin(){
+        this.authService.GGLSignIn();
+    }
 
 }
