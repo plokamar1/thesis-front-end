@@ -3,19 +3,24 @@ import {Http, Headers, Response} from "@angular/http";
 import {Observable} from "rxjs/Observable";
 import 'rxjs/Rx'
 
-import {User} from "../models/user.model";
 import {FBuser} from "../models/FBuser.model";
 import {CoverObject} from "../models/cover.object";
 import {Router} from "@angular/router";
+import {DataService} from "./data.service";
+import {User} from "../models/user.model";
+import {GGLuser} from "../models/GGLuser.model";
+
 
 declare const FB: any;
+declare const gapi: any;
 
 @Injectable()
 export class AuthenticationService {
     callsUrl: string = 'https://api-storage.herokuapp.com/api/user';
 
     constructor(private http: Http,
-                private router: Router) {
+                private router: Router,
+                private dataService: DataService) {
     }
 
     public signUp(user, link: string) {
@@ -40,6 +45,7 @@ export class AuthenticationService {
 
     FBSignIn(onResponse) {
         const callsFBUrl = 'https://api-storage.herokuapp.com/api/user';
+        let instance = this;
         let fbuser = new FBuser();
         //check login status. if connected then ask for user data. The user will be matched in the database by email
         //and user fb id
@@ -47,7 +53,7 @@ export class AuthenticationService {
             //----------------->SIGN IN
             if (response.status === "connected") {
                 console.log(response);
-                localStorage.setItem('accessToken' ,response.authResponse.accessToken);
+                localStorage.setItem('accessToken', response.authResponse.accessToken);
                 //get the data of the user
                 console.log('LOGGING IN');
                 FB.api('/me', 'get', {fields: "email,first_name,last_name,short_name,id,link,verified"},
@@ -60,10 +66,11 @@ export class AuthenticationService {
                             resp.verified,
                             resp.id,
                             'facebook',
-                            new CoverObject(null,null,null,null));
-                        FB.api('/me/picture',function (response) {
-                           fbuser.cover.source = response.data.url;
-                           onResponse(fbuser);
+                            new CoverObject(null, null, null, null));
+                        FB.api('/me/picture', function (response) {
+                            fbuser.cover.source = response.data.url;
+                            onResponse(fbuser);
+                            instance.dataService.setData(fbuser);
                         });
                     });
             } else {
@@ -72,9 +79,8 @@ export class AuthenticationService {
                 FB.login(function (response) {
                         if (response.status === "connected") {
                             //then the same happens and we produce the user model which will be sent to the database
-                            FB.api('/me', 'get', {fields: "email,first_name,last_name,short_name,id,cover,link,verified"},
+                            FB.api('/me', 'get', {fields: "email,first_name,last_name,short_name,id,link,verified"},
                                 function (resp) {
-                                    //producing the FBuser model to send to the signUp function
                                     fbuser = new FBuser(resp.email,
                                         resp.first_name,
                                         resp.last_name,
@@ -83,22 +89,51 @@ export class AuthenticationService {
                                         resp.verified,
                                         resp.id,
                                         'facebook',
-                                        new CoverObject(resp.cover.id, resp.cover.offset_x, resp.cover.offset_y, resp.cover.source));
-                                    console.log('Signing Up');
-                                    onResponse(fbuser);
-
+                                        new CoverObject(null, null, null, null));
+                                    FB.api('/me/picture', function (response) {
+                                        fbuser.cover.source = response.data.url;
+                                        onResponse(fbuser);
+                                        instance.dataService.setData(fbuser);
+                                    });
                                 });
                         }
                     }, //these are the permissions we are asking the user to give us
-                    {scope: 'public_profile,user_friends,email,pages_show_list,user_photos', return_scopes: true});
+                    {
+                        scope: 'public_profile,user_friends,email,pages_show_list,user_photos,user_posts',
+                        return_scopes: true
+                    });
             }
         });
 
     }
 
+    GGLSignIn() {
+        const GoogleAuth = gapi.auth2.getAuthInstance();
+        const signedIn = GoogleAuth.isSignedIn.get();
+        console.log(signedIn);
+        if (!signedIn) {
+            GoogleAuth.signIn()
+                .then((resolve, reject) => {
+                    const userData = GoogleAuth.currentUser.get().getBasicProfile();
+                    resolve(userData);
+                })
+                .then((userData) =>{
+
+                    const user = new GGLuser(userData.getEmail(),userData.ofa,userData.wea,userData.getId(),'google',userData.getImageUrl());
+                    console.log(user);
+                });
+        } else {
+            const userData = GoogleAuth.currentUser.get().getBasicProfile();
+            //console.log(userData.getImageUrl());
+
+            const user = new GGLuser(userData.getEmail(),userData.ofa,userData.wea,userData.getId(),'google',userData.getImageUrl());
+            console.log(user);
+        }
+    }
+
     checkUserToken(path: string) {
         if (localStorage.getItem('token')) {
-            if(path){
+            if (path) {
                 this.router.navigateByUrl(path);
             }
         } else {
