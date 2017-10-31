@@ -2,8 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {NgForm, FormGroup, FormControl, Validators} from "@angular/forms";
 
 import {User} from "../../models/user.model"
-import {AuthenticationService} from "../authentication.service";
+import {AuthenticationService} from "../../authentication.service";
 import {Router} from "@angular/router";
+import {DataService} from "../../data.service";
 
 @Component({
     selector: 'app-sign-up',
@@ -14,7 +15,8 @@ export class SignUpComponent implements OnInit {
     signUpForm: FormGroup;
 
     constructor(private authService: AuthenticationService,
-                private router: Router) {
+                private router: Router,
+                private dataService: DataService) {
         //authService.checkUserToken('user-profile');
     }
 
@@ -49,6 +51,7 @@ export class SignUpComponent implements OnInit {
                     //to the local browser memory. This memory lasts for 2 hours
                     localStorage.setItem('token', data.token);
                     localStorage.setItem('id', data.id);
+                    this.dataService.userData = data;
                     this.router.navigateByUrl('/user-profile');
                 },
                 error => {
@@ -72,6 +75,7 @@ export class SignUpComponent implements OnInit {
                         localStorage.setItem('token', data.token);
                         localStorage.setItem('id', data.id);
                         localStorage.setItem('loginType', 'facebook');
+                        this.dataService.userData = data;
 
                         instance.router.navigateByUrl('/user-profile');
                     }
