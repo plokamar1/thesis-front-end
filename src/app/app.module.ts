@@ -8,8 +8,11 @@ import {SignUpComponent} from "./authentication/sign-up/sign-up.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {routing} from "./app.routing";
 import {HttpModule} from "@angular/http";
-import {AuthenticationService} from "./authentication/authentication.service";
-import {ProfileComponent} from "./authentication/profile/profile.component";
+import {AuthenticationService} from "./authentication.service";
+import {ProfileComponent} from "./main/profile/profile.component";
+import {DataService} from "./data.service";
+import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
+import { MainComponent } from './main/main.component';
 
 @NgModule({
     declarations: [
@@ -18,6 +21,8 @@ import {ProfileComponent} from "./authentication/profile/profile.component";
         SignInComponent,
         SignUpComponent,
         ProfileComponent,
+        LoadingSpinnerComponent,
+        MainComponent,
 
     ],
     imports: [
@@ -28,7 +33,7 @@ import {ProfileComponent} from "./authentication/profile/profile.component";
         HttpModule,
     ],
     bootstrap: [AppComponent],
-    providers: [AuthenticationService]
+    providers: [AuthenticationService, DataService]
 })
 export class AppModule {
 

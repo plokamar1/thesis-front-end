@@ -3,12 +3,12 @@ import {Http, Headers, Response} from "@angular/http";
 import {Observable} from "rxjs/Observable";
 import 'rxjs/Rx'
 
-import {FBuser} from "../models/FBuser.model";
-import {CoverObject} from "../models/cover.object";
+import {FBuser} from "./models/FBuser.model";
+import {CoverObject} from "./models/cover.object";
 import {Router} from "@angular/router";
 import {DataService} from "./data.service";
-import {User} from "../models/user.model";
-import {GGLuser} from "../models/GGLuser.model";
+import {User} from "./models/user.model";
+import {GGLuser} from "./models/GGLuser.model";
 
 
 declare const FB: any;
@@ -33,6 +33,18 @@ export class AuthenticationService {
             .catch((error: Response) => Observable.throw(error.json()));
     }
 
+    /*public signUp2(user, link: string) {
+        const headers = new Headers({'Content-Type': 'application/json'});
+        const body = JSON.stringify(user);
+        console.log(body);
+
+        return this.http.post(link, body).toPromise()
+            .then((res:Response)=>{
+            const body = res.json();
+            return body;
+            });
+    }*/
+
     public signIn(user, link: string) {
         const headers = new Headers({'Content-Type': 'application/json'});
 
@@ -43,6 +55,7 @@ export class AuthenticationService {
             .catch((error: Response) => Observable.throw(error.json()));
     }
 
+
     FBSignIn(onResponse) {
         const callsFBUrl = 'https://api-storage.herokuapp.com/api/user';
         let instance = this;
@@ -50,6 +63,7 @@ export class AuthenticationService {
         //check login status. if connected then ask for user data. The user will be matched in the database by email
         //and user fb id
         FB.getLoginStatus(function (response) {
+            console.log(response);
             //----------------->SIGN IN
             if (response.status === "connected") {
                 console.log(response);
@@ -70,7 +84,7 @@ export class AuthenticationService {
                         FB.api('/me/picture', function (response) {
                             fbuser.cover.source = response.data.url;
                             onResponse(fbuser);
-                            instance.dataService.setData(fbuser);
+                            /*instance.dataService.setData(fbuser);*/
                         });
                     });
             } else {
@@ -117,18 +131,33 @@ export class AuthenticationService {
                     const userData = GoogleAuth.currentUser.get().getBasicProfile();
                     resolve(userData);
                 })
-                .then((userData) =>{
+                .then((userData) => {
 
-                    const user = new GGLuser(userData.getEmail(),userData.ofa,userData.wea,userData.getId(),'google',userData.getImageUrl());
+                    const user = new GGLuser(userData.getEmail(), userData.ofa, userData.wea, userData.getId(), 'google', userData.getImageUrl());
                     console.log(user);
                 });
         } else {
             const userData = GoogleAuth.currentUser.get().getBasicProfile();
             //console.log(userData.getImageUrl());
 
-            const user = new GGLuser(userData.getEmail(),userData.ofa,userData.wea,userData.getId(),'google',userData.getImageUrl());
+            const user = new GGLuser(userData.getEmail(), userData.ofa, userData.wea, userData.getId(), 'google', userData.getImageUrl());
             console.log(user);
         }
+    }
+
+    TTRSignIn() {
+        const settings = {
+            oauth_consumer_key: 'a1ZK0tFm8wHBfN8eX4LYLsCqM',
+            consumersecret: 'kiJVGJTypbhX0BkUgdfXpwVdzRHhq2Be0aHslTjL0v3UuMaRqF'
+        };
+        const header = settings.oauth_consumer_key + ':' + settings.consumersecret;
+
+
+        this.http.post('https://api.twitter.com/oauth/access_token', header)
+            .map((response: Response) => console.log(response))
+            .catch((error: Response) => Observable.throw(error.json()));
+
+
     }
 
     checkUserToken(path: string) {
@@ -137,8 +166,9 @@ export class AuthenticationService {
                 this.router.navigateByUrl(path);
             }
         } else {
-            this.router.navigateByUrl('sign-in');
+            this.router.navigateByUrl('auth/sign-in');
         }
     }
+
 
 }
