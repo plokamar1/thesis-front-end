@@ -11,7 +11,6 @@ import {HttpModule} from "@angular/http";
 import {AuthenticationService} from "./authentication.service";
 import {ProfileComponent} from "./main/profile/profile.component";
 import {DataService} from "./data.service";
-import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
 import { MainComponent } from './main/main.component';
 
 @NgModule({
@@ -21,7 +20,6 @@ import { MainComponent } from './main/main.component';
         SignInComponent,
         SignUpComponent,
         ProfileComponent,
-        LoadingSpinnerComponent,
         MainComponent,
 
     ],
