@@ -1,21 +1,24 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
-import {AuthenticationService} from "../authentication.service"
+import {AuthenticationService} from "../../authentication.service"
 import {User} from "../../models/user.model";
+import {DataService} from "../../data.service";
+
 
 @Component({
     selector: 'app-sign-in',
     templateUrl: './sign-in.component.html'
 })
-export class SignInComponent implements OnInit {
+export class SignInComponent implements OnInit{
 
     signInForm: FormGroup;
 
     constructor(private authService: AuthenticationService,
-                private router: Router) {
+                private router: Router,
+                private dataService: DataService) {
         //checking the status of the user. If he is logged in continue
-        authService.checkUserToken('/user-profile');
+        //authService.checkUserToken('/user-profile');
     }
 
     ngOnInit() {
@@ -41,9 +44,7 @@ export class SignInComponent implements OnInit {
                     console.log(data);
                     //here i save the token and the userId returned from the server
                     //to the local browser memory. This memory lasts for 2 hours
-                    localStorage.setItem('token', data.token);
-                    localStorage.setItem('id', data.id);
-                    localStorage.setItem('loginType', 'form');
+                    this.authService.assignLocalData(data, 'form');
                     this.router.navigateByUrl('/user-profile');
                 },
                 error => {
@@ -62,14 +63,19 @@ export class SignInComponent implements OnInit {
             instance.authService.signUp(response, callsFBUrl)
                 .subscribe(
                     data => {
-                        console.log(data);
-                        localStorage.setItem('token', data.token);
-                        localStorage.setItem('id', data.id);
-                        localStorage.setItem('loginType', 'facebook');
-                        instance.router.navigateByUrl('user-profile');
+                        instance.dataService.userData = data;
+                        instance.authService.assignLocalData(data, 'facebook');
+                        instance.router.navigateByUrl('main/profile');
                     },
                     error => console.error(error));
         });
+    }
+
+/*    onTTRLogin(){
+        this.authService.TTRSignIn();
+    }*/
+    onGGLLogin(){
+        this.authService.GGLSignIn();
     }
 
 }
