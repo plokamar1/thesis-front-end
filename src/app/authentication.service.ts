@@ -116,7 +116,7 @@ export class AuthenticationService {
         if (!signedIn) {
 
             GoogleAuth.signIn()
-                //Get the user's basic profile info
+            //Get the user's basic profile info
                 .then(function () {
                     return new Promise(function (resolve) {
                         const userData = GoogleAuth.currentUser.get().getBasicProfile();
@@ -131,15 +131,18 @@ export class AuthenticationService {
 
                     return user;
                 })
-                //sign up the user to the back end
                 .then(function (user) {
-                    that.signUp(user, that.callsUrl).subscribe(data => {
-                        that.dataService.userData = data;
-                        localStorage.setItem('token', data.token);
-                        localStorage.setItem('id', data.id);
-                        localStorage.setItem('loginType', 'google');
-                        that.router.navigateByUrl('main/profile');
-                    }, error => console.error(error));
+                    //sign up the user to the back end
+                    that.signUp(user, that.callsUrl)
+                        .subscribe(data => {
+                            //passing the data to the new component with the data service
+                            that.dataService.userData = data;
+                            //calling the function to save data to local storage
+                            that.assignLocalData(data);
+                            //transfer the user to main page
+                            that.router.navigateByUrl('main/profile');
+                        }, error => console.error(error));
+
                 });
         } else {
             //Making a promise for getting user basic info
@@ -151,15 +154,16 @@ export class AuthenticationService {
                 user = new GGLuser(userData.getEmail(), userData.ofa, userData.wea, userData.getId(), 'google', userData.getImageUrl());
                 return user;
             })
-                //signing in the user to the back end and transferring him to main page
+            //signing in the user to the back end and transferring him to main page
                 .then(function (user) {
                     console.log(user);
                     that.signUp(user, that.callsUrl)
                         .subscribe(data => {
+                            //passing the data to the new component with the data service
                             that.dataService.userData = data;
-                            localStorage.setItem('token', data.token);
-                            localStorage.setItem('id', data.id);
-                            localStorage.setItem('loginType', 'google');
+                            //calling the function to save data to local storage
+                            that.assignLocalData(data);
+                            //transfer the user to main page
                             that.router.navigateByUrl('main/profile');
                         }, error => console.error(error));
                 });
@@ -181,6 +185,14 @@ export class AuthenticationService {
 
 
     }
+
+    //assign local storage data(tokens etc.)
+    assignLocalData(data) {
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('id', data.id);
+        localStorage.setItem('loginType', 'google');
+    }
+
 
     checkUserToken(path: string) {
         if (localStorage.getItem('token')) {
