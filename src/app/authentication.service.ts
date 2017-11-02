@@ -138,7 +138,7 @@ export class AuthenticationService {
                             //passing the data to the new component with the data service
                             that.dataService.userData = data;
                             //calling the function to save data to local storage
-                            that.assignLocalData(data);
+                            that.assignLocalData(data, 'google');
                             //transfer the user to main page
                             that.router.navigateByUrl('main/profile');
                         }, error => console.error(error));
@@ -162,7 +162,7 @@ export class AuthenticationService {
                             //passing the data to the new component with the data service
                             that.dataService.userData = data;
                             //calling the function to save data to local storage
-                            that.assignLocalData(data);
+                            that.assignLocalData(data, 'google');
                             //transfer the user to main page
                             that.router.navigateByUrl('main/profile');
                         }, error => console.error(error));
@@ -187,10 +187,10 @@ export class AuthenticationService {
     }
 
     //assign local storage data(tokens etc.)
-    assignLocalData(data) {
+    assignLocalData(data, logintype) {
         localStorage.setItem('token', data.token);
         localStorage.setItem('id', data.id);
-        localStorage.setItem('loginType', 'google');
+        localStorage.setItem('loginType', logintype);
     }
 
 
