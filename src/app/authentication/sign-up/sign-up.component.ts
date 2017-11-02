@@ -49,8 +49,7 @@ export class SignUpComponent implements OnInit {
             .subscribe(data => {
                     //here i save the token and the userId returned from the server
                     //to the local browser memory. This memory lasts for 2 hours
-                    localStorage.setItem('token', data.token);
-                    localStorage.setItem('id', data.id);
+                this.authService.assignLocalData(data, 'form');
                     this.dataService.userData = data;
                     this.router.navigateByUrl('/user-profile');
                 },
@@ -72,19 +71,16 @@ export class SignUpComponent implements OnInit {
             instance.authService.signUp(response, callsFBUrl)
                 .subscribe(data => {
                         console.log(data);
-                        localStorage.setItem('token', data.token);
-                        localStorage.setItem('id', data.id);
-                        localStorage.setItem('loginType', 'facebook');
+                        this.authService.assignLocalData(data, 'facebook');
                         this.dataService.userData = data;
-
                         instance.router.navigateByUrl('/user-profile');
                     }
                     , error => console.error(error));
         });
     }
 
-    /*    //catches the errors
-        private handleError(error) {
-            console.error('Error processing action', error);
-        }*/
+    onGGLLogin(){
+        this.authService.GGLSignIn();
+    }
+
 }

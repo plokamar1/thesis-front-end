@@ -44,10 +44,7 @@ export class SignInComponent implements OnInit{
                     console.log(data);
                     //here i save the token and the userId returned from the server
                     //to the local browser memory. This memory lasts for 2 hours
-                    localStorage.setItem('token', data.token);
-                    localStorage.setItem('id', data.id);
-                    localStorage.setItem('loginType', 'form');
-
+                    this.authService.assignLocalData(data, 'form');
                     this.router.navigateByUrl('/user-profile');
                 },
                 error => {
@@ -67,18 +64,16 @@ export class SignInComponent implements OnInit{
                 .subscribe(
                     data => {
                         instance.dataService.userData = data;
-                        localStorage.setItem('token', data.token);
-                        localStorage.setItem('id', data.id);
-                        localStorage.setItem('loginType', 'facebook');
+                        instance.authService.assignLocalData(data, 'facebook');
                         instance.router.navigateByUrl('main/profile');
                     },
                     error => console.error(error));
         });
     }
 
-    onTTRLogin(){
+/*    onTTRLogin(){
         this.authService.TTRSignIn();
-    }
+    }*/
     onGGLLogin(){
         this.authService.GGLSignIn();
     }
