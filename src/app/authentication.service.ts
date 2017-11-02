@@ -26,24 +26,10 @@ export class AuthenticationService {
     public signUp(user, link: string) {
         const headers = new Headers({'Content-Type': 'application/json'});
         const body = JSON.stringify(user);
-        console.log(body);
-
         return this.http.post(link, body)
             .map((response: Response) => response.json())
             .catch((error: Response) => Observable.throw(error.json()));
     }
-
-    /*public signUp2(user, link: string) {
-        const headers = new Headers({'Content-Type': 'application/json'});
-        const body = JSON.stringify(user);
-        console.log(body);
-
-        return this.http.post(link, body).toPromise()
-            .then((res:Response)=>{
-            const body = res.json();
-            return body;
-            });
-    }*/
 
     public signIn(user, link: string) {
         const headers = new Headers({'Content-Type': 'application/json'});
@@ -84,7 +70,6 @@ export class AuthenticationService {
                         FB.api('/me/picture', function (response) {
                             fbuser.cover.source = response.data.url;
                             onResponse(fbuser);
-                            /*instance.dataService.setData(fbuser);*/
                         });
                     });
             } else {
@@ -107,7 +92,6 @@ export class AuthenticationService {
                                     FB.api('/me/picture', function (response) {
                                         fbuser.cover.source = response.data.url;
                                         onResponse(fbuser);
-                                        instance.dataService.setData(fbuser);
                                     });
                                 });
                         }
@@ -122,27 +106,65 @@ export class AuthenticationService {
     }
 
     GGLSignIn() {
-        const GoogleAuth = gapi.auth2.getAuthInstance();
-        const signedIn = GoogleAuth.isSignedIn.get();
+        let that = this;
+        let user = new GGLuser();
+        let getUserInfoPromise;
+        let GoogleAuth = gapi.auth2.getAuthInstance();
+        let signedIn = GoogleAuth.isSignedIn.get();
         console.log(signedIn);
-        if (!signedIn) {
-            GoogleAuth.signIn()
-                .then((resolve, reject) => {
-                    const userData = GoogleAuth.currentUser.get().getBasicProfile();
-                    resolve(userData);
-                })
-                .then((userData) => {
 
-                    const user = new GGLuser(userData.getEmail(), userData.ofa, userData.wea, userData.getId(), 'google', userData.getImageUrl());
-                    console.log(user);
+        if (!signedIn) {
+
+            GoogleAuth.signIn()
+                //Get the user's basic profile info
+                .then(function () {
+                    return new Promise(function (resolve) {
+                        const userData = GoogleAuth.currentUser.get().getBasicProfile();
+                        resolve(userData);
+                    });
+                })
+                //construct the ggluser model and return it
+                .then((userData) => {
+                    const gglUser = new GGLuser(userData.getEmail(), userData.ofa, userData.wea, userData.getId(), 'google', userData.getImageUrl());
+                    user = gglUser;
+                    console.log(gglUser);
+
+                    return user;
+                })
+                //sign up the user to the back end
+                .then(function (user) {
+                    that.signUp(user, that.callsUrl).subscribe(data => {
+                        that.dataService.userData = data;
+                        localStorage.setItem('token', data.token);
+                        localStorage.setItem('id', data.id);
+                        localStorage.setItem('loginType', 'google');
+                        that.router.navigateByUrl('main/profile');
+                    }, error => console.error(error));
                 });
         } else {
-            const userData = GoogleAuth.currentUser.get().getBasicProfile();
-            //console.log(userData.getImageUrl());
-
-            const user = new GGLuser(userData.getEmail(), userData.ofa, userData.wea, userData.getId(), 'google', userData.getImageUrl());
-            console.log(user);
+            //Making a promise for getting user basic info
+            getUserInfoPromise = new Promise(function (resolve) {
+                resolve(GoogleAuth.currentUser.get().getBasicProfile());
+            });
+            //constructing the model of the gglUser
+            getUserInfoPromise.then(function (userData) {
+                user = new GGLuser(userData.getEmail(), userData.ofa, userData.wea, userData.getId(), 'google', userData.getImageUrl());
+                return user;
+            })
+                //signing in the user to the back end and transferring him to main page
+                .then(function (user) {
+                    console.log(user);
+                    that.signUp(user, that.callsUrl)
+                        .subscribe(data => {
+                            that.dataService.userData = data;
+                            localStorage.setItem('token', data.token);
+                            localStorage.setItem('id', data.id);
+                            localStorage.setItem('loginType', 'google');
+                            that.router.navigateByUrl('main/profile');
+                        }, error => console.error(error));
+                });
         }
+
     }
 
     TTRSignIn() {
