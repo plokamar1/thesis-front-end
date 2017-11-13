@@ -62,21 +62,7 @@ export class SignUpComponent implements OnInit {
 
     //onFBLogin attempts to log the user in facebook via the app. It should return some basic information for the user
     onFBLogin() {
-        let instance = this;
-        const callsFBUrl = 'https://api-storage.herokuapp.com/api/user';
-
-        this.authService.FBSignIn(function (response) {
-            //this is the callback function i send to the service to be called after producing the FBuser
-            //It would be better to develop it with promises. Thoough i dont understand them so well
-            instance.authService.signUp(response, callsFBUrl)
-                .subscribe(data => {
-                        console.log(data);
-                        this.authService.assignLocalData(data, 'facebook');
-                        this.dataService.userData = data;
-                        instance.router.navigateByUrl('/user-profile');
-                    }
-                    , error => console.error(error));
-        });
+        this.authService.FBSign();
     }
 
     onGGLLogin(){
