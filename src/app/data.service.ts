@@ -10,13 +10,20 @@ export class DataService {
     }
 
     setData(data) {
-        console.log('got Data');
-        this.userData = data;
+        let instance = this;
+        return new Promise(function (resolve) {
+           resolve(instance.userData = data);
+        });
+  /*      console.log('got Data');
+        this.userData = data;*/
     }
 
     getData() {
-        if (this.userData) {
-            return this.userData;
-        }
+        console.log(this.userData);
+        let instance = this;
+        return new Promise(function (resolve) {
+            resolve(instance.userData);
+        })
+
     }
 }
