@@ -13,6 +13,7 @@ import {ProfileComponent} from "./main/profile/profile.component";
 import {DataService} from "./data.service";
 import { MainComponent } from './main/main.component';
 import { AccountComponent } from './main/profile/account/account.component';
+import { HeaderComponent } from './main/header/header.component';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { AccountComponent } from './main/profile/account/account.component';
         ProfileComponent,
         MainComponent,
         AccountComponent,
+        HeaderComponent,
 
     ],
     imports: [
