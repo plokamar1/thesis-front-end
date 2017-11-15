@@ -1,6 +1,6 @@
 <div class="col-md-4 col-md-offset-1">
-    <div class="panel panel-default">
-        <div class="panel-heading">Facebook</div>
+    <div *ngFor="let account of accounts" class="panel panel-default">
+        <div class="panel-heading">{{account.provider}}</div>
         <div class="panel-body">
             <div class="row text-center">
                 Email: para.plokamar@gmail.com
@@ -13,6 +13,9 @@
             </div>
             <div class="row text-center" >
                 Connected: True
+            </div>
+            <div class="row">
+                <button class="btn btn-primary"(click)="logOut(account.provider)">Logout</button>
             </div>
 
         </div>
