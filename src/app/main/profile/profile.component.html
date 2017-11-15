@@ -2,18 +2,22 @@
     <div class="row">
         <div class="col-md-2 col-sm-6 col-md-offset-2 col-sm-offset-3 col-xs-6 col-xs-offset-3">
             <div class="panel panel-default">
+
                 <div class="panel-heading">
                     User Profile
                 </div>
 
-                <div class="row">
                     <div class="panel-body">
-                        <img [src]=" imgSrc " class="img img-responsive">
+                        <div class="row">
+                            <img [src]=" imgSrc " class="img img-responsive">
+                        </div>
+                        <br />
+                        <div class="row">
+                            <h3>{{userFirstName}}</h3>
+                            <h3>{{userLastName}}</h3>
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <h1>{{userFirstName}} {{userLastName}}</h1>
-                </div>
+
             </div>
         </div>
         <app-account></app-account>
