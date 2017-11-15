@@ -54,7 +54,7 @@ export class SignInComponent implements OnInit{
     }
 
     onFBLogin() {
-        this.authService.FBSign();
+        this.authService.FBSignIn();
     }
 
     onTTRLogin(){
