@@ -10,19 +10,18 @@ export class DataService {
     }
 
     setData(data) {
-        let instance = this;
+        let that = this;
         return new Promise(function (resolve) {
-           resolve(instance.userData = data);
+            resolve(that.userData = data);
         });
-  /*      console.log('got Data');
-        this.userData = data;*/
+        /*      console.log('got Data');
+              this.userData = data;*/
     }
 
     getData() {
-        console.log(this.userData);
-        let instance = this;
+        let that = this;
         return new Promise(function (resolve) {
-            resolve(instance.userData);
+            resolve(that.userData);
         })
 
     }
