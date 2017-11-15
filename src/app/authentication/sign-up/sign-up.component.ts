@@ -35,6 +35,7 @@ export class SignUpComponent implements OnInit {
 
     //onSubmit gives us the user info when he submits.
     onSignUp(form: NgForm) {
+        let that = this;
         const callsUrl: string = 'https://api-storage.herokuapp.com/api/user';
 
         const user = new User(form.form.value.username,
@@ -47,11 +48,12 @@ export class SignUpComponent implements OnInit {
         console.log(user);
         this.authService.signUp(user, callsUrl)
             .subscribe(data => {
+                that.dataService.setData(data).then(function(){
                     //here i save the token and the userId returned from the server
                     //to the local browser memory. This memory lasts for 2 hours
-                this.authService.assignLocalData(data, 'form');
-                    this.dataService.userData = data;
-                    this.router.navigateByUrl('/user-profile');
+                    that.authService.assignLocalData(data, 'form');
+                    that.router.navigateByUrl('/main/profile');
+                });
                 },
                 error => {
                     console.error(error)
@@ -62,7 +64,7 @@ export class SignUpComponent implements OnInit {
 
     //onFBLogin attempts to log the user in facebook via the app. It should return some basic information for the user
     onFBLogin() {
-        this.authService.FBSign();
+        this.authService.FBSignIn();
     }
 
     onGGLLogin(){
