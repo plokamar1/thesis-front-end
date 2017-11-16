@@ -70,6 +70,11 @@
                                            formControlName="password">
                                 </div>
                             </div>
+                            <div class="row" *ngIf="isHidden" >
+                                <div class="col-md-10 col-md-offset-1">
+                                    <p class="text-danger">Your username or password was incorrect. Please try again.</p>
+                                </div>
+                            </div>
                             <hr>
                             <button class="btn btn-success col-md-8 col-md-offset-2" type="submit" [disabled]="!signInForm.valid">Sign In!</button>
                         </div>

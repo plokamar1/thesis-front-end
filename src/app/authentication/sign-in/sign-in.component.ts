@@ -10,9 +10,10 @@ import {DataService} from "../../data.service";
     selector: 'app-sign-in',
     templateUrl: './sign-in.component.html'
 })
-export class SignInComponent implements OnInit{
+export class SignInComponent implements OnInit {
 
     signInForm: FormGroup;
+    isHidden = false;
 
     constructor(private authService: AuthenticationService,
                 private router: Router,
@@ -42,13 +43,20 @@ export class SignInComponent implements OnInit{
             .subscribe(
                 data => {
                     console.log(data);
-                    //here i save the token and the userId returned from the server
-                    //to the local browser memory. This memory lasts for 2 hours
-                    this.authService.assignLocalData(data, 'form');
-                    this.router.navigateByUrl('/user-profile');
-                },
-                error => {
-                    console.error(error)
+                    switch (data.message) {
+                        case "succesfully logged in":
+                            console.log('correct pass');
+                            this.dataService.setData(data).then(function () {
+                                this.authService.assignLocalData(data, 'form');
+                                this.router.navigateByUrl('main/profile');
+                            });
+                            //here i save the token and the userId returned from the server
+                            //to the local browser memory. This memory lasts for 2 hours
+                            break;
+                        case 'Wrong Password':
+                            this.isHidden = true;
+                            break;
+                    }
                 }
             );
     }
@@ -57,10 +65,11 @@ export class SignInComponent implements OnInit{
         this.authService.FBSignIn();
     }
 
-    onTTRLogin(){
+    onTTRLogin() {
         this.authService.TTRSignIn();
     }
-    onGGLLogin(){
+
+    onGGLLogin() {
         this.authService.GGLSignIn();
     }
 
