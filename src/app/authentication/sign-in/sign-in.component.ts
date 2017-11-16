@@ -13,7 +13,8 @@ import {DataService} from "../../data.service";
 export class SignInComponent implements OnInit {
 
     signInForm: FormGroup;
-    isHidden = false;
+    wrongInput = false;
+    noAccount = false;
 
     constructor(private authService: AuthenticationService,
                 private router: Router,
@@ -42,7 +43,6 @@ export class SignInComponent implements OnInit {
         this.authService.signIn(user, callsUrl)
             .subscribe(
                 data => {
-                    console.log(data);
                     switch (data.message) {
                         case "succesfully logged in":
                             console.log('correct pass');
@@ -54,8 +54,18 @@ export class SignInComponent implements OnInit {
                             //to the local browser memory. This memory lasts for 2 hours
                             break;
                         case 'Wrong Password':
-                            this.isHidden = true;
+                            this.wrongInput = true;
+                            this.noAccount = false;
                             break;
+
+                    }
+                }, error =>{
+                    switch (error.message){
+                        case "No such user":
+                            this.noAccount = true;
+                            this.wrongInput = false;
+                            break;
+
                     }
                 }
             );
