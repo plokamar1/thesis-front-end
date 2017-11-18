@@ -1,0 +1,41 @@
+.panel-body{
+    background: #DC2430;
+    color: #FFFFFF;
+}
+.panel{
+    border-color: #FFFFFF;
+    border-radius: 10px;
+    opacity: 0.5%;
+    margin-top: 50%;
+}
+.fbButton, .gglButton, .ttrButton{
+    border-radius: 20px;
+}
+.gglButton{
+    background: #EA4335;
+}
+.fbButton{
+    background: #4267B2;
+}
+.ttrButton{
+    background: #1DA1F2;
+}
+i{
+    color: #FFFFFF;
+}
+hr{
+    border-color: #000000;
+}
+a{
+    color: #000000;
+}
+input{
+    background: #FFFFFF;
+    color: #000000;
+}
+
+.submitButton{
+    background: #7C4397;
+    color: #FFFFFF;
+}
+
