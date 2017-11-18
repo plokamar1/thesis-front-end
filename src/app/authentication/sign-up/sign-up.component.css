@@ -1,0 +1,17 @@
+.panel-body{
+    background: #50c5b7;
+}
+.panel{
+    border-color: #50c5b7;
+    border-radius: 5px;
+    opacity: 0.5%;
+    margin-top: 50%;
+
+}
+hr{
+    border-color: #294e5a;
+}
+a{
+    color: #08605f;
+}
+
