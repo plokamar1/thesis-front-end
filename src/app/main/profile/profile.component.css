@@ -1,0 +1,12 @@
+.container{
+    margin-top: 10px;
+    width: 100%;
+}
+.panel, .panel-heading, .panel-body{
+    border-color: #7C4397;
+    margin: 5px;
+}
+h3{
+    color: #7C4397;
+}
+

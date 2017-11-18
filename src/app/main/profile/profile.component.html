@@ -1,18 +1,16 @@
 <div class="container">
     <div class="row">
-        <div class="col-md-2 col-sm-6 col-md-offset-2 col-sm-offset-3 col-xs-6 col-xs-offset-3">
+        <div class="col-md-2">
             <div class="panel panel-default">
 
-                <div class="panel-heading">
-                    User Profile
-                </div>
+
 
                     <div class="panel-body">
                         <div class="row">
-                            <img [src]=" imgSrc " class="img img-responsive">
+                            <img [src]=" imgSrc " class="img img-responsive img-rounded">
                         </div>
                         <br />
-                        <div class="row">
+                        <div class="row text-center">
                             <h3>{{userFirstName}}</h3>
                             <h3>{{userLastName}}</h3>
                         </div>
@@ -20,6 +18,8 @@
 
             </div>
         </div>
+
         <app-account></app-account>
+
     </div>
 </div>
