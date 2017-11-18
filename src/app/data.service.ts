@@ -11,6 +11,7 @@ export class DataService {
 
     setData(data) {
         let that = this;
+        localStorage.setItem('userBasicInfo', JSON.stringify(data));
         return new Promise(function (resolve) {
             resolve(that.userData = data);
         });
@@ -20,9 +21,16 @@ export class DataService {
 
     getData() {
         let that = this;
-        return new Promise(function (resolve) {
-            resolve(that.userData);
-        })
+        if(that.userData){
+            return new Promise(function (resolve) {
+                resolve(that.userData);
+            })
+        }else{
+            return new Promise(function (resolve) {
+                resolve( JSON.parse(localStorage.getItem('userBasicInfo') ) );
+            })
+        }
+
 
     }
 }
