@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import {DataService} from "../../data.service";
 
 @Component({
   selector: 'app-header',
@@ -7,10 +8,17 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
   encapsulation: ViewEncapsulation.None
 })
 export class HeaderComponent implements OnInit {
-
-  constructor() { }
+    userData: any;
+    userFullname: string;
+  constructor( private dataService: DataService) { }
 
   ngOnInit() {
+      const that = this;
+      this.dataService.getData()
+          .then(function(response){
+              that.userData = response;
+              that.userFullname = that.userData.firstname.concat(' ', that.userData.lastname);
+          });
   }
 
 }
