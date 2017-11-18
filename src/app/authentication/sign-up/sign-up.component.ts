@@ -9,7 +9,7 @@ import {DataService} from "../../data.service";
 @Component({
     selector: 'app-sign-up',
     templateUrl: './sign-up.component.html',
-    styleUrls: ['./sign-up.component.css']
+    styleUrls: ['../sign-in/sign-in.component.css']
 })
 export class SignUpComponent implements OnInit {
     signUpForm: FormGroup;

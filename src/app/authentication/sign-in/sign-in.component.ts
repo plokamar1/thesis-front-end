@@ -8,7 +8,8 @@ import {DataService} from "../../data.service";
 
 @Component({
     selector: 'app-sign-in',
-    templateUrl: './sign-in.component.html'
+    templateUrl: './sign-in.component.html',
+    styleUrls: ['./sign-in.component.css'],
 })
 export class SignInComponent implements OnInit {
 
@@ -38,6 +39,7 @@ export class SignInComponent implements OnInit {
     }
 
     onSignIn(form) {
+        const that = this;
         const callsUrl: string = 'https://api-storage.herokuapp.com/api/user';
         const user = new User(form.value.username, form.value.password);
         this.authService.signIn(user, callsUrl)
@@ -47,8 +49,8 @@ export class SignInComponent implements OnInit {
                         case "succesfully logged in":
                             console.log('correct pass');
                             this.dataService.setData(data).then(function () {
-                                this.authService.assignLocalData(data, 'form');
-                                this.router.navigateByUrl('main/profile');
+                                that.authService.assignLocalData(data, 'form');
+                                that.router.navigateByUrl('main/profile');
                             });
                             //here i save the token and the userId returned from the server
                             //to the local browser memory. This memory lasts for 2 hours
