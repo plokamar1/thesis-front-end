@@ -1,32 +1,31 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-4 col-sm-6 col-md-offset-4 col-sm-offset-3 col-xs-6 col-xs-offset-3">
+        <div class="col-lg-4 col-md-4 col-sm-4 col-lg-offset-4 col-md-offset-4 col-sm-offset-4">
             <div class="panel panel-default">
-                <div class="panel-body">
-                    <p>Sign In component works</p>
+                <div class="panel-body" >
                     <p>
                         Sign-in or <a [routerLink]="['/auth/sign-up']"> sign-up</a>
                     </p>
 
                     <div class="row">
                         <div class="col-md-12">
-                            <button class="btn btn-primary col-md-10 col-sm-10 col-xs-10  col-md-offset-1 col-sm-offset-1 col-xs-offset-1"
-                                    (click)="onFBLogin()">Facebook</button>
+                            <button class="btn col-md-10 col-sm-10 col-xs-10  col-md-offset-1 col-sm-offset-1 col-xs-offset-1 fbButton"
+                                    (click)="onFBLogin()"><i class="fa fa-facebook-official" style="font-size: 24px;" aria-hidden="true"></i></button>
                         </div>
                     </div>
                     <br />
                     <div class="row">
                         <div class="col-md-12">
-                            <button class="btn btn-danger col-md-10 col-sm-10 col-xs-10  col-md-offset-1 col-sm-offset-1 col-xs-offset-1"
-                                    (click)="onGGLLogin()">Google</button>
+                            <button class="btn col-md-10 col-sm-10 col-xs-10  col-md-offset-1 col-sm-offset-1 col-xs-offset-1 gglButton"
+                                    (click)="onGGLLogin()"><i class="fa fa-google" style="font-size: 24px;" aria-hidden="true"></i></button>
                         </div>
                     </div>
                     <br />
                     <div class="row">
                         <div class="col-md-12">
-                            <button class="btn btn-danger col-md-10 col-sm-10 col-xs-10  col-md-offset-1 col-sm-offset-1 col-xs-offset-1"
-                                    (click)="onTTRLogin()">Twitter</button>
+                            <button class="btn col-md-10 col-sm-10 col-xs-10  col-md-offset-1 col-sm-offset-1 col-xs-offset-1 ttrButton"
+                                    (click)="onTTRLogin()"><i class="fa fa-twitter" style="font-size: 24px;" aria-hidden="true"></i></button>
                         </div>
                     </div>
                     <br />
@@ -57,6 +56,7 @@
                                            class="form-control"
                                            placeholder="Username"
                                            formControlName="username">
+                                    <strong></strong>
                                 </div>
                             </div>
 
@@ -70,8 +70,18 @@
                                            formControlName="password">
                                 </div>
                             </div>
+                            <div class="row" *ngIf="wrongInput" >
+                                <div class="col-md-10 col-md-offset-1">
+                                    <p class="text-danger">Your username or password was incorrect. Please try again.</p>
+                                </div>
+                            </div>
+                            <div class="row" *ngIf="noAccount" >
+                                <div class="col-md-10 col-md-offset-1">
+                                    <p class="text-danger">There is not such user.</p>
+                                </div>
+                            </div>
                             <hr>
-                            <button class="btn btn-success col-md-8 col-md-offset-2" type="submit" [disabled]="!signInForm.valid">Sign In!</button>
+                            <button class="btn col-md-8 col-md-offset-2 submitButton" type="submit" [disabled]="!signInForm.valid"><strong>Sign In!</strong></button>
                         </div>
                     </form>
                 </div>

@@ -9,8 +9,7 @@ import {DataService} from "../../data.service";
     styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-
-    userData : string;
+    userData: any;
     loading = true;
     userFirstName : string;
     userLastName : string;
@@ -31,10 +30,16 @@ export class ProfileComponent implements OnInit {
     }
 
     ngOnInit() {
+        let that = this;
         console.log('Profile initialised');
-        this.userData  = this.dataService.userData;
-        this.userLastName = this.dataService.userData.firstname;
-        this.userLastName  = this.dataService.userData.lastname;
+        this.dataService.getData().then(function(response: any){
+            console.log(response);
+            that.userData = response;
+            that.userFirstName = that.userData.firstname;
+            that.userLastName  = that.userData.lastname;
+            console.log(that.userFirstName);
+            }
+        );
         /*    const userData = this.dataService.getData();
             console.log(userData);*/
     }

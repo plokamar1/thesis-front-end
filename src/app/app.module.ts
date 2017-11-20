@@ -12,6 +12,9 @@ import {AuthenticationService} from "./authentication.service";
 import {ProfileComponent} from "./main/profile/profile.component";
 import {DataService} from "./data.service";
 import { MainComponent } from './main/main.component';
+import { AccountComponent } from './main/profile/account/account.component';
+import { HeaderComponent } from './main/header/header.component';
+
 
 @NgModule({
     declarations: [
@@ -21,6 +24,8 @@ import { MainComponent } from './main/main.component';
         SignUpComponent,
         ProfileComponent,
         MainComponent,
+        AccountComponent,
+        HeaderComponent,
 
     ],
     imports: [

@@ -1,0 +1,13 @@
+.aC {
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background: #d7cdcc;
+    /*background-image: url("../../assets/black-and-white-bridge-night-skyscraper-line-darkness-1404480-pxhere.com.jpg");*/
+    /*
+    background: -moz-linear-gradient(#d3e4f4, #304d6d);
+    */
+    height: 100vh;
+    width: 100%;
+}
+

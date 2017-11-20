@@ -33,7 +33,6 @@ export class AuthenticationService {
 
     public signIn(user, link: string) {
         const headers = new Headers({'Content-Type': 'application/json'});
-
         //producing the string of the call of the sign in
         const signInCallURL = link.concat('/', user.username, '/', user.password);
         return this.http.get(signInCallURL)
@@ -41,68 +40,119 @@ export class AuthenticationService {
             .catch((error: Response) => Observable.throw(error.json()));
     }
 
-
-    FBSignIn(onResponse) {
-        const callsFBUrl = 'https://api-storage.herokuapp.com/api/user';
+    FBSignIn() {
         let instance = this;
         let fbuser = new FBuser();
-        //check login status. if connected then ask for user data. The user will be matched in the database by email
-        //and user fb id
-        FB.getLoginStatus(function (response) {
-            console.log(response);
-            //----------------->SIGN IN
-            if (response.status === "connected") {
+        let registerPromise = instance.FBGetLoginStatus();
+
+        registerPromise
+            .then(function (response: any) {
                 console.log(response);
-                localStorage.setItem('accessToken', response.authResponse.accessToken);
-                //get the data of the user
-                console.log('LOGGING IN');
-                FB.api('/me', 'get', {fields: "email,first_name,last_name,short_name,id,link,verified"},
-                    function (resp) {
-                        fbuser = new FBuser(resp.email,
-                            resp.first_name,
-                            resp.last_name,
-                            resp.short_name,
-                            resp.link,
-                            resp.verified,
-                            resp.id,
-                            'facebook',
-                            new CoverObject(null, null, null, null));
-                        FB.api('/me/picture', function (response) {
-                            fbuser.cover.source = response.data.url;
-                            onResponse(fbuser);
+                if (response.status === "connected") {
+                    localStorage.setItem('FBuserID', response.authResponse.userID);
+                    localStorage.setItem('FBaccessToken', response.authResponse.accessToken);
+                    //getting the user's data and passing it as a promise to next then
+                    return new Promise(function (resolve) {
+                        instance.FBData().then(function (apiResp) {
+                            resolve(apiResp);
                         });
                     });
-            } else {
-                //--------------->SIGN UP
-                //if the user isnt connected a pop up window appears and asks for authentication
-                FB.login(function (response) {
+                } else {
+                    instance.FBLogin()
+                        .then(function (response: any) {
+                        //making sure the user is connected
                         if (response.status === "connected") {
-                            //then the same happens and we produce the user model which will be sent to the database
-                            FB.api('/me', 'get', {fields: "email,first_name,last_name,short_name,id,link,verified"},
-                                function (resp) {
-                                    fbuser = new FBuser(resp.email,
-                                        resp.first_name,
-                                        resp.last_name,
-                                        resp.short_name,
-                                        resp.link,
-                                        resp.verified,
-                                        resp.id,
-                                        'facebook',
-                                        new CoverObject(null, null, null, null));
-                                    FB.api('/me/picture', function (response) {
-                                        fbuser.cover.source = response.data.url;
-                                        onResponse(fbuser);
-                                    });
+                            localStorage.setItem('FBuserID', response.userID);
+                            localStorage.setItem('FBaccessToken', response.authResponse.accessToken);
+                            //same passing the user's data as a promise to next then
+                            return new Promise(function (resolve) {
+                                instance.FBData().then(function (apiResp) {
+                                    resolve(apiResp);
                                 });
+                            });
                         }
-                    }, //these are the permissions we are asking the user to give us
-                    {
-                        scope: 'public_profile,user_friends,email,pages_show_list,user_photos,user_posts',
-                        return_scopes: true
                     });
-            }
+                }
+            })
+            .then(function (userRawdata: any) {
+                //creating the object to send to the server
+                fbuser = new FBuser(userRawdata.email,
+                    userRawdata.first_name,
+                    userRawdata.last_name,
+                    userRawdata.short_name,
+                    userRawdata.link,
+                    userRawdata.verified,
+                    userRawdata.id,
+                    'facebook',
+                    new CoverObject(null, null, null, null));
+                //getting the photo of the user and passing the user object to next then
+                return new Promise(function (resolve) {
+                    const FBuserId = '/'.concat(localStorage.getItem('FBuserID'),'/picture');
+                    FB.api(FBuserId, function (response: any) {
+                        fbuser.cover.source = response.data.url;
+                        resolve(fbuser);
+                    });
+                });
+            })
+            .then(function (fbuser) {
+                //signing up the user
+                instance.signUp(fbuser, instance.callsUrl)
+                    .subscribe(data => {
+                        //passing the data to the new component with the data service
+                        instance.dataService.setData(data)
+                            .then(function () {
+                                //calling the function to save data to local storage
+                                instance.assignLocalData(data, 'facebook');
+                                //transfer the user to main page
+                                instance.router.navigateByUrl('main/profile');
+                            });
+                    }, error => console.error(error));
+            })
+        ;
+    }
+    FBLogout(){
+        return new Promise(function (resolve) {
+            FB.logout(function(response){
+                resolve(response);
+            })
+        })
+    }
+    FBLogin(){
+        return new Promise(function (resolve) {
+            FB.login(function(response){
+                resolve(response);
+            }, {
+                scope: 'public_profile,user_friends,email,pages_show_list,user_photos,user_posts',
+                return_scopes: true
+            });
         });
+    }
+    FBGetLoginStatus(){
+        return new Promise(function (resolve) {
+            FB.getLoginStatus(function(response){
+                resolve(response);
+            })
+        });
+    }
 
+    FBData() {
+        let FBuserID = localStorage.getItem('FBuserID');
+        FBuserID = '/'.concat(FBuserID);
+        //getting user's data
+        return new Promise(function (resolve) {
+            FB.api(FBuserID, 'get', {fields: "email,first_name,last_name,short_name,id,link,verified"}, function (response) {
+                resolve(response);
+            });
+        });
+    }
+    GGLGetLoginStatus() {
+        let GoogleAuth = gapi.auth2.getAuthInstance();
+        return GoogleAuth.isSignedIn.get();
+    }
+
+    GGLLogin(){
+        let GoogleAuth = gapi.auth2.getAuthInstance();
+        return GoogleAuth.signIn();
     }
 
     GGLSignIn() {
@@ -110,12 +160,10 @@ export class AuthenticationService {
         let user = new GGLuser();
         let getUserInfoPromise;
         let GoogleAuth = gapi.auth2.getAuthInstance();
-        let signedIn = GoogleAuth.isSignedIn.get();
-        console.log(signedIn);
 
-        if (!signedIn) {
+        if (!that.GGLGetLoginStatus()) {
 
-            GoogleAuth.signIn()
+            that.GGLLogin()
             //Get the user's basic profile info
                 .then(function () {
                     return new Promise(function (resolve) {
@@ -136,11 +184,12 @@ export class AuthenticationService {
                     that.signUp(user, that.callsUrl)
                         .subscribe(data => {
                             //passing the data to the new component with the data service
-                            that.dataService.userData = data;
-                            //calling the function to save data to local storage
-                            that.assignLocalData(data, 'google');
-                            //transfer the user to main page
-                            that.router.navigateByUrl('main/profile');
+                            that.dataService.setData(data).then(function () {
+                                //calling the function to save data to local storage
+                                that.assignLocalData(data, 'google');
+                                //transfer the user to main page
+                                that.router.navigateByUrl('main/profile');
+                            });
                         }, error => console.error(error));
 
                 });
@@ -159,12 +208,15 @@ export class AuthenticationService {
                     console.log(user);
                     that.signUp(user, that.callsUrl)
                         .subscribe(data => {
+                            console.log(data);
                             //passing the data to the new component with the data service
-                            that.dataService.userData = data;
-                            //calling the function to save data to local storage
-                            that.assignLocalData(data, 'google');
-                            //transfer the user to main page
-                            that.router.navigateByUrl('main/profile');
+                            that.dataService.setData(data)
+                                .then(function () {
+                                    //calling the function to save data to local storage
+                                    that.assignLocalData(data, 'google');
+                                    //transfer the user to main page
+                                    that.router.navigateByUrl('main/profile');
+                                });
                         }, error => console.error(error));
                 });
         }
@@ -179,7 +231,7 @@ export class AuthenticationService {
         const header = settings.oauth_consumer_key + ':' + settings.consumersecret;
 
 
-        this.http.post('https://api.twitter.com/oauth/access_token', header)
+        this.http.post('https://api.twitter.com/oauth/request_token', header)
             .map((response: Response) => console.log(response))
             .catch((error: Response) => Observable.throw(error.json()));
 
@@ -193,8 +245,9 @@ export class AuthenticationService {
         localStorage.setItem('loginType', logintype);
     }
 
-
-    checkUserToken(path: string) {
+    //if there is no token the user isn't logged in. If he isn't and tries to enter the main site he gets redirected
+    //back to the sign-in page
+    checkUserToken(path ?: string) {
         if (localStorage.getItem('token')) {
             if (path) {
                 this.router.navigateByUrl(path);

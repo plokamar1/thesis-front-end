@@ -8,11 +8,14 @@ import {DataService} from "../../data.service";
 
 @Component({
     selector: 'app-sign-in',
-    templateUrl: './sign-in.component.html'
+    templateUrl: './sign-in.component.html',
+    styleUrls: ['./sign-in.component.css'],
 })
-export class SignInComponent implements OnInit{
+export class SignInComponent implements OnInit {
 
     signInForm: FormGroup;
+    wrongInput = false;
+    noAccount = false;
 
     constructor(private authService: AuthenticationService,
                 private router: Router,
@@ -36,45 +39,49 @@ export class SignInComponent implements OnInit{
     }
 
     onSignIn(form) {
+        const that = this;
         const callsUrl: string = 'https://api-storage.herokuapp.com/api/user';
         const user = new User(form.value.username, form.value.password);
         this.authService.signIn(user, callsUrl)
             .subscribe(
                 data => {
-                    console.log(data);
-                    //here i save the token and the userId returned from the server
-                    //to the local browser memory. This memory lasts for 2 hours
-                    this.authService.assignLocalData(data, 'form');
-                    this.router.navigateByUrl('/user-profile');
-                },
-                error => {
-                    console.error(error)
+                    switch (data.message) {
+                        case "succesfully logged in":
+                            console.log('correct pass');
+                            this.dataService.setData(data).then(function () {
+                                that.authService.assignLocalData(data, 'form');
+                                that.router.navigateByUrl('main/profile');
+                            });
+                            //here i save the token and the userId returned from the server
+                            //to the local browser memory. This memory lasts for 2 hours
+                            break;
+                        case 'Wrong Password':
+                            this.wrongInput = true;
+                            this.noAccount = false;
+                            break;
+
+                    }
+                }, error =>{
+                    switch (error.message){
+                        case "No such user":
+                            this.noAccount = true;
+                            this.wrongInput = false;
+                            break;
+
+                    }
                 }
             );
     }
 
     onFBLogin() {
-        let instance = this;
-        const callsFBUrl = 'https://api-storage.herokuapp.com/api/user';
-
-        this.authService.FBSignIn(function (response) {
-            //this is the callback function i send to the service to be called after producing the FBuser
-            //It would be better to develop it with promises. Thoough i dont understand them so well
-            instance.authService.signUp(response, callsFBUrl)
-                .subscribe(
-                    data => {
-                        instance.dataService.userData = data;
-                        instance.authService.assignLocalData(data, 'facebook');
-                        instance.router.navigateByUrl('main/profile');
-                    },
-                    error => console.error(error));
-        });
+        this.authService.FBSignIn();
     }
 
-/*    onTTRLogin(){
+    onTTRLogin() {
         this.authService.TTRSignIn();
-    }*/
-    onGGLLogin(){
+    }
+
+    onGGLLogin() {
         this.authService.GGLSignIn();
     }
 
