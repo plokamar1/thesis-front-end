@@ -1,8 +1,21 @@
 .headerStyle {
+    padding: 0px;
     width: 100%;
     height:3%;
-    background: -moz-linear-gradient(left, #DC2430, #7C4397);
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
-    box-shadow: 0px 2px 2px #c5c5c5;
+    background: -moz-linear-gradient(left, #66b3ba, #7C4397);
+   /* background: black;*/
+    box-shadow: 0px 2px 2px #59656f;
+    color: #FFFFFF;
+}
+.container{
+    width: 100%;
+}
+.link{
+    border-left-style: solid !important;
+    /*border-right-style: solid !important;*/
+    border-left: black ;
+    border-right: black;
+    border-width:1px;
+    cursor: pointer;
+
 }
