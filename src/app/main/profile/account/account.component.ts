@@ -5,7 +5,7 @@ import {AuthenticationService} from "../../../authentication.service";
 @Component({
     selector: 'app-account',
     templateUrl: './account.component.html',
-    styleUrls: ['./account.component.css']
+    styleUrls: ['./account.component.css', '../profile.component.css']
 })
 export class AccountComponent implements OnInit {
     userData: any;
@@ -15,6 +15,21 @@ export class AccountComponent implements OnInit {
                 private authService: AuthenticationService) {
     }
 
+    setBackground(provider: string) {
+        switch (provider) {
+            case 'facebook':
+                return '#4267B2';
+
+            case 'google':
+                return '#EA4335';
+
+            case 'twitter':
+                return '#1DA1F2';
+
+            case 'api':
+                return '#7C4397';
+        }
+    }
 
     logOut(provider: string) {
         let that = this;
@@ -23,7 +38,7 @@ export class AccountComponent implements OnInit {
                 this.authService.FBLogout().then(function (response) {
                     console.log(response);
                     that.authService.FBGetLoginStatus().then(function (response) {
-                       console.log(response);
+                        console.log(response);
                     });
                 });
         }

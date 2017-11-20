@@ -1,6 +1,6 @@
 <div class="col-md-4 col-md-offset-2">
     <div *ngFor="let account of accounts" class="panel panel-default">
-        <div class="panel-heading">{{account.provider}}</div>
+        <div class="panel-heading" [style.background]="setBackground(account.provider)" >{{account.provider}}</div>
         <div class="panel-body">
             <div class="row text-center">
                 Email: para.plokamar@gmail.com
