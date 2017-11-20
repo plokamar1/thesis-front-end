@@ -14,8 +14,8 @@ import {DataService} from "./data.service";
 import { MainComponent } from './main/main.component';
 import { AccountComponent } from './main/profile/account/account.component';
 import { HeaderComponent } from './main/header/header.component';
-
-
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { HomeComponent } from './main/home/home.component';
 @NgModule({
     declarations: [
         AppComponent,
@@ -26,6 +26,7 @@ import { HeaderComponent } from './main/header/header.component';
         MainComponent,
         AccountComponent,
         HeaderComponent,
+        HomeComponent,
 
     ],
     imports: [
@@ -34,6 +35,7 @@ import { HeaderComponent } from './main/header/header.component';
         ReactiveFormsModule,
         routing,
         HttpModule,
+        NgbModule.forRoot(),
     ],
     bootstrap: [AppComponent],
     providers: [AuthenticationService, DataService]
