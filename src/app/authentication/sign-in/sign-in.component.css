@@ -1,10 +1,11 @@
 .panel-body{
-    background: #DC2430;
+
+    background: #66b3ba;
     color: #FFFFFF;
 }
 .panel{
-    border-color: #FFFFFF;
-    border-radius: 10px;
+    border-color: #66b3ba;
+    border-radius: 8px;
     opacity: 0.5%;
     margin-top: 50%;
 }
