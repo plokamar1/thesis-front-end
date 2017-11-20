@@ -247,7 +247,7 @@ export class AuthenticationService {
 
     //if there is no token the user isn't logged in. If he isn't and tries to enter the main site he gets redirected
     //back to the sign-in page
-    checkUserToken(path: string) {
+    checkUserToken(path ?: string) {
         if (localStorage.getItem('token')) {
             if (path) {
                 this.router.navigateByUrl(path);
