@@ -16,6 +16,8 @@ import { AccountComponent } from './main/profile/account/account.component';
 import { HeaderComponent } from './main/header/header.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { HomeComponent } from './main/home/home.component';
+import { RssReaderComponent } from './main/home/rss-reader/rss-reader.component';
+import {RssReaderService} from "./main/home/rss-reader/rss-reader.service";
 @NgModule({
     declarations: [
         AppComponent,
@@ -27,6 +29,7 @@ import { HomeComponent } from './main/home/home.component';
         AccountComponent,
         HeaderComponent,
         HomeComponent,
+        RssReaderComponent,
 
     ],
     imports: [
@@ -38,7 +41,7 @@ import { HomeComponent } from './main/home/home.component';
         NgbModule.forRoot(),
     ],
     bootstrap: [AppComponent],
-    providers: [AuthenticationService, DataService]
+    providers: [AuthenticationService, DataService, RssReaderService]
 })
 export class AppModule {
 

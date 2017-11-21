@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import {RssReaderService} from "./rss-reader.service";
 
 @Component({
   selector: 'app-rss-reader',
@@ -8,8 +9,14 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 })
 export class RssReaderComponent implements OnInit {
 
-  constructor() { }
+  constructor(private rssService: RssReaderService) { }
 
+  getRss(){
+     this.rssService.getJson()
+         .subscribe(function (response) {
+             console.log(response);
+         });
+  }
   ngOnInit() {
   }
 
