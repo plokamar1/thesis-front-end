@@ -1,4 +1,54 @@
-<p>
-  rss-reader works!
-</p>
-<button (click)="getRss()">hello</button>
+<div class="container">
+    <div class="row col-lg-4 col-lg-offset-1" id="tab">
+        <div class="row">
+            <mat-form-field style="width:100%">
+                <input matInput placeholder="Enter an RSS url..." disabled="{{hidden}}" (keyup.enter)="receiveRss(rssUrl)" [(ngModel)]="rssUrl">
+            </mat-form-field>
+            <p>http://feeds.reuters.com/reuters/lifestyle</p>
+        </div>
+        <div class="row">
+            <hr>
+        </div>
+        <div class="row" *ngIf="mediaDescription">
+            <a [href]="mediaDescription.link"><img [src]="mediaDescription.image" class="img img-responsive"></a>
+            <p>{{mediaDescription.description}}</p>
+        </div>
+
+        <div *ngIf="feedArray">
+            <mat-accordion>
+                <mat-expansion-panel *ngFor="let feed of feedArray; let i = index">
+                    <mat-expansion-panel-header >
+                        <mat-panel-title >
+                            <p>{{feed.title}}</p>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <span [innerHTML]="feed.description"></span>
+                    <hr>
+                    <a [href]="feed.guid">Read the story!</a>
+                </mat-expansion-panel>
+            </mat-accordion>
+
+            <!--<div class="row" *ngFor="let feed of feedArray; let i = index">
+                <div class="panel-group">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="panel-title">
+                                <button data-toggle="collapse" (click)="#feed{{i}}">{{feed.title}}</button>
+                            </div>
+
+                            <div class="panel-body" id="feed{{i}}">
+                                <p>{{feed.description}}</p>
+                            </div>
+                            <div class="panel-footer">
+                                <p>{{feed.author}}</p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>-->
+        </div>
+
+    </div>
+</div>
