@@ -10,17 +10,17 @@ import {Form} from "@angular/forms";
 })
 export class RssReaderComponent implements OnInit {
     private rssUrl: string;
-    private hidden = false;
+    private hide = false;
     private feedArray: any;
     private mediaDescription: any;
   constructor(private rssService: RssReaderService) {
 
   }
   receiveRss(){
-      this.hidden = true;
+      this.hide = true;
       this.rssService.getJson(this.rssUrl)
           .subscribe(data=> {
-              this.hidden=false;
+              this.hide=false;
               console.log(data);
               if(data.status === 'ok'){
                   this.mediaDescription = data.feed;
