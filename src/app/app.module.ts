@@ -18,6 +18,10 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { HomeComponent } from './main/home/home.component';
 import { RssReaderComponent } from './main/home/rss-reader/rss-reader.component';
 import {RssReaderService} from "./main/home/rss-reader/rss-reader.service";
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatInputModule} from '@angular/material/input';
 @NgModule({
     declarations: [
         AppComponent,
@@ -31,6 +35,7 @@ import {RssReaderService} from "./main/home/rss-reader/rss-reader.service";
         HomeComponent,
         RssReaderComponent,
 
+
     ],
     imports: [
         BrowserModule,
@@ -39,6 +44,10 @@ import {RssReaderService} from "./main/home/rss-reader/rss-reader.service";
         routing,
         HttpModule,
         NgbModule.forRoot(),
+        MatExpansionModule,
+        BrowserAnimationsModule,
+        MatProgressSpinnerModule,
+        MatInputModule
     ],
     bootstrap: [AppComponent],
     providers: [AuthenticationService, DataService, RssReaderService]
