@@ -1,0 +1,14 @@
+.rssReader{
+    padding-top: 2%;
+    background: #DDDDDD;
+    margin-left: 20px;
+    margin-right: 20px;
+    border-radius: 5px;
+}
+mat-form-field{
+    width: 100%;
+}
+mat-input-container{
+    width: 60%;
+}
+
