@@ -8,11 +8,11 @@ declare const gapi: any;
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css']
 })
-export class AppComponent implements AfterViewInit{
+export class AppComponent implements AfterViewInit {
     public auth2: any;
 
     constructor() {
-        //fb.init should start right away. The appId and the version aren't optional
+        // fb.init should start right away. The appId and the version aren't optional
         FB.init({
                 appId: '752997224907283',
                 cookie: true,
@@ -22,7 +22,8 @@ export class AppComponent implements AfterViewInit{
         );
 
     }
-    public googleInit(){
+
+    public googleInit() {
         gapi.load('auth2', () => {
             this.auth2 = gapi.auth2.init({
                 client_id: '448479229111-ogop287ptqs9fq6bia40kr7gh2lhg45b.apps.googleusercontent.com',
@@ -33,7 +34,7 @@ export class AppComponent implements AfterViewInit{
         });
     }
 
-    ngAfterViewInit(){
+    ngAfterViewInit() {
         this.googleInit();
     }
 }

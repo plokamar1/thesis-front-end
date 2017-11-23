@@ -10,7 +10,7 @@ export class DataService {
     }
 
     setData(data) {
-        let that = this;
+        const that = this;
         localStorage.setItem('userBasicInfo', JSON.stringify(data));
         return new Promise(function (resolve) {
             resolve(that.userData = data);
@@ -20,14 +20,14 @@ export class DataService {
     }
 
     getData() {
-        let that = this;
-        if(that.userData){
+        const that = this;
+        if (that.userData) {
             return new Promise(function (resolve) {
                 resolve(that.userData);
             })
-        }else{
+        } else {
             return new Promise(function (resolve) {
-                resolve( JSON.parse(localStorage.getItem('userBasicInfo') ) );
+                resolve(JSON.parse(localStorage.getItem('userBasicInfo')));
             })
         }
 
