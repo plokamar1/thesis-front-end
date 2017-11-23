@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {NgForm, FormGroup, FormControl, Validators} from "@angular/forms";
+import {NgForm, FormGroup, FormControl, Validators} from '@angular/forms';
 
-import {User} from "../../models/user.model"
-import {AuthenticationService} from "../../authentication.service";
-import {Router} from "@angular/router";
-import {DataService} from "../../data.service";
+import {User} from '../../models/user.model'
+import {AuthenticationService} from '../../authentication.service';
+import {Router} from '@angular/router';
+import {DataService} from '../../data.service';
 
 @Component({
     selector: 'app-sign-up',
@@ -17,7 +17,7 @@ export class SignUpComponent implements OnInit {
     constructor(private authService: AuthenticationService,
                 private router: Router,
                 private dataService: DataService) {
-        //authService.checkUserToken('user-profile');
+        // authService.checkUserToken('user-profile');
     }
 
     ngOnInit() {
@@ -33,10 +33,10 @@ export class SignUpComponent implements OnInit {
         });
     }
 
-    //onSubmit gives us the user info when he submits.
+    // onSubmit gives us the user info when he submits.
     onSignUp(form: NgForm) {
-        let that = this;
-        const callsUrl: string = 'https://api-storage.herokuapp.com/api/user';
+        const that = this;
+        const callsUrl = 'https://api-storage.herokuapp.com/api/user';
 
         const user = new User(form.form.value.username,
             form.form.value.password,
@@ -48,26 +48,26 @@ export class SignUpComponent implements OnInit {
         console.log(user);
         this.authService.signUp(user, callsUrl)
             .subscribe(data => {
-                that.dataService.setData(data).then(function(){
-                    //here i save the token and the userId returned from the server
-                    //to the local browser memory. This memory lasts for 2 hours
-                    that.authService.assignLocalData(data, 'form');
-                    that.router.navigateByUrl('/main/profile');
-                });
+                    that.dataService.setData(data).then(function () {
+                        // here i save the token and the userId returned from the server
+                        // to the local browser memory. This memory lasts for 2 hours
+                        that.authService.assignLocalData(data, 'form');
+                        that.router.navigateByUrl('/main/profile');
+                    });
                 },
                 error => {
                     console.error(error)
                 }
             );
-        //this.signUpForm.reset();
+        // this.signUpForm.reset();
     }
 
-    //onFBLogin attempts to log the user in facebook via the app. It should return some basic information for the user
+    // onFBLogin attempts to log the user in facebook via the app. It should return some basic information for the user
     onFBLogin() {
         this.authService.FBSignIn();
     }
 
-    onGGLLogin(){
+    onGGLLogin() {
         this.authService.GGLSignIn();
     }
 
