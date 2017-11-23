@@ -22,12 +22,15 @@ export class RssReaderComponent implements OnInit {
     console.log(this.containerHeight);
   }
   receiveRss(){
+        //enabling spinner
       this.hideSpinner = true;
+      //disabling probably enabled error message
       this.hideError = false;
+      //get the Json with RSS data
       this.rssService.getJson(this.rssUrl)
           .subscribe(data=> {
+              //upon receiving data we disable the spinner
               this.hideSpinner=false;
-              console.log(data);
               if(data.status === 'ok'){
                   this.mediaDescription = data.feed;
                   this.feedArray = data.items;
