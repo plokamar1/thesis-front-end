@@ -7,15 +7,15 @@
                 <h5>Logo</h5>
             </div>
 
-            <div [ngStyle]="hover1 ? {'background': '#DC2430'}: {'background': 'none'}" (mouseover)="hover1 = true" (mouseout)="hover1 = false" class="col-md-1 text-center link col-md-offset-2">
+            <div [ngStyle]="hover1 ? {'background': '#177e89', 'box-shadow': '0px 5px 0px #177e89' }: {'background': 'none'}" (mouseover)="hover1 = true" (mouseout)="hover1 = false" class="col-md-1 text-center link col-md-offset-2" (click)="redirectTo('/main/home')">
                 <h5><strong>Home</strong></h5>
             </div>
 
-            <div [ngStyle]="hover2 ? {'background': '#DC2430'}: {'background': 'none'}" (mouseover)="hover2 = true" (mouseout)="hover2 = false" class="col-md-2 text-center link ">
+            <div [ngStyle]="hover2 ? {'background': '#177e89', 'box-shadow': '0px 5px 0px #177e89'}: {'background': 'none'}" (mouseover)="hover2 = true" (mouseout)="hover2 = false" class="col-md-2 text-center link " (click)="redirectTo('/main/profile')">
                 <h5><strong>{{userFullname}}'s profile</strong></h5>
             </div>
 
-            <div [ngStyle]="hover3 ? {'background': '#DC2430'}: {'background': 'none'}" (mouseover)="hover3 = true" (mouseout)="hover3 = false"  class="col-md-1 text-center link" (click)="logout()" >
+            <div [ngStyle]="hover3 ? {'background': '#db3a34', 'box-shadow': '0px 5px 0px #db3a34' }: {'background': 'none'}" (mouseover)="hover3 = true" (mouseout)="hover3 = false"  class="col-md-1 text-center link" (click)="logout()" >
                 <h5><strong>logout</strong></h5>
             </div>
 

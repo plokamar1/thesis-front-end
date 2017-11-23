@@ -1,0 +1,17 @@
+.rssReader{
+    padding-top: 1%;
+    background: #DDDDDD;
+    margin-left: 20px;
+    margin-right: 20px;
+    border-radius: 5px;
+}
+hr{
+    border-color: #b0b0b0;
+}
+mat-form-field{
+    width: 100%;
+}
+mat-input-container{
+    width: 60%;
+}
+

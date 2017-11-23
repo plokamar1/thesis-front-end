@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {DataService} from "../../../data.service";
-import {AuthenticationService} from "../../../authentication.service";
+import {DataService} from '../../../data.service';
+import {AuthenticationService} from '../../../authentication.service';
 
 @Component({
     selector: 'app-account',
@@ -32,7 +32,7 @@ export class AccountComponent implements OnInit {
     }
 
     logOut(provider: string) {
-        let that = this;
+        const that = this;
         switch (provider) {
             case 'facebook':
                 this.authService.FBLogout().then(function (response) {
@@ -46,15 +46,13 @@ export class AccountComponent implements OnInit {
 
     ngOnInit() {
         console.log('Initializing account comp');
-        let instance = this;
+        const that = this;
         this.dataService.getData()
             .then(function (response: any) {
-                instance.userData = response;
-                instance.accounts = response.user_accounts[0];
+                that.userData = response;
+                that.accounts = response.user_accounts[0];
             });
 
-        //this.userData = this.dataService.userData;
-        //this.accounts = this.dataService.userData.user_accounts;
     }
 
 }
