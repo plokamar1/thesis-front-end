@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {DataService} from "../../data.service";
-import {AuthenticationService} from "../../authentication.service";
-import {Router} from "@angular/router";
+import {DataService} from '../../data.service';
+import {AuthenticationService} from '../../authentication.service';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-header',
@@ -12,16 +12,17 @@ import {Router} from "@angular/router";
 export class HeaderComponent implements OnInit {
     userData: any;
     userFullname: string;
-    background: string = 'none';
 
     constructor(private dataService: DataService,
                 private authService: AuthenticationService,
                 private router: Router) {
     }
-    redirectTo(path: string){
+
+    redirectTo(path: string) {
         this.router.navigateByUrl(path);
     }
-    logout(){
+
+    logout() {
         localStorage.clear()
         this.authService.checkUserToken();
     }
