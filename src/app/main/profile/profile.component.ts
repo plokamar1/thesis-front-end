@@ -19,7 +19,7 @@ export class ProfileComponent implements OnInit {
                 private authService: AuthenticationService,
                 private dataService: DataService) {
         this.imgSrc = 'https://www.1plusx.com/app/mu-plugins/all-in-one-seo-pack-pro/images/default-user-image.png';
-        authService.checkUserToken(null);
+        authService.checkUserToken('main/profile');
     }
 
     enableComp() {

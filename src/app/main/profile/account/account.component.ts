@@ -10,15 +10,16 @@ import {AuthenticationService} from '../../../authentication.service';
 export class AccountComponent implements OnInit {
     userData: any;
     accounts: any;
+    fa_Class: string;
 
     constructor(private dataService: DataService,
                 private authService: AuthenticationService) {
     }
 
-    setBackground(provider: string) {
+    setIconClass(provider: string) {
         switch (provider) {
             case 'facebook':
-                return '#4267B2';
+                this.fa_Class = 'fa-facebook-official';
 
             case 'google':
                 return '#EA4335';

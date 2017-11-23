@@ -24,6 +24,9 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatInputModule} from '@angular/material/input';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { MalihuScrollbarModule } from 'ngx-malihu-scrollbar';
+import {MatCardModule} from "@angular/material";
+import { EmailReaderComponent } from './main/home/email-reader/email-reader.component';
+
 @NgModule({
     declarations: [
         AppComponent,
@@ -36,6 +39,7 @@ import { MalihuScrollbarModule } from 'ngx-malihu-scrollbar';
         HeaderComponent,
         HomeComponent,
         RssReaderComponent,
+        EmailReaderComponent,
 
 
     ],
@@ -51,7 +55,8 @@ import { MalihuScrollbarModule } from 'ngx-malihu-scrollbar';
         MatProgressSpinnerModule,
         MatInputModule,
         MatProgressBarModule,
-        MalihuScrollbarModule.forRoot()
+        MalihuScrollbarModule.forRoot(),
+        MatCardModule
 
     ],
     bootstrap: [AppComponent],

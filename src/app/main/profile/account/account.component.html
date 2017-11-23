@@ -1,23 +1,31 @@
-<div class="col-md-4 col-md-offset-2">
-    <div *ngFor="let account of accounts" class="panel panel-default">
-        <div class="panel-heading" [style.background]="setBackground(account.provider)" >{{account.provider}}</div>
-        <div class="panel-body">
-            <div class="row text-center">
-                Email: para.plokamar@gmail.com
-            </div>
-            <div class="row text-center">
-                Name: Panos
-            </div>
-            <div class="row text-center">
-                LastName: Dorgiakis
-            </div>
-            <div class="row text-center" >
-                Connected: True
-            </div>
-            <div class="row">
-                <button class="btn btn-primary"(click)="logOut(account.provider)">Logout</button>
-            </div>
+<div class="col-md-12 accountContainer">
+    <div *ngFor="let account of accounts">
+        <div class="row">
+            <mat-card class="accountCard">
+                <mat-card-content>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <i class="fa" [ngClass]="{'fa-facebook-official':account.provider === 'facebook','fa-google':account.provider === 'google'}"
+                               style="font-size: 82px"></i>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="row">
+                                Email: para.plokamar@gmail.com
+                            </div>
+                            <div class="row ">
+                                Name: Panos
+                            </div>
+                            <div class="row ">
+                                LastName: Dorgiakis
+                            </div>
+                            <div class="row" >
+                                Connected: True
+                            </div>
+                        </div>
+                    </div>
 
+                </mat-card-content>
+            </mat-card>
         </div>
     </div>
 </div>
