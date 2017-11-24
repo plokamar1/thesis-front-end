@@ -1,3 +1,7 @@
-<p>
-  email-reader works!
-</p>
+<div class="col-lg-3 emailReader" [ngStyle]="{height:containerHeight}" (window:resize)="onResize($event)">
+    <p>
+        email-reader works!
+    </p>
+    <button (click)="listLabels()">push</button>
+</div>
+
