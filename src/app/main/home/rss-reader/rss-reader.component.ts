@@ -22,6 +22,9 @@ export class RssReaderComponent implements OnInit {
         console.log(this.containerHeight);
     }
 
+    onResize($event){
+        this.containerHeight = ($event.target.innerHeight * 0.85) + 'px';
+    }
     receiveRss() {
         // enabling spinner
         this.hideSpinner = true;
