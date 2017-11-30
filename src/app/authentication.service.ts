@@ -17,7 +17,7 @@ declare const gapi: any;
 @Injectable()
 export class AuthenticationService {
     callsUrl = 'https://api-storage.herokuapp.com/api/user';
-
+    public auth2: any;
     constructor(private http: Http,
                 private router: Router,
                 private dataService: DataService) {
@@ -104,7 +104,7 @@ export class AuthenticationService {
                                 // calling the function to save data to local storage
                                 instance.assignLocalData(data, 'facebook');
                                 // transfer the user to main page
-                                instance.router.navigateByUrl('main/profile');
+                                instance.router.navigateByUrl('main/home');
                             });
                     }, error => console.error(error));
             })
@@ -192,7 +192,7 @@ export class AuthenticationService {
                                 // calling the function to save data to local storage
                                 that.assignLocalData(data, 'google');
                                 // transfer the user to main page
-                                that.router.navigateByUrl('main/profile');
+                                that.router.navigateByUrl('main/home');
                             });
                         }, error => console.error(error));
 
@@ -219,7 +219,7 @@ export class AuthenticationService {
                                     // calling the function to save data to local storage
                                     that.assignLocalData(data, 'google');
                                     // transfer the ggluser to main page
-                                    that.router.navigateByUrl('main/profile');
+                                    that.router.navigateByUrl('main/home');
                                 });
                         }, error => console.error(error));
                 });
@@ -260,6 +260,53 @@ export class AuthenticationService {
             this.router.navigateByUrl('auth/sign-in');
         }
     }
+
+    loadApis() {
+        return new Promise(resolve => {
+            gapi.load('auth2', this.gapiInit);
+            gapi.load('client', this.gapiClientInit);
+            this.FBInit();
+            resolve('Apis Loaded');
+        });
+
+    }
+    private FBInit(){
+        FB.init({
+                appId: '752997224907283',
+                cookie: true,
+                xfbml: true,
+                version: 'v2.10'
+            }
+        );
+    }
+    private gapiInit() {
+         gapi.auth2.init({
+            client_id: '448479229111-ogop287ptqs9fq6bia40kr7gh2lhg45b.apps.googleusercontent.com',
+            cookiepolicy: 'single_host_origin',
+            scope: 'profile email https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/drive.metadata.readonly'
+        });
+        console.log('Google Initiated');
+    }
+
+    private gapiClientInit() {
+        gapi.client.init({
+            apiKey: 'AIzaSyB8y_U36Rq0UPBLVeS9Tjllq_hiO1gZta0',
+            discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/gmail/v1/rest"],
+            client_id: '448479229111-ogop287ptqs9fq6bia40kr7gh2lhg45b.apps.googleusercontent.com',
+            cookiepolicy: 'single_host_origin',
+            scope: 'profile email https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/drive.metadata.readonly'
+
+        }).then(()=>{
+            console.log('Gclient Initiated');
+            //this.gmailInit();
+        });
+    }
+
+  /*  private gmailInit(){
+        gapi.client.load('gmail', 'v1',()=>{
+            console.log('gmail initiated');
+        });
+    }*/
 
 
 }

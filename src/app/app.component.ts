@@ -1,4 +1,5 @@
 import {AfterViewInit, Component} from '@angular/core';
+import {AuthenticationService} from "./authentication.service";
 
 declare const FB: any;
 declare const gapi: any;
@@ -11,15 +12,10 @@ declare const gapi: any;
 export class AppComponent implements AfterViewInit {
     public auth2: any;
 
-    constructor() {
+    constructor(private authService: AuthenticationService) {
+        authService.loadApis();
         // fb.init should start right away. The appId and the version aren't optional
-        FB.init({
-                appId: '752997224907283',
-                cookie: true,
-                xfbml: true,
-                version: 'v2.10'
-            }
-        );
+
 
     }
 
@@ -35,7 +31,7 @@ export class AppComponent implements AfterViewInit {
     }
 
     ngAfterViewInit() {
-        this.googleInit();
+        //this.googleInit();
     }
 }
 
