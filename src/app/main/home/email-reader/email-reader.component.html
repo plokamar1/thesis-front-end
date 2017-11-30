@@ -1,7 +1,49 @@
-<div class="col-lg-3 emailReader" [ngStyle]="{height:containerHeight}" (window:resize)="onResize($event)">
-    <p>
-        email-reader works!
-    </p>
-    <button (click)="listLabels()">push</button>
+<div class="col-lg-6 emailReader " [ngStyle]="{height:containerHeight}" (window:resize)="onResize($event)"
+     malihu-scrollbar [scrollbarOptions]="scrollOptions"
+     *ngIf="isConnected else noAccount">
+    <div class="col-lg-12">
+        <div class="row">
+            <i class="fa fa-envelope" aria-hidden="true" style="font-size: 54px"></i>
+        </div>
+    </div>
+    <button (click)="dataService.getMail()">push</button>
+    <button (click)="showData()">show</button>
+    <div class="col-lg-12 "  >
+        <div class="row" *ngIf="dataService.messagesList" >
+            <mat-accordion >
+                <mat-expansion-panel *ngFor="let mail of dataService.messagesList" >
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <strong *ngIf="mail.Unread else read">{{mail.From}}</strong>
+                            <ng-template #read>{{mail.From}}</ng-template>
+                        </mat-panel-title>
+                        <mat-panel-description >
+                            {{mail.Subject}}
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <p>Received at: {{mail.Date}}</p>
+                    <div class="container"  malihu-scrollbar [scrollbarOptions]="scrollOptions2">
+                        <span [innerHTML]="mail.Body"></span>
+                    </div>
+                </mat-expansion-panel>
+            </mat-accordion>
+
+        </div>
+    </div>
 </div>
+
+<ng-template #noAccount>
+    <div class="col-lg-6 emailReader emailTemp" [ngStyle]="{height:containerHeight}" (window:resize)="onResize($event)" >
+        <div class="col-lg-2 col-lg-offset-5">
+            <div class="row text-center">
+                <i class="fa fa-plug" aria-hidden="true" style="font-size: 54px"></i>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="row text-center">
+                <a><h4>You haven't connected with your Google account yet!</h4></a>
+            </div>
+        </div>
+    </div>
+</ng-template>
 
