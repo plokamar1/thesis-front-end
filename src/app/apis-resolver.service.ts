@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {Resolve, Router, ActivatedRouteSnapshot} from "@angular/router";
-import {AuthenticationService} from "../authentication.service";
+import { AuthenticationService} from "./authentication.service";
 
 @Injectable()
-export class MainResolverService implements Resolve <any>{
+export class ApisResolverService implements Resolve <any>{
 
     constructor(private authService: AuthenticationService,
                 private router: Router) {

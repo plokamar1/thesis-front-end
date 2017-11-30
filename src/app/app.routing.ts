@@ -6,7 +6,7 @@ import { SignInComponent } from './authentication/sign-in/sign-in.component'
 import {ProfileComponent} from './main/profile/profile.component';
 import { MainComponent} from './main/main.component';
 import {HomeComponent} from './main/home/home.component';
-import {MainResolverService} from "./main/main-resolver.service";
+import {ApisResolverService} from "./apis-resolver.service";
 
 const APP_ROUTES: Routes = [
     {path: '', redirectTo: '/auth/sign-in', pathMatch: 'full' },
@@ -14,12 +14,12 @@ const APP_ROUTES: Routes = [
     children: [
         {path: 'sign-in', component: SignInComponent },
         {path: 'sign-up', component: SignUpComponent }
-    ], resolve:{ response: MainResolverService}},
+    ], resolve:{ response: ApisResolverService}},
     {path: 'main', component: MainComponent,
     children: [
         {path: 'profile', component: ProfileComponent},
         {path: 'home', component: HomeComponent}
-    ], resolve: { response: MainResolverService}}
+    ], resolve: { response: ApisResolverService}}
 ];
 
 export const routing = RouterModule.forRoot(APP_ROUTES);
