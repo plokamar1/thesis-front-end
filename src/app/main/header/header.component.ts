@@ -28,12 +28,12 @@ export class HeaderComponent implements OnInit {
     }
 
     ngOnInit() {
-        const that = this;
-        this.dataService.getData()
-            .then(function (response) {
+        this.userData = this.dataService.getData();
+        this.userFullname = this.userData.firstname.concat(' ', this.userData.lastname);
+           /* .then(function (response) {
                 that.userData = response;
                 that.userFullname = that.userData.firstname.concat(' ', that.userData.lastname);
-            });
+            });*/
     }
 
 }

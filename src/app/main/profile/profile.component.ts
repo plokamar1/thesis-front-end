@@ -29,12 +29,15 @@ export class ProfileComponent implements OnInit {
     ngOnInit() {
         const that = this;
         console.log('Profile initialised');
-        this.dataService.getData().then(function (response: any) {
+        this.userData = this.dataService.getData();
+        this.userFirstName = this.userData.firstname;
+        this.userLastName = this.userData.lastname;
+        /*this.dataService.getData().then(function (response: any) {
                 that.userData = response;
                 that.userFirstName = that.userData.firstname;
                 that.userLastName = that.userData.lastname;
             }
-        );
+        );*/
 
     }
 

@@ -48,11 +48,8 @@ export class AccountComponent implements OnInit {
     ngOnInit() {
         console.log('Initializing account comp');
         const that = this;
-        this.dataService.getData()
-            .then(function (response: any) {
-                that.userData = response;
-                that.accounts = response.user_accounts[0];
-            });
+        this.userData = this. dataService.getData();
+        this.accounts = this.userData.user_accounts[0];
 
     }
 
