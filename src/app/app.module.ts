@@ -26,6 +26,7 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { MalihuScrollbarModule } from 'ngx-malihu-scrollbar';
 import {MatCardModule} from "@angular/material";
 import { EmailReaderComponent } from './main/home/email-reader/email-reader.component';
+import{ MainResolverService} from "./main/main-resolver.service";
 
 @NgModule({
     declarations: [
@@ -56,11 +57,11 @@ import { EmailReaderComponent } from './main/home/email-reader/email-reader.comp
         MatInputModule,
         MatProgressBarModule,
         MalihuScrollbarModule.forRoot(),
-        MatCardModule
+        MatCardModule,
 
     ],
     bootstrap: [AppComponent],
-    providers: [AuthenticationService, DataService, RssReaderService]
+    providers: [AuthenticationService, DataService, RssReaderService,MainResolverService]
 })
 export class AppModule {
 

@@ -13,7 +13,7 @@ export class AppComponent implements AfterViewInit {
     public auth2: any;
 
     constructor(private authService: AuthenticationService) {
-        authService.loadApis();
+        //authService.loadApis();
         // fb.init should start right away. The appId and the version aren't optional
 
 
