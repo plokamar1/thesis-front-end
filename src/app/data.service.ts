@@ -20,16 +20,13 @@ export class DataService {
     }
 
     getData() {
-        const that = this;
-        if (that.userData) {
-            return new Promise(function (resolve) {
-                resolve(that.userData);
-            })
+        if (this.userData) {
+            return this.userData
         } else {
-            return new Promise(function (resolve) {
-                resolve(JSON.parse(localStorage.getItem('userBasicInfo')));
-            })
+            this.userData = JSON.parse(localStorage.getItem('userBasicInfo'));
+            return this.userData;
         }
+    }
 
 
     }
