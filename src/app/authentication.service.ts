@@ -285,7 +285,7 @@ export class AuthenticationService {
         gapi.auth2.init({
             client_id: '448479229111-ogop287ptqs9fq6bia40kr7gh2lhg45b.apps.googleusercontent.com',
             cookiepolicy: 'single_host_origin',
-            scope: 'profile email https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/drive.metadata.readonly'
+            scope: 'profile email https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/drive.metadata.readonly https://mail.google.com/'
         }).then(() => {
             console.log('Google Initiated');
         });
