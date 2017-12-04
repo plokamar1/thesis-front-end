@@ -2,6 +2,7 @@ import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {DataService} from '../../../data.service';
 import {AuthenticationService} from "../../../authentication.service";
 import {ActivatedRoute, Params} from "@angular/router";
+import {EmailService} from "./email.service";
 
 @Component({
     selector: 'app-email-reader',
@@ -14,7 +15,8 @@ export class EmailReaderComponent implements OnInit,AfterViewInit {
     scrollOptions2 = {axis: 'x', theme: 'minimal-dark', scrollButtons: {enable: true}};
     containerHeight: string;
 
-    constructor(public dataService: DataService,
+    constructor(private dataService: DataService,
+                public emailService: EmailService,
                 private authService: AuthenticationService,
                 private route: ActivatedRoute) {
         this.containerHeight = (window.screen.height * 0.85) + 'px';
@@ -27,7 +29,7 @@ export class EmailReaderComponent implements OnInit,AfterViewInit {
     }
     ngAfterViewInit() {
         if (this.dataService.checkIfConnected('google')) {
-            this.dataService.getMail();
+            this.emailService.getMail();
         } else {
             this.isConnected = false;
         }

@@ -27,6 +27,7 @@ import { MalihuScrollbarModule } from 'ngx-malihu-scrollbar';
 import {MatCardModule} from "@angular/material";
 import { EmailReaderComponent } from './main/home/email-reader/email-reader.component';
 import{ ApisResolverService} from "./apis-resolver.service";
+import {EmailService} from "./main/home/email-reader/email.service";
 
 @NgModule({
     declarations: [
@@ -61,7 +62,7 @@ import{ ApisResolverService} from "./apis-resolver.service";
 
     ],
     bootstrap: [AppComponent],
-    providers: [AuthenticationService, DataService, RssReaderService,ApisResolverService]
+    providers: [AuthenticationService, DataService, RssReaderService,ApisResolverService,EmailService]
 })
 export class AppModule {
 

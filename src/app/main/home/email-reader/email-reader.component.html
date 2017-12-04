@@ -6,12 +6,12 @@
             <i class="fa fa-envelope" aria-hidden="true" style="font-size: 54px"></i>
         </div>
     </div>
-    <button (click)="dataService.getMail()">push</button>
+    <button (click)="emailService.getMail()">push</button>
     <button (click)="showData()">show</button>
     <div class="col-lg-12 "  >
-        <div class="row" *ngIf="dataService.messagesList" >
+        <div class="row" *ngIf="emailService.messagesList" >
             <mat-accordion >
-                <mat-expansion-panel *ngFor="let mail of dataService.messagesList" >
+                <mat-expansion-panel *ngFor="let mail of emailService.messagesList" >
                     <mat-expansion-panel-header>
                         <mat-panel-title>
                             <strong *ngIf="mail.Unread else read">{{mail.From}}</strong>
@@ -32,7 +32,7 @@
     </div>
     <div class="col-lg-12">
         <div class="row">
-            <button class="btn-lg moreMail" (click)="dataService.getMail()">
+            <button class="btn-lg moreMail" (click)="emailService.getMail()">
                 <div class="row">
                     <i class="fa fa-plus-square" aria-hidden="true"></i>
                 </div>
