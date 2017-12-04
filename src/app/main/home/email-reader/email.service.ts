@@ -14,7 +14,9 @@ export class EmailService {
 
     constructor(private dataService: DataService) {
     }
+    toTrash(emails=[]){
 
+    }
     getMail(clicked?: string) {
         if(this.firstLoadFlag){
             this.emailHandler();
@@ -24,20 +26,23 @@ export class EmailService {
     }
 
     emailModify(email: EmailModel, labelId: string) {
-        const userData = this.dataService.getData();
-        const gglAccounts = userData.user_accounts[0].filter(x => x.provider === 'google');
+        if( email.Unread) {
+            const userData = this.dataService.getData();
+            const gglAccounts = userData.user_accounts[0].filter(x => x.provider === 'google');
 
-        const request = gapi.client.gmail.users.messages.modify(
-            {
-                'userId': gglAccounts[0].puid,
-                'id': email.Id,
-                "removeLabelIds": [
-                    labelId
-                ]
+            const request = gapi.client.gmail.users.messages.modify(
+                {
+                    'userId': gglAccounts[0].puid,
+                    'id': email.Id,
+                    "removeLabelIds": [
+                        labelId
+                    ]
+                });
+            request.execute((response)=>{
+                console.log(response);
             });
-        request.execute((response)=>{
-            console.log(response);
-        })
+        }
+
     }
 
     emailHandler() {
