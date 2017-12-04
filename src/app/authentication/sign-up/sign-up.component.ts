@@ -52,7 +52,7 @@ export class SignUpComponent implements OnInit {
                         // here i save the token and the userId returned from the server
                         // to the local browser memory. This memory lasts for 2 hours
                         that.authService.assignLocalData(data, 'form');
-                        that.router.navigateByUrl('/main/profile');
+                        that.router.navigateByUrl('/main/home');
                     });
                 },
                 error => {

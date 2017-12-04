@@ -46,7 +46,7 @@ export class SignInComponent implements OnInit {
                             console.log('correct pass');
                             this.dataService.setData(data).then(function () {
                                 that.authService.assignLocalData(data, 'form');
-                                that.router.navigateByUrl('main/profile');
+                                that.router.navigateByUrl('main/home');
                             });
                             // here i save the token and the userId returned from the server
                             // to the local browser memory. This memory lasts for 2 hours
