@@ -28,12 +28,7 @@ import {MatCardModule} from '@angular/material';
 import {EmailReaderComponent} from './main/home/email-reader/email-reader.component';
 
 export function apisInitFactory(injector: Injector): Function {
-    return () => setTimeout(() => {
-            let authenticationService: AuthenticationService;
-            authenticationService = injector.get(AuthenticationService);
-            authenticationService.loadApis();
-        }
-    );
+    return () => setTimeout(() => injector.get(AuthenticationService).loadApis());
 }
 
 @NgModule({
