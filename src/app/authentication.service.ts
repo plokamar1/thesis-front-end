@@ -18,6 +18,7 @@ declare const gapi: any;
 export class AuthenticationService {
     callsUrl = 'https://api-storage.herokuapp.com/api/user';
     public auth2: any;
+
     constructor(private http: Http,
                 private router: Router,
                 private dataService: DataService) {
@@ -262,15 +263,15 @@ export class AuthenticationService {
     }
 
     loadApis() {
-        return new Promise(resolve => {
-            gapi.load('auth2', this.gapiInit);
-            gapi.load('client', this.gapiClientInit);
-            this.FBInit();
-            resolve('Apis Loaded');
-        });
-
+        /*gapi.load('auth2', this.gapiInit);
+        gapi.load('client', this.gapiClientInit);
+        this.FBInit();*/
+        Promise.all([gapi.load('auth2', this.gapiInit),gapi.load('client', this.gapiClientInit),this.FBInit()]).then(()=>{
+            return 'apis Loaded';
+        })
     }
-    private FBInit(){
+
+    private FBInit() {
         FB.init({
                 appId: '752997224907283',
                 cookie: true,
@@ -279,13 +280,15 @@ export class AuthenticationService {
             }
         );
     }
+
     private gapiInit() {
-         gapi.auth2.init({
+        gapi.auth2.init({
             client_id: '448479229111-ogop287ptqs9fq6bia40kr7gh2lhg45b.apps.googleusercontent.com',
             cookiepolicy: 'single_host_origin',
             scope: 'profile email https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/drive.metadata.readonly'
+        }).then(() => {
+            console.log('Google Initiated');
         });
-        console.log('Google Initiated');
     }
 
     private gapiClientInit() {
@@ -296,17 +299,17 @@ export class AuthenticationService {
             cookiepolicy: 'single_host_origin',
             scope: 'profile email https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/drive.metadata.readonly'
 
-        }).then(()=>{
+        }).then(() => {
             console.log('Gclient Initiated');
-            //this.gmailInit();
+            this.gmailInit();
         });
     }
 
-  /*  private gmailInit(){
-        gapi.client.load('gmail', 'v1',()=>{
-            console.log('gmail initiated');
-        });
-    }*/
+      private gmailInit(){
+          gapi.client.load('gmail', 'v1',()=>{
+              console.log('gmail initiated');
+          });
+      }
 
 
 }
