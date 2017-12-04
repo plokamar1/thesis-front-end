@@ -14,19 +14,40 @@ export class EmailService {
 
     constructor(private dataService: DataService) {
     }
-    toTrash(emails=[]){
+
+    toTrash(emails) {
+        const userData = this.dataService.getData();
+        const gglAccounts = userData.user_accounts[0].filter(x => x.provider === 'google');
+        let counter = 0;
+        return new Promise((resolve) => {
+            for (let mail of emails) {
+                counter += 1;
+                const request = gapi.client.gmail.users.messages.trash({
+                    'userId': gglAccounts[0].puid,
+                    'id': mail.Id
+                });
+                request.execute((response) => {
+                    console.log(response);
+                });
+            }
+            this.nextPageToken = '';
+            this.messagesList = [];
+            this.getMail('clicked');
+            resolve(counter);
+        });
 
     }
+
     getMail(clicked?: string) {
-        if(this.firstLoadFlag){
+        if (this.firstLoadFlag) {
             this.emailHandler();
             this.firstLoadFlag = false;
         }
-        if(clicked) this.emailHandler();
+        if (clicked) this.emailHandler();
     }
 
     emailModify(email: EmailModel, labelId: string) {
-        if( email.Unread) {
+        if (email.Unread) {
             const userData = this.dataService.getData();
             const gglAccounts = userData.user_accounts[0].filter(x => x.provider === 'google');
 
@@ -38,7 +59,7 @@ export class EmailService {
                         labelId
                     ]
                 });
-            request.execute((response)=>{
+            request.execute((response) => {
                 console.log(response);
             });
         }

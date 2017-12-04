@@ -6,8 +6,7 @@
             <i class="fa fa-envelope" aria-hidden="true" style="font-size: 54px"></i>
         </div>
     </div>
-    <button (click)="emailService.getMail()">push</button>
-    <button (click)="showData()">show</button>
+    <button [disabled]="!trashArray.length" class="btn btn-danger" (click)="onMoveToTrash()">Move to Trash</button>
     <div class="col-lg-12 ">
         <div class="row" *ngIf="emailService.messagesList">
             <mat-accordion>
@@ -31,7 +30,6 @@
                                     <span [innerHtml]="mail.Subject"></span>
                                 </mat-panel-description>
                             </mat-expansion-panel-header>
-                            <button (click)="show(mail)">hi</button>
                             <p>Received at: {{mail.Date}}</p>
                             <div class="container" malihu-scrollbar [scrollbarOptions]="scrollOptions2">
                                 <span [innerHTML]="mail.Body"></span>

@@ -4,6 +4,7 @@ import {AuthenticationService} from "../../../authentication.service";
 import {ActivatedRoute, Params} from "@angular/router";
 import {EmailService} from "./email.service";
 import {EmailModel} from "../../../models/email.model";
+import {MatSnackBar} from "@angular/material";
 
 @Component({
     selector: 'app-email-reader',
@@ -20,9 +21,17 @@ export class EmailReaderComponent implements OnInit, AfterViewInit {
     constructor(private dataService: DataService,
                 public emailService: EmailService,
                 private authService: AuthenticationService,
-                private route: ActivatedRoute) {
+                private route: ActivatedRoute,
+                private snackBar: MatSnackBar) {
         this.containerHeight = (window.screen.height * 0.85) + 'px';
+        console.log(this.trashArray)
 
+    }
+
+    onMoveToTrash() {
+        this.emailService.toTrash(this.trashArray).then((counter) => {
+            this.snackBar.open(counter + ' messages moved to Trash', '', {duration: 2000,});
+        });
 
     }
 
@@ -30,20 +39,16 @@ export class EmailReaderComponent implements OnInit, AfterViewInit {
         if ($event.checked) {
             this.trashArray.push(mail);
         } else {
-            const updatedItem = this.trashArray.find(x=>x.Id === mail.Id);
+            const updatedItem = this.trashArray.find(x => x.Id === mail.Id);
             const index = this.trashArray.indexOf(updatedItem);
             console.log(index);
-            this.trashArray.splice(index,1);
+            this.trashArray.splice(index, 1);
         }
         console.log(this.trashArray);
     }
 
     onResize($event) {
         this.containerHeight = ($event.target.innerHeight * 0.85) + 'px';
-    }
-
-    show(mail: EmailModel) {
-        console.log(mail.Subject);
     }
 
     ngAfterViewInit() {
