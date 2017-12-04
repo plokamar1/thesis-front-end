@@ -1,18 +1,43 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {EmailModel} from "../../../models/email.model";
 import base64url from "base64url";
 import {DataService} from "../../../data.service";
 
 declare const gapi: any;
+
 @Injectable()
 export class EmailService {
     private googleAccounts = [];
     private nextPageToken = '';
     public messagesList = [];
-  constructor(private dataService: DataService) { }
+    public firstLoadFlag = true;
 
-    getMail() {
-        this.emailHandler();
+    constructor(private dataService: DataService) {
+    }
+
+    getMail(clicked?: string) {
+        if(this.firstLoadFlag){
+            this.emailHandler();
+            this.firstLoadFlag = false;
+        }
+        if(clicked) this.emailHandler();
+    }
+
+    emailModify(email: EmailModel, labelId: string) {
+        const userData = this.dataService.getData();
+        const gglAccounts = userData.user_accounts[0].filter(x => x.provider === 'google');
+
+        const request = gapi.client.gmail.users.messages.modify(
+            {
+                'userId': gglAccounts[0].puid,
+                'id': email.Id,
+                "removeLabelIds": [
+                    labelId
+                ]
+            });
+        request.execute((response)=>{
+            console.log(response);
+        })
     }
 
     emailHandler() {
@@ -40,7 +65,7 @@ export class EmailService {
     }
 
     getMessages(messagesIds: any, userId: string) {
-        for(let messageObj of messagesIds){
+        for (let messageObj of messagesIds) {
             gapi.client.gmail.users.messages.get({
                 'userId': userId,
                 'id': messageObj.id,
@@ -62,12 +87,10 @@ export class EmailService {
                 date = this.filterHeaders(messageResult, 'Date');
                 from = this.filterHeaders(messageResult, 'From');
                 if (messageResult.result.payload.body.size === 0) {
-                    console.log('Mime');
                     body = this.decode(messageResult.result.payload.parts[1].body.data);
                     Email = new EmailModel(subject, from, body, id, unread, timestamp, '', date);
                     this.messagesList.push(Email);
                 } else {
-                    console.log('Normal');
                     body = this.decode(messageResult.result.payload.body.data);
                     Email = new EmailModel(subject, from, body, id, unread, timestamp, '', date);
                     this.messagesList.push(Email);

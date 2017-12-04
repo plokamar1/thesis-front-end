@@ -12,7 +12,7 @@
         <div class="row" *ngIf="emailService.messagesList" >
             <mat-accordion >
                 <mat-expansion-panel *ngFor="let mail of emailService.messagesList" >
-                    <mat-expansion-panel-header>
+                    <mat-expansion-panel-header (click)="emailService.emailModify(mail,'UNREAD'); mail.Unread= false" >
                         <mat-panel-title>
                             <strong *ngIf="mail.Unread else read">{{mail.From}}</strong>
                             <ng-template #read>{{mail.From}}</ng-template>
@@ -32,7 +32,7 @@
     </div>
     <div class="col-lg-12">
         <div class="row">
-            <button class="btn-lg moreMail" (click)="emailService.getMail()">
+            <button class="btn-lg moreMail" (click)="emailService.getMail('clicked')">
                 <div class="row">
                     <i class="fa fa-plus-square" aria-hidden="true"></i>
                 </div>
