@@ -25,7 +25,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { MalihuScrollbarModule } from 'ngx-malihu-scrollbar';
 import {MatCardModule} from "@angular/material";
-
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 import { EmailReaderComponent } from './main/home/email-reader/email-reader.component';
 import{ ApisResolverService} from "./apis-resolver.service";
@@ -62,6 +62,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
         MalihuScrollbarModule.forRoot(),
         MatCardModule,
         MatCheckboxModule,
+        MatSnackBarModule
     ],
     bootstrap: [AppComponent],
     providers: [AuthenticationService, DataService, RssReaderService,ApisResolverService,EmailService]
