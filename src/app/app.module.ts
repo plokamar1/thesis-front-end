@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {APP_INITIALIZER, Injector, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 
 import {AppComponent} from './app.component';
@@ -23,27 +23,20 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatInputModule} from '@angular/material/input';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
-import { MalihuScrollbarModule } from 'ngx-malihu-scrollbar';
-import {MatCardModule} from "@angular/material";
-import { EmailReaderComponent } from './main/home/email-reader/email-reader.component';
-import{ ApisResolverService} from "./apis-resolver.service";
+import {MalihuScrollbarModule} from 'ngx-malihu-scrollbar';
+import {MatCardModule} from '@angular/material';
+import {EmailReaderComponent} from './main/home/email-reader/email-reader.component';
+
+export function apisInitFactory(injector: Injector): Function {
+    return () => setTimeout(() => {
+            let authenticationService: AuthenticationService;
+            authenticationService = injector.get(AuthenticationService);
+            authenticationService.loadApis();
+        }
+    );
+}
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        AuthenticationComponent,
-        SignInComponent,
-        SignUpComponent,
-        ProfileComponent,
-        MainComponent,
-        AccountComponent,
-        HeaderComponent,
-        HomeComponent,
-        RssReaderComponent,
-        EmailReaderComponent,
-
-
-    ],
     imports: [
         BrowserModule,
         FormsModule,
@@ -57,11 +50,32 @@ import{ ApisResolverService} from "./apis-resolver.service";
         MatInputModule,
         MatProgressBarModule,
         MalihuScrollbarModule.forRoot(),
-        MatCardModule,
-
+        MatCardModule
     ],
-    bootstrap: [AppComponent],
-    providers: [AuthenticationService, DataService, RssReaderService,ApisResolverService]
+    declarations: [
+        AppComponent,
+        AuthenticationComponent,
+        SignInComponent,
+        SignUpComponent,
+        ProfileComponent,
+        MainComponent,
+        AccountComponent,
+        HeaderComponent,
+        HomeComponent,
+        RssReaderComponent,
+        EmailReaderComponent
+    ],
+    providers: [
+        DataService,
+        RssReaderService,
+        AuthenticationService,
+        {
+            provide: APP_INITIALIZER,
+            useFactory: apisInitFactory,
+            deps: [Injector],
+            multi: true
+        }],
+    bootstrap: [AppComponent]
 })
 export class AppModule {
 
