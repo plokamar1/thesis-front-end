@@ -1,19 +1,17 @@
 import {Injectable} from '@angular/core';
 import {Resolve, Router, ActivatedRouteSnapshot} from "@angular/router";
-import { AuthenticationService} from "./authentication.service";
-
+import {AuthenticationService} from "./authentication.service";
+declare const gapi: any;
 @Injectable()
-export class ApisResolverService implements Resolve <any>{
+
+export class ApisResolverService implements Resolve <any> {
 
     constructor(private authService: AuthenticationService,
                 private router: Router) {
     }
 
-    resolve(route: ActivatedRouteSnapshot){
-        return this.authService.loadApis().then(response => {
-            return response;
-            }
-        )
+    resolve(route: ActivatedRouteSnapshot) {
+        if(!gapi.client) return this.authService.loadApis();
     }
 
 }
