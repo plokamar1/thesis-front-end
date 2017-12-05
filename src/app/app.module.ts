@@ -29,6 +29,7 @@ import {EmailService} from "./main/home/email-reader/email.service";
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MalihuCustomScrollerModule } from 'ngx-malihu-scroller';
 import {MatCardModule} from '@angular/material';
+import { EmailSenderComponent } from './main/home/email-reader/email-sender/email-sender.component';
 
 export function apisInitFactory(injector: Injector): Function {
     return () => setTimeout(() => injector.get(AuthenticationService).loadApis());
@@ -63,7 +64,8 @@ export function apisInitFactory(injector: Injector): Function {
         HeaderComponent,
         HomeComponent,
         RssReaderComponent,
-        EmailReaderComponent
+        EmailReaderComponent,
+        EmailSenderComponent
     ],
     providers: [
         DataService,
