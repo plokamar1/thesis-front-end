@@ -19,21 +19,23 @@ export class EmailService {
         const userData = this.dataService.getData();
         const gglAccounts = userData.user_accounts[0].filter(x => x.provider === 'google');
         let counter = 0;
-        return new Promise((resolve) => {
-            for (let mail of emails) {
-                counter += 1;
-                const request = gapi.client.gmail.users.messages.trash({
-                    'userId': gglAccounts[0].puid,
-                    'id': mail.Id
-                });
-                request.execute((response) => {
-                    console.log(response);
-                });
-            }
-            this.nextPageToken = '';
-            this.messagesList = [];
-            this.getMail('clicked');
-            resolve(counter);
+        return new Promise((resolve,reject) => {
+            const request = gapi.client.gmail.users.messages.batchModify({
+                'userId': gglAccounts[0].puid,
+                'ids': emails,
+                'addLabelIds':['TRASH']});
+            request.execute(response=>{
+                console.log(response);
+                this.nextPageToken = '';
+                this.messagesList = [];
+                this.getMail('clicked');
+                const str = emails.length.toString().concat(' messages were sent to trash!');
+                if(response.result) resolve(str);
+                if(response.error) reject('There was an error when moving the selected messages to trash');
+
+            });
+
+
         });
 
     }

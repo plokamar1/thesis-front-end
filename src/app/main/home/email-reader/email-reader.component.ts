@@ -6,6 +6,8 @@ import {EmailService} from "./email.service";
 import {EmailModel} from "../../../models/email.model";
 import {MatSnackBar} from "@angular/material";
 
+declare const gapi: any;
+
 @Component({
     selector: 'app-email-reader',
     templateUrl: './email-reader.component.html',
@@ -17,6 +19,7 @@ export class EmailReaderComponent implements OnInit, AfterViewInit {
     scrollOptions2 = {axis: 'x', theme: 'minimal-dark', scrollButtons: {enable: true}};
     containerHeight: string;
     trashArray = [];
+    state :string;
 
     constructor(private dataService: DataService,
                 public emailService: EmailService,
@@ -29,17 +32,24 @@ export class EmailReaderComponent implements OnInit, AfterViewInit {
     }
 
     onMoveToTrash() {
-        this.emailService.toTrash(this.trashArray).then((counter) => {
-            this.snackBar.open(counter + ' messages moved to Trash', '', {duration: 2000,});
+        const cssSnack = 'snack';
+        this.emailService.toTrash(this.trashArray).then((response: string) => {
+            console.log(response);
+            this.trashArray = [];
+            this.snackBar.open(response, '', {duration: 2000,panelClass: cssSnack});
+        }).catch(reason => {
+            console.log(reason);
+            this.trashArray = [];
+            this.snackBar.open(reason, '', {duration: 2000,panelClass: cssSnack});
         });
 
     }
 
     insertToTrashArray($event, mail: EmailModel) {
         if ($event.checked) {
-            this.trashArray.push(mail);
+            this.trashArray.push(mail.Id);
         } else {
-            const updatedItem = this.trashArray.find(x => x.Id === mail.Id);
+            const updatedItem = this.trashArray.find(x => x === mail.Id);
             const index = this.trashArray.indexOf(updatedItem);
             console.log(index);
             this.trashArray.splice(index, 1);
@@ -52,14 +62,16 @@ export class EmailReaderComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit() {
-        if (this.dataService.checkIfConnected('google')) {
-            this.emailService.getMail();
-        } else {
-            this.isConnected = false;
-        }
+
     }
 
     ngOnInit() {
-
+        if (this.dataService.checkIfConnected('google')) {
+            this.state = 'viewer'
+            //this.emailService.getMail();
+        } else {
+            this.state = 'notConnected';
+            this.isConnected = false;
+        }
     }
 }
