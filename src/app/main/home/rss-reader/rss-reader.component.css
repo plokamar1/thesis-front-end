@@ -1,21 +1,33 @@
-.rssReader ,.emailReader{
+.rssReader, .emailReader {
     padding-top: 1%;
     background: #DDDDDD;
     margin-left: 20px;
     margin-right: 20px;
     border-radius: 5px;
 }
-.moreMail{
+
+.snack {
+    border-color: #63C7B2;
+    border-width: 3px;
+    border-radius: 7px;
+    border-style: solid;
+    box-shadow: 0px -10px 5px #515151;
+}
+
+.moreMail {
     background: #63c7b2;
     width: 100%;
 }
-hr{
+
+hr {
     border-color: #b0b0b0;
 }
-mat-form-field{
+
+mat-form-field {
     width: 100%;
 }
-mat-input-container{
+
+mat-input-container {
     width: 60%;
 }
 
