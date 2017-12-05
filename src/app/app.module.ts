@@ -27,7 +27,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { EmailReaderComponent } from './main/home/email-reader/email-reader.component';
 import {EmailService} from "./main/home/email-reader/email.service";
 import {MatCheckboxModule} from '@angular/material/checkbox';
-import {MalihuScrollbarModule} from 'ngx-malihu-scrollbar';
+import { MalihuCustomScrollerModule } from 'ngx-malihu-scroller';
 import {MatCardModule} from '@angular/material';
 
 export function apisInitFactory(injector: Injector): Function {
@@ -47,7 +47,7 @@ export function apisInitFactory(injector: Injector): Function {
         MatProgressSpinnerModule,
         MatInputModule,
         MatProgressBarModule,
-        MalihuScrollbarModule.forRoot(),
+        MalihuCustomScrollerModule,
         MatCardModule,
         MatCheckboxModule,
         MatSnackBarModule
