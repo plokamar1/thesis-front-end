@@ -18,7 +18,6 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {HomeComponent} from './main/home/home.component';
 import {RssReaderComponent} from './main/home/rss-reader/rss-reader.component';
 import {RssReaderService} from './main/home/rss-reader/rss-reader.service';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatInputModule} from '@angular/material/input';
@@ -30,6 +29,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MalihuCustomScrollerModule } from 'ngx-malihu-scroller';
 import {MatCardModule} from '@angular/material';
 import { EmailSenderComponent } from './main/home/email-reader/email-sender/email-sender.component';
+import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 export function apisInitFactory(injector: Injector): Function {
     return () => setTimeout(() => injector.get(AuthenticationService).loadApis());
@@ -40,18 +41,16 @@ export function apisInitFactory(injector: Injector): Function {
         BrowserModule,
         FormsModule,
         ReactiveFormsModule,
+        BrowserAnimationsModule,
         routing,
         HttpModule,
         NgbModule.forRoot(),
+
         MatExpansionModule,
-        BrowserAnimationsModule,
-        MatProgressSpinnerModule,
-        MatInputModule,
-        MatProgressBarModule,
+        MatProgressSpinnerModule,MatInputModule,MatProgressBarModule,MatCardModule,MatCheckboxModule,MatSnackBarModule,
+
         MalihuCustomScrollerModule,
-        MatCardModule,
-        MatCheckboxModule,
-        MatSnackBarModule
+        FroalaEditorModule.forRoot(), FroalaViewModule.forRoot()
     ],
     declarations: [
         AppComponent,
