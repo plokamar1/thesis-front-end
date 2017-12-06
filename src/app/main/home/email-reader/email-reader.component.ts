@@ -57,6 +57,10 @@ export class EmailReaderComponent implements OnInit, AfterViewInit {
         console.log(this.trashArray);
     }
 
+    onChangeState(state: string){
+        this.state = state;
+    }
+
     onResize($event) {
         this.containerHeight = ($event.target.innerHeight * 0.85) + 'px';
     }
