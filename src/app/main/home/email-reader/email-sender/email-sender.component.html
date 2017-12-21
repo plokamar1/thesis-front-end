@@ -1,3 +1,37 @@
-<p>
-  email-sender works!
-</p>
+<div class="rssReader">
+    <form [formGroup]="emailForm"
+          #f="ngForm"
+          method="post"
+          (ngSubmit)="emailService.createMessage(f)">
+        <div class="form-group">
+            <mat-form-field>
+
+                <div class="row ">
+                    <input matInput placeholder="Receiver's email address" formControlName="To">
+                </div>
+            </mat-form-field>
+
+            <mat-form-field>
+                <div class="row">
+                    <input matInput placeholder="Subject" formControlName="Subject">
+                </div>
+            </mat-form-field>
+
+            <div class="row">
+                <textarea [froalaEditor]="options" formControlName="Body"></textarea>
+            </div>
+
+            <div class="col-md-1 col-md-offset-10">
+                <br/>
+                <div class="row">
+                    <button class="btn btn-success btn-lg" [disabled]="!emailForm.valid" >Send</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+
+
