@@ -104,6 +104,18 @@
                         </div>
                     </form>
 
+                    
+                    <div class="row" *ngIf="alreadyExists" >
+                        <div class="col-md-10 col-md-offset-1">
+                            <p class="text-danger">The username or email you used already exists.</p>
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="success" >
+                        <div class="col-md-10 col-md-offset-1">
+                            <p class="text-success">Success. You can now login with your credentials in the  <a [routerLink]="['/auth/sign-in']">Sign-In</a> page.</p>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>

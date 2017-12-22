@@ -13,6 +13,8 @@ import {DataService} from '../../data.service';
 })
 export class SignUpComponent implements OnInit {
     signUpForm: FormGroup;
+    alreadyExists = false;
+    success = false;
 
     constructor(private authService: AuthenticationService,
                 private router: Router,
@@ -48,14 +50,20 @@ export class SignUpComponent implements OnInit {
         console.log(user);
         this.authService.signUp(user, callsUrl)
             .subscribe(data => {
-                    that.dataService.setData(data).then(function () {
-                        // here i save the token and the userId returned from the server
-                        // to the local browser memory. This memory lasts for 2 hours
-                        that.authService.assignLocalData(data, 'form');
-                        that.router.navigateByUrl('/main/home');
-                    });
+                that.success = true;
+                that.alreadyExists = false;
+                // that.router.navigateByUrl('/auth/sign-in');
+
+                    // that.dataService.setData(data).then(function () {
+                    //     // here i save the token and the userId returned from the server
+                    //     // to the local browser memory. This memory lasts for 2 hours
+                    //     that.authService.assignLocalData(data, 'form');
+                    //     that.router.navigateByUrl('/main/home');
+                    // });
                 },
                 error => {
+                    that.alreadyExists = true;
+                    that.success = false;
                     console.error(error)
                 }
             );

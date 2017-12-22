@@ -26,8 +26,11 @@ export class AuthenticationService {
 
     public signUp(user, link: string) {
         const headers = new Headers({'Content-Type': 'application/json'});
+        headers.append('Access-Control-Allow-Origin','*')
         const body = JSON.stringify(user);
-        return this.http.post(link, body)
+        return this.http.post('http://127.0.0.1:5000/api/user', body,{
+            'headers': headers
+        })
             .map((response: Response) => response.json())
             .catch((error: Response) => Observable.throw(error.json()));
     }
