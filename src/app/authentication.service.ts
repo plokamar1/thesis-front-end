@@ -38,7 +38,7 @@ export class AuthenticationService {
     public signIn(user, link: string) {
         const headers = new Headers({'Content-Type': 'application/json'});
         // producing the string of the call of the sign in
-        const signInCallURL = link.concat('/', user.username, '/', user.password);
+        const signInCallURL = link.concat('?username=', user.username, '&password=', user.password);
         return this.http.get(signInCallURL)
             .map((response: Response) => response.json())
             .catch((error: Response) => Observable.throw(error.json()));

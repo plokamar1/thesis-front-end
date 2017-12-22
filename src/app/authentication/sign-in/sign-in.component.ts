@@ -36,34 +36,30 @@ export class SignInComponent implements OnInit {
 
     onSignIn(form) {
         const that = this;
-        const callsUrl = 'https://api-storage.herokuapp.com/api/user';
+        const callsUrl = 'http://127.0.0.1:5000/api/user';
         const user = new User(form.value.username, form.value.password);
         this.authService.signIn(user, callsUrl)
             .subscribe(
                 data => {
-                    switch (data.message) {
-                        case 'succesfully logged in':
-                            console.log('correct pass');
-                            this.dataService.setData(data).then(function () {
+                    console.log(data)
+
+                    this.dataService.setData(data).then(function () {
                                 that.authService.assignLocalData(data, 'form');
                                 that.router.navigateByUrl('main/home');
                             });
                             // here i save the token and the userId returned from the server
                             // to the local browser memory. This memory lasts for 2 hours
-                            break;
-                        case 'Wrong Password':
-                            this.wrongInput = true;
-                            this.noAccount = false;
-                            break;
 
-                    }
                 }, error => {
                     switch (error.message) {
                         case 'No such user':
                             this.noAccount = true;
                             this.wrongInput = false;
                             break;
-
+                        case 'Wrong Credentials':
+                            this.wrongInput = true;
+                            this.noAccount = false;
+                            break;
                     }
                 }
             );
