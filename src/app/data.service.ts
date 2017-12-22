@@ -35,7 +35,10 @@ export class DataService {
     }
     checkIfConnected(provider: string) {
         const data = this.getData();
-        const Accounts = data.user_accounts[0].filter(x => x.provider === provider);
+        if(data.user_accounts.length < 1) {
+            return 0;
+        }
+        const Accounts = data.user_accounts.filter(x => x.provider === provider);
         return Accounts.length;
     }
 

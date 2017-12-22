@@ -49,7 +49,7 @@ export class AccountComponent implements OnInit {
         console.log('Initializing account comp');
         const that = this;
         this.userData = this. dataService.getData();
-        this.accounts = this.userData.user_accounts[0];
+        this.accounts = this.userData.user_accounts;
 
     }
 
