@@ -32,18 +32,18 @@ export class AccountComponent implements OnInit {
         }
     }
 
-    logOut(provider: string) {
-        const that = this;
-        switch (provider) {
-            case 'facebook':
-                this.authService.FBLogout().then(function (response) {
-                    console.log(response);
-                    that.authService.FBGetLoginStatus().then(function (response) {
-                        console.log(response);
-                    });
-                });
-        }
-    }
+    // logOut(provider: string) {
+    //     const that = this;
+    //     switch (provider) {
+    //         case 'facebook':
+    //             this.authService.FBLogout().then(function (response) {
+    //                 console.log(response);
+    //                 that.authService.FBGetLoginStatus().then(function (response) {
+    //                     console.log(response);
+    //                 });
+    //             });
+    //     }
+    // }
 
     ngOnInit() {
         console.log('Initializing account comp');

@@ -24,7 +24,7 @@ export class HeaderComponent implements OnInit {
 
     logout() {
         localStorage.clear()
-        this.authService.checkUserToken();
+        this.router.navigateByUrl('/auth/sign-in')
     }
 
     ngOnInit() {

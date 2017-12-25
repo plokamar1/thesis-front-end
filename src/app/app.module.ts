@@ -32,9 +32,7 @@ import { EmailSenderComponent } from './main/home/email-reader/email-sender/emai
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
-export function apisInitFactory(injector: Injector): Function {
-    return () => setTimeout(() => injector.get(AuthenticationService).loadApis());
-}
+
 
 @NgModule({
     imports: [
@@ -71,12 +69,7 @@ export function apisInitFactory(injector: Injector): Function {
         RssReaderService,
         EmailService,
         AuthenticationService,
-        {
-            provide: APP_INITIALIZER,
-            useFactory: apisInitFactory,
-            deps: [Injector],
-            multi: true
-        }],
+        ],
     bootstrap: [AppComponent]
 })
 export class AppModule {
