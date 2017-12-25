@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {Router} from '@angular/router';
+import {Router, ActivatedRoute, Params} from '@angular/router';
 import {AuthenticationService} from '../../authentication.service'
 import {User} from '../../models/user.model';
 import {DataService} from '../../data.service';
@@ -16,12 +16,16 @@ export class SignInComponent implements OnInit {
     signInForm: FormGroup;
     wrongInput = false;
     noAccount = false;
+    gglURL :any;
 
     constructor(private authService: AuthenticationService,
                 private router: Router,
-                private dataService: DataService) {
+                private dataService: DataService,
+                private activatedRoute: ActivatedRoute) {
         // checking the status of the user. If he is logged in continue
         // authService.checkUserToken('/user-profile');
+        
+        //console.log(this.gglURL)
     }
 
     ngOnInit() {
@@ -31,6 +35,17 @@ export class SignInComponent implements OnInit {
             username: new FormControl(null, Validators.required),
             password: new FormControl(null, Validators.required)
         });
+
+        this.authService.GGLLogin2()
+            .subscribe(data => {
+                this.gglURL = data._body
+            }, error =>{
+                this.gglURL = '';
+            });
+
+
+        var param = this.router.parseUrl(this.router.url).queryParams["code"];
+        this.authService.postCode(param, 'ggl');
 
     }
 
@@ -71,10 +86,6 @@ export class SignInComponent implements OnInit {
 
     onTTRLogin() {
         this.authService.TTRSignIn();
-    }
-
-    onGGLLogin() {
-        this.authService.GGLSignIn();
     }
 
 }
