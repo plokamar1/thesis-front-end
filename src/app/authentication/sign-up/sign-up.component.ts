@@ -70,13 +70,4 @@ export class SignUpComponent implements OnInit {
         // this.signUpForm.reset();
     }
 
-    // onFBLogin attempts to log the user in facebook via the app. It should return some basic information for the user
-    onFBLogin() {
-        this.authService.FBSignIn();
-    }
-
-    onGGLLogin() {
-        this.authService.GGLSignIn();
-    }
-
 }

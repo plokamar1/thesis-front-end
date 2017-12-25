@@ -16,16 +16,14 @@ export class SignInComponent implements OnInit {
     signInForm: FormGroup;
     wrongInput = false;
     noAccount = false;
-    gglURL :any;
+    gglURL :string;
+    fbURL: string;
 
     constructor(private authService: AuthenticationService,
                 private router: Router,
                 private dataService: DataService,
                 private activatedRoute: ActivatedRoute) {
-        // checking the status of the user. If he is logged in continue
-        // authService.checkUserToken('/user-profile');
-        
-        //console.log(this.gglURL)
+
     }
 
     ngOnInit() {
@@ -35,17 +33,29 @@ export class SignInComponent implements OnInit {
             username: new FormControl(null, Validators.required),
             password: new FormControl(null, Validators.required)
         });
-
-        this.authService.GGLLogin2()
+        //Here i get all the uris that are binded to the social media buttons
+        this.authService.get_URI()
             .subscribe(data => {
-                this.gglURL = data._body
+                console.log(data);
+                this.gglURL = data.ggl_uri;
+                this.fbURL = data.fb_uri;
             }, error =>{
+                console.log(error);
                 this.gglURL = '';
+                this.fbURL = '';
             });
 
 
-        var param = this.router.parseUrl(this.router.url).queryParams["code"];
-        this.authService.postCode(param, 'ggl');
+
+        var prov = this.router.parseUrl(this.router.url).queryParams["prov"];
+        if(prov === 'ggl'){
+            const code = this.router.parseUrl(this.router.url).queryParams["code"];
+            this.authService.postCode(code, 'ggl');            
+        }else if(prov === 'fb'){
+            const code = this.router.parseUrl(this.router.url).queryParams["code"];
+            console.log(code);
+            this.authService.postCode(code, 'fb');
+        }
 
     }
 
@@ -79,13 +89,4 @@ export class SignInComponent implements OnInit {
                 }
             );
     }
-
-    onFBLogin() {
-        this.authService.FBSignIn();
-    }
-
-    onTTRLogin() {
-        this.authService.TTRSignIn();
-    }
-
 }

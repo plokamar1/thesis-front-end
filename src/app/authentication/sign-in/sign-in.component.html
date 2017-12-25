@@ -10,17 +10,11 @@
 
                     <div class="row">
                         <div class="col-md-12">
-                            <button class="btn col-md-10 col-sm-10 col-xs-10  col-md-offset-1 col-sm-offset-1 col-xs-offset-1 fbButton"
-                                    (click)="onFBLogin()"><i class="fa fa-facebook-official" style="font-size: 24px;" aria-hidden="true"></i></button>
+                            <a href="{{fbURL}}"> <button [disabled]="!fbURL" class="btn col-md-10 col-sm-10 col-xs-10  col-md-offset-1 col-sm-offset-1 col-xs-offset-1 fbButton"
+                                    ><i class="fa fa-facebook-official" style="font-size: 24px;" aria-hidden="true"></i></button></a>
                         </div>
                     </div>
                     <br />
-                    <!-- <div class="row">
-                        <div class="col-md-12">
-                            <button class="btn col-md-10 col-sm-10 col-xs-10  col-md-offset-1 col-sm-offset-1 col-xs-offset-1 gglButton"
-                                    (click)="onGGLLogin()"><i class="fa fa-google" style="font-size: 24px;" aria-hidden="true"></i></button>
-                        </div>
-                    </div> -->
                     <div class="row">
                         <div class="col-md-12">
                            <a href="{{gglURL}}"> <button [disabled]="!gglURL"  class="btn col-md-10 col-sm-10 col-xs-10  col-md-offset-1 col-sm-offset-1 col-xs-offset-1 gglButton"
