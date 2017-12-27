@@ -81,16 +81,6 @@ export class AuthenticationService {
 
 
     TTRSignIn() {
-        const settings = {
-            oauth_consumer_key: 'a1ZK0tFm8wHBfN8eX4LYLsCqM',
-            consumersecret: 'kiJVGJTypbhX0BkUgdfXpwVdzRHhq2Be0aHslTjL0v3UuMaRqF'
-        };
-        const header = settings.oauth_consumer_key + ':' + settings.consumersecret;
-
-
-        this.http.post('https://api.twitter.com/oauth/request_token', header)
-            .map((response: Response) => console.log(response))
-            .catch((error: Response) => Observable.throw(error.json()));
 
 
     }
