@@ -18,6 +18,7 @@ export class SignInComponent implements OnInit {
     noAccount = false;
     gglURL :string;
     fbURL: string;
+    ttrURL: string;
 
     constructor(private authService: AuthenticationService,
                 private router: Router,
@@ -39,23 +40,34 @@ export class SignInComponent implements OnInit {
                 console.log(data);
                 this.gglURL = data.ggl_uri;
                 this.fbURL = data.fb_uri;
+                this.ttrURL = data.ttr_uri;
             }, error =>{
                 console.log(error);
                 this.gglURL = '';
                 this.fbURL = '';
+                this.ttrURL = '';
             });
 
-
-
+        //Search for parameters in the url   
         var prov = this.router.parseUrl(this.router.url).queryParams["prov"];
-        if(prov === 'ggl'){
-            const code = this.router.parseUrl(this.router.url).queryParams["code"];
-            this.authService.postCode(code, 'ggl');            
-        }else if(prov === 'fb'){
-            const code = this.router.parseUrl(this.router.url).queryParams["code"];
-            console.log(code);
-            this.authService.postCode(code, 'fb');
+        if (prov){
+            if(prov === 'ggl'){
+                const code = this.router.parseUrl(this.router.url).queryParams["code"];
+                this.authService.postCode(code, 'ggl');            
+            }
+            if(prov === 'fb'){
+                const code = this.router.parseUrl(this.router.url).queryParams["code"];
+                console.log(code);
+                this.authService.postCode(code, 'fb');
+            }
+            if(prov === 'ttr') {
+                let code = this.router.url
+                code = 'http://localhost:4200'.concat(code)
+                this.authService.postCode(code, 'ttr');
+                console.log(code)
+            }
         }
+
 
     }
 

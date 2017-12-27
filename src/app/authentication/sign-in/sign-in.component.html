@@ -24,8 +24,8 @@
                     <br />
                     <div class="row">
                         <div class="col-md-12">
-                            <button class="btn col-md-10 col-sm-10 col-xs-10  col-md-offset-1 col-sm-offset-1 col-xs-offset-1 ttrButton"
-                                    (click)="onTTRLogin()"><i class="fa fa-twitter" style="font-size: 24px;" aria-hidden="true"></i></button>
+                            <a href="{{ttrURL}}"> <button [disabled]="!ttrURL" class="btn col-md-10 col-sm-10 col-xs-10  col-md-offset-1 col-sm-offset-1 col-xs-offset-1 ttrButton"
+                                    ><i class="fa fa-twitter" style="font-size: 24px;" aria-hidden="true"></i></button></a> 
                         </div>
                     </div>
                     <br />
