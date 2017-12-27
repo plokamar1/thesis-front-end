@@ -6,9 +6,11 @@ import {SignInComponent} from './authentication/sign-in/sign-in.component'
 import {ProfileComponent} from './main/profile/profile.component';
 import {MainComponent} from './main/main.component';
 import {HomeComponent} from './main/home/home.component';
+import {SpinnerComponent} from './spinner/spinner.component'
 
 const APP_ROUTES: Routes = [
     {path: '', redirectTo: '/auth/sign-in', pathMatch: 'full'},
+    {path: 'load', component:SpinnerComponent },
     {
         path: 'auth', component: AuthenticationComponent,
         children: [

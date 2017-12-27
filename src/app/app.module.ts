@@ -31,6 +31,7 @@ import {MatCardModule} from '@angular/material';
 import { EmailSenderComponent } from './main/home/email-reader/email-sender/email-sender.component';
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import { SpinnerComponent } from './spinner/spinner.component';
 
 
 
@@ -62,7 +63,8 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
         HomeComponent,
         RssReaderComponent,
         EmailReaderComponent,
-        EmailSenderComponent
+        EmailSenderComponent,
+        SpinnerComponent
     ],
     providers: [
         DataService,
