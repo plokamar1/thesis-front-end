@@ -18,7 +18,7 @@ export class DataService {
 
     setData(data) {
         const that = this;
-        localStorage.setItem('userBasicInfo', JSON.stringify(data));
+        //localStorage.setItem('userBasicInfo', JSON.stringify(data));
         return new Promise(function (resolve) {
             resolve(that.userData = data);
         });
