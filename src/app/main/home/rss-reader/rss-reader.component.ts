@@ -1,6 +1,7 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {RssReaderService} from './rss-reader.service';
 import {Form} from '@angular/forms';
+import { DataService } from 'app/data.service';
 
 @Component({
     selector: 'app-rss-reader',
@@ -17,7 +18,8 @@ export class RssReaderComponent implements OnInit {
     private containerHeight: string;
     private scrollOptions = {axis: 'y', theme: 'minimal-dark', scrollButtons: {enable: true}};
 
-    constructor(private rssService: RssReaderService) {
+    constructor(private rssService: RssReaderService,
+                public dataService: DataService) {
         this.containerHeight = (window.screen.height * 0.85) + 'px';
         console.log(this.containerHeight);
     }
@@ -36,6 +38,7 @@ export class RssReaderComponent implements OnInit {
                 // upon receiving data we disable the spinner
                 this.hideSpinner = false;
                 if (data.status === 'ok') {
+                    this.rssService.add_Rss(this.rssUrl);
                     this.mediaDescription = data.feed;
                     this.feedArray = data.items;
                 }else if (data.status === 'error') {

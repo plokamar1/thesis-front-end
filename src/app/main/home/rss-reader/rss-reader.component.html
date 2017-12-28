@@ -10,7 +10,7 @@
                     <input matInput placeholder="Enter an RSS url..." (keyup.enter)="receiveRss(rssUrl)"
                            [(ngModel)]="rssUrl">
                 </mat-form-field>
-                <p>http://feeds.reuters.com/reuters/lifestyle</p>
+                <p *ngFor="let rss of dataService.userData.rss_feeds">{{rss}}</p>
             </div>
 
             <div class="row">
