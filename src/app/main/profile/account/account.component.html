@@ -1,5 +1,5 @@
 <div class="col-md-12 accountContainer">
-    <div *ngFor="let account of accounts">
+    <div *ngFor="let account of dataService.userData.user_accounts">
         <div class="row">
             <mat-card class="accountCard">
                 <mat-card-content>
@@ -10,16 +10,13 @@
                         </div>
                         <div class="col-md-8">
                             <div class="row">
-                                Email: para.plokamar@gmail.com
+                                Email: {{account.email}}
                             </div>
                             <div class="row ">
-                                Name: Panos
+                                Name: {{account.firstname}}
                             </div>
                             <div class="row ">
-                                LastName: Dorgiakis
-                            </div>
-                            <div class="row" >
-                                Connected: True
+                                LastName: {{account.lastname}}
                             </div>
                         </div>
                     </div>

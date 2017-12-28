@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {DataService} from '../../../data.service';
-import {AuthenticationService} from '../../../authentication.service';
 
 @Component({
     selector: 'app-account',
@@ -12,25 +11,24 @@ export class AccountComponent implements OnInit {
     accounts: any;
     fa_Class: string;
 
-    constructor(private dataService: DataService,
-                private authService: AuthenticationService) {
+    constructor(public dataService: DataService) {
     }
 
-    setIconClass(provider: string) {
-        switch (provider) {
-            case 'facebook':
-                this.fa_Class = 'fa-facebook-official';
+    // setIconClass(provider: string) {
+    //     switch (provider) {
+    //         case 'facebook':
+    //             this.fa_Class = 'fa-facebook-official';
 
-            case 'google':
-                return '#EA4335';
+    //         case 'google':
+    //             return '#EA4335';
 
-            case 'twitter':
-                return '#1DA1F2';
+    //         case 'twitter':
+    //             return '#1DA1F2';
 
-            case 'api':
-                return '#7C4397';
-        }
-    }
+    //         case 'api':
+    //             return '#7C4397';
+    //     }
+    // }
 
     // logOut(provider: string) {
     //     const that = this;
@@ -46,10 +44,6 @@ export class AccountComponent implements OnInit {
     // }
 
     ngOnInit() {
-        console.log('Initializing account comp');
-        const that = this;
-        this.userData = this. dataService.getData();
-        this.accounts = this.userData.user_accounts;
 
     }
 
