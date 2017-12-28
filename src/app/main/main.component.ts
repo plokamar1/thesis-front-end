@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from '../authentication.service';
-import {Router} from '@angular/router';
+import {Router, ActivatedRoute} from '@angular/router';
+import { DataService } from '../data.service';
 
 @Component({
     selector: 'app-main',
@@ -8,12 +9,16 @@ import {Router} from '@angular/router';
     styleUrls: ['./main.component.css']
 })
 export class MainComponent implements OnInit {
-    constructor(private authService: AuthenticationService,
-                private router: Router) {
-        router.navigateByUrl('/main/home');
+    data: any;
+    constructor(private route: ActivatedRoute,
+                private dataService: DataService) {
+        //router.navigateByUrl('/main/home');
     }
 
     ngOnInit() {
+        this.data = this.route.snapshot.data;
+        this.dataService.userData = this.data.data;
+        //console.log(this.data.data);
     }
 
 }
