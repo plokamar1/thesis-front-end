@@ -10,6 +10,7 @@ import { DataService } from './data.service';
 import { User } from './models/user.model';
 import { GGLuser } from './models/GGLuser.model';
 import { error } from 'util';
+import { request } from 'http';
 
 
 declare const FB: any;
@@ -59,15 +60,46 @@ export class AuthenticationService {
             .catch((error: Response) => Observable.throw(error.json()))
             .subscribe(data =>{
                 console.log(data);
-                this.dataService.setData(data)
-                    .then(function(){
-                        instance.router.navigateByUrl('main/home');
-                    })
+                this.assignLocalData(data);
+                this.router.navigateByUrl('main/home');
+                // this.dataService.setData(data)
+                //     .then(function(){
+                //         instance.router.navigateByUrl('main/home');
+                //     })
             },error=>{
                 console.log(error);
                 //instance.router.navigateByUrl('/auth/sign-in');
             });
 
+    }
+    isAuthenticated(){
+        //const api_url = '127.0.0.1:5000/api/user'
+        const token = localStorage.getItem('token');
+        const d = new Date();
+        const time = d.getTime();
+        console.log(time);
+        console.log(Number(localStorage.getItem('expires_at')));
+        if( !token ){
+            console.log('no token')
+            return false;
+        }
+        if( Number(localStorage.getItem('expires_at')) < time ){
+            console.log('expired')
+            
+            return false;
+        }
+        return true;
+    }
+
+    getUserData(){
+        let requestUrl = 'http://127.0.0.1:5000/api/get-user';
+        const token = localStorage.getItem('token');
+        if ( token ){
+            requestUrl = requestUrl.concat('?token=', token);
+            return this.http.get(requestUrl)
+            .map((response: Response) => response.json())
+            .catch((error: Response) => Observable.throw(error.json()))
+        }
     }
 
     get_URI() {
@@ -79,17 +111,10 @@ export class AuthenticationService {
    
     }
 
-
-    TTRSignIn() {
-
-
-    }
-
     // assign local storage data(tokens etc.)
-    assignLocalData(data, logintype) {
+    assignLocalData(data) {
         localStorage.setItem('token', data.token);
-        localStorage.setItem('id', data.id);
-        localStorage.setItem('loginType', logintype);
+        localStorage.setItem('expires_at', data.expires_at);
     }
 
     // if there is no token the user isn't logged in. If he isn't and tries to enter the main site he gets redirected

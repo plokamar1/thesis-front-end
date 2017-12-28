@@ -7,6 +7,8 @@ import {ProfileComponent} from './main/profile/profile.component';
 import {MainComponent} from './main/main.component';
 import {HomeComponent} from './main/home/home.component';
 import {SpinnerComponent} from './spinner/spinner.component'
+import { AuthGuard } from './auth.guard';
+import { ApisResolverService } from './apis-resolver.service'
 
 const APP_ROUTES: Routes = [
     {path: '', redirectTo: '/auth/sign-in', pathMatch: 'full'},
@@ -19,7 +21,7 @@ const APP_ROUTES: Routes = [
         ]
     },
     {
-        path: 'main', component: MainComponent,
+        path: 'main', component: MainComponent, canActivate:[AuthGuard], resolve: {data:ApisResolverService },
         children: [
             {path: 'profile', component: ProfileComponent},
             {path: 'home', component: HomeComponent}

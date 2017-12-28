@@ -32,7 +32,8 @@ import { EmailSenderComponent } from './main/home/email-reader/email-sender/emai
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { SpinnerComponent } from './spinner/spinner.component';
-
+import {AuthGuard} from './auth.guard';
+import { ApisResolverService } from 'app/apis-resolver.service';
 
 
 @NgModule({
@@ -70,6 +71,8 @@ import { SpinnerComponent } from './spinner/spinner.component';
         DataService,
         RssReaderService,
         EmailService,
+        AuthGuard,
+        ApisResolverService,
         AuthenticationService,
         ],
     bootstrap: [AppComponent]

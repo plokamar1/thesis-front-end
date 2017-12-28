@@ -11,7 +11,7 @@ export class ApisResolverService implements Resolve <any> {
     }
 
     resolve(route: ActivatedRouteSnapshot) {
-        // if(!gapi.client) return this.authService.loadApis();
+        return this.authService.getUserData()
     }
 
 }
