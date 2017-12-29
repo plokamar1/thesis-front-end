@@ -39,6 +39,7 @@ export class RssReaderComponent implements OnInit {
                 this.hideSpinner = false;
                 if (data.status === 'ok') {
                     this.rssService.add_Rss(this.rssUrl);
+                    console.log(data);
                     this.mediaDescription = data.feed;
                     this.feedArray = data.items;
                 }else if (data.status === 'error') {

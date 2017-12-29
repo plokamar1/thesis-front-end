@@ -27,13 +27,14 @@ import { EmailReaderComponent } from './main/home/email-reader/email-reader.comp
 import {EmailService} from "./main/home/email-reader/email.service";
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MalihuCustomScrollerModule } from 'ngx-malihu-scroller';
-import {MatCardModule} from '@angular/material';
+import {MatCardModule, MatAutocomplete} from '@angular/material';
 import { EmailSenderComponent } from './main/home/email-reader/email-sender/email-sender.component';
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { SpinnerComponent } from './spinner/spinner.component';
 import {AuthGuard} from './auth.guard';
 import { ApisResolverService } from 'app/apis-resolver.service';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 
 @NgModule({
@@ -46,7 +47,7 @@ import { ApisResolverService } from 'app/apis-resolver.service';
         HttpModule,
         NgbModule.forRoot(),
 
-        MatExpansionModule,
+        MatExpansionModule,MatAutocompleteModule,
         MatProgressSpinnerModule,MatInputModule,MatProgressBarModule,MatCardModule,MatCheckboxModule,MatSnackBarModule,
 
         MalihuCustomScrollerModule,
