@@ -51,7 +51,8 @@ export class AuthenticationService {
         headers.append('Access-Control-Allow-Origin', '*')
         let instance = this;
         const requestUrl = 'http://127.0.0.1:5000/api/socialAuth';
-        const json_str = {'code': code, 'prov':prov};
+        const token = localStorage.getItem('token');
+        const json_str = {'code': code, 'prov':prov, 'token': token};
         const json = JSON.stringify(json_str);
         return this.http.post(requestUrl,json,{
             'headers': headers

@@ -5,6 +5,7 @@ import {ActivatedRoute, Params} from "@angular/router";
 import {EmailService} from "./email.service";
 import {EmailModel} from "../../../models/email.model";
 import {MatSnackBar} from "@angular/material";
+import { error } from 'selenium-webdriver';
 
 declare const gapi: any;
 
@@ -20,6 +21,7 @@ export class EmailReaderComponent implements OnInit, AfterViewInit {
     containerHeight: string;
     trashArray = [];
     state :string;
+    gglAuth: string;
 
     constructor(private dataService: DataService,
                 public emailService: EmailService,
@@ -74,6 +76,12 @@ export class EmailReaderComponent implements OnInit, AfterViewInit {
             this.state = 'viewer'
             //this.emailService.getMail();
         } else {
+            this.authService.get_URI()
+                .subscribe(data=>{
+                    this.gglAuth = data.ggl_uri;
+                },error=>{
+                    this.gglAuth='';
+                } ) ;
             this.state = 'notConnected';
             this.isConnected = false;
         }
