@@ -3,6 +3,9 @@ import {EmailModel} from "../../../models/email.model";
 import base64url from "base64url";
 import {DataService} from "../../../data.service";
 import {FormGroup, NgForm} from "@angular/forms";
+import { request } from 'https';
+import { Http, Headers, Response } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
 
 declare const gapi: any;
 
@@ -13,11 +16,26 @@ export class EmailService {
     public messagesList = [];
     public firstLoadFlag = true;
 
-    constructor(private dataService: DataService) {
+    constructor(private dataService: DataService,
+    private http: Http) {
     }
 
     onSend(f: NgForm) {
         console.log(f);
+    }
+
+    backGetMail(){
+        const token = 'token='.concat(localStorage.getItem('token'))
+        const request_url = 'http://127.0.0.1:5000/api/getmails?'.concat(token)
+
+        this.http.get(request_url)
+        .map((response: Response) => response.json())
+        .catch((error: Response) => Observable.throw(error.json()))
+        .subscribe(data=>{
+            this.messagesList = data.messages;
+        })
+    
+    
     }
 
     createMessage(f: NgForm) {
