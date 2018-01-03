@@ -16,11 +16,11 @@ export class RssReaderComponent implements OnInit {
     private feedArray: any;
     private mediaDescription: any;
     private containerHeight: string;
-    private scrollOptions = {axis: 'y', theme: 'minimal-dark', scrollButtons: {enable: true}};
+    private scrollOptions = {axis: 'y', theme: 'minimal-dark', scrollButtons: {enable: true},scrollInertia: 0};
 
     constructor(private rssService: RssReaderService,
                 public dataService: DataService) {
-        this.containerHeight = (window.screen.height * 0.85) + 'px';
+        //this.containerHeight = (window.screen.height * 0.85) + 'px';
         console.log(this.containerHeight);
     }
 

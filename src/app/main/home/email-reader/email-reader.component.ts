@@ -16,8 +16,8 @@ declare const gapi: any;
 })
 export class EmailReaderComponent implements OnInit, AfterViewInit {
     isConnected: boolean = true;
-    scrollOptions = {axis: 'y', theme: 'minimal-dark', scrollButtons: {enable: true}};
-    scrollOptions2 = {axis: 'x', theme: 'minimal-dark', scrollButtons: {enable: true}};
+    scrollOptions = {axis: 'y', theme: 'minimal-dark', scrollButtons: {enable: true},scrollInertia: 0};
+    scrollOptions2 = {axis: 'x', theme: 'minimal-dark', scrollButtons: {enable: true},scrollInertia: 0};
     containerHeight: string;
     trashArray = [];
     state :string;
@@ -28,22 +28,23 @@ export class EmailReaderComponent implements OnInit, AfterViewInit {
                 private authService: AuthenticationService,
                 private route: ActivatedRoute,
                 private snackBar: MatSnackBar) {
-        this.containerHeight = (window.screen.height * 0.85) + 'px';
-        console.log(this.trashArray)
+        //this.containerHeight = (window.screen.height * 0.85) + 'px';
+        console.log(this.trashArray);
+        emailService.getMail();
 
     }
 
     onMoveToTrash() {
-        const cssSnack = 'snack';
-        this.emailService.toTrash(this.trashArray).then((response: string) => {
-            console.log(response);
-            this.trashArray = [];
-            this.snackBar.open(response, '', {duration: 2000,panelClass: cssSnack});
-        }).catch(reason => {
-            console.log(reason);
-            this.trashArray = [];
-            this.snackBar.open(reason, '', {duration: 2000,panelClass: cssSnack});
-        });
+        // const cssSnack = 'snack';
+        // this.emailService.toTrash(this.trashArray).then((response: string) => {
+        //     console.log(response);
+        //     this.trashArray = [];
+        //     this.snackBar.open(response, '', {duration: 2000,panelClass: cssSnack});
+        // }).catch(reason => {
+        //     console.log(reason);
+        //     this.trashArray = [];
+        //     this.snackBar.open(reason, '', {duration: 2000,panelClass: cssSnack});
+        // });
 
     }
 
