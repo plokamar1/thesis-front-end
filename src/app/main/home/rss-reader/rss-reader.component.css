@@ -1,9 +1,11 @@
 .rssReader, .emailReader {
     padding-top: 1%;
     background: #DDDDDD;
-    margin-left: 20px;
-    margin-right: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
     border-radius: 5px;
+    height: 90vh;
+    max-height: 90vh;
 }
 
 .snack {

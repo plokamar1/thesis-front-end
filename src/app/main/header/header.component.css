@@ -2,7 +2,9 @@
     margin-bottom: 2% ;
     padding: 0px;
     width: 100%;
-    height:3%;/*
+    /* height:3%;
+    max-height: 5%; */
+    /*
     background: -moz-linear-gradient(left, #66b3ba, #7C4397);
     background: -webkit-gradient(linear,left top, right top, from(#66b3ba), to(#7C4397));
     background: -webkit-linear-gradient(left,#66b3ba, #7C4397);
