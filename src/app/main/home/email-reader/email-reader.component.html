@@ -1,4 +1,4 @@
-<div class="col-lg-6 emailReader " [ngStyle]="{height:containerHeight}" (window:resize)="onResize($event)"
+<div class="col-lg-6 emailReader " 
      malihuCustomScroller [scrollOptions]="scrollOptions"
      [ngSwitch]="state">
     <ng-template ngSwitchCase="viewer">
@@ -9,6 +9,9 @@
         </div>
         <button class="btn btn-success " (click)="onChangeState('sender')" >Send</button>
         <button [disabled]="!trashArray.length" class="btn btn-danger" (click)="onMoveToTrash()">Move to Trash</button>
+        <div>
+            <br>
+        </div>
         <div class="col-lg-12 ">
             <div class="row" *ngIf="emailService.messagesList">
                 <mat-accordion>
@@ -22,19 +25,23 @@
                                     (click)="emailService.emailModify(mail,'UNREAD'); mail.Unread= false">
                                     <mat-panel-title>
                                     <span *ngIf="mail.Unread else read"><i class="fa fa-envelope"
-                                                                           aria-hidden="true"></i> {{mail.From}}</span>
+                                                                           aria-hidden="true"></i> {{(mail.From.length>24)? (mail.From | slice:0:24)+'..':(mail.From)}}</span>
 
                                         <ng-template #read><i class="fa fa-envelope-open-o" aria-hidden="true"></i>
-                                            {{mail.From}}
+                                            {{(mail.From.length>24)? (mail.From | slice:0:24)+'..':(mail.From)}}
                                         </ng-template>
                                     </mat-panel-title>
                                     <mat-panel-description>
-                                        <span [innerHtml]="mail.Subject"></span>
+                                        <span innerHtml="{{(mail.Subject.length>24)? (mail.Subject | slice:0:24)+'..':(mail.Subject)}}"></span>
                                     </mat-panel-description>
                                 </mat-expansion-panel-header>
-                                <p>Received at: {{mail.Date}}</p>
+                                <p><strong>Received at:</strong> {{mail.Date}}</p>
+                                <p><strong>From:</strong> {{mail.From}}</p>
+                                <p><strong>Subject:</strong> {{mail.Subject}}</p>
+                                
+                                
                                 <div class="container" malihuCustomScroller [scrollOptions]="scrollOptions2">
-                                    <span [innerHTML]="mail.Body"></span>
+                                    <span [innerHTML]="emailService.decode(mail.Body)"></span>
                                 </div>
                             </mat-expansion-panel>
                         </div>
@@ -47,7 +54,7 @@
         </div>
         <div class="col-lg-12">
             <div class="row">
-                <button class="btn-lg moreMail" (click)="emailService.backGetMail()">
+                <button class="btn-lg moreMail" (click)="emailService.getMail()">
                     <div class="row">
                         <i class="fa fa-plus-square" aria-hidden="true"></i>
                     </div>
