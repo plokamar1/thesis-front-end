@@ -68,6 +68,7 @@ export class AuthenticationService {
                 //         instance.router.navigateByUrl('main/home');
                 //     })
             },error=>{
+                this.router.navigateByUrl('main/home');
                 console.log(error);
                 //instance.router.navigateByUrl('/auth/sign-in');
             });
@@ -78,7 +79,6 @@ export class AuthenticationService {
         const token = localStorage.getItem('token');
         const d = new Date();
         const time = d.getTime();
-        console.log(time);
         console.log(Number(localStorage.getItem('expires_at')));
         if( !token ){
             console.log('no token')
