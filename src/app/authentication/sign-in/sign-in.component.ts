@@ -48,29 +48,6 @@ export class SignInComponent implements OnInit {
                 this.ttrURL = '';
             });
 
-        //Search for parameters in the url   
-        // var prov = this.router.parseUrl(this.router.url).queryParams["prov"];
-        // if (prov){
-        //     if(prov === 'ggl'){
-        //         const code = this.router.parseUrl(this.router.url).queryParams["code"];
-        //         this.authService.postCode(code, 'ggl');            
-        //     }
-        //     if(prov === 'fb'){
-        //         const code = this.router.parseUrl(this.router.url).queryParams["code"];
-        //         console.log(code);
-        //         this.authService.postCode(code, 'fb');
-        //     }
-        //     if(prov === 'ttr') {
-        //         let code = this.router.url
-        //         code = 'http://localhost:4200'.concat(code)
-        //         this.authService.postCode(code, 'ttr');
-        //         console.log(code)
-        //     }
-        // }else{
-        //     this.router.navigateByUrl('/auth/sing-in')
-        // }
-
-
     }
 
     onSignIn(form) {
@@ -83,13 +60,6 @@ export class SignInComponent implements OnInit {
                     console.log(data)
                     this.authService.assignLocalData(data);
                     this.router.navigateByUrl('main/home');
-
-                    // this.dataService.setData(data).then(function () {
-                    //             that.authService.assignLocalData(data, 'form');
-                    //             that.router.navigateByUrl('main/home');
-                    //         });
-                            // here i save the token and the userId returned from the server
-                            // to the local browser memory. This memory lasts for 2 hours
 
                 }, error => {
                     switch (error.message) {
