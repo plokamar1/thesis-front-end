@@ -18,7 +18,8 @@
             </mat-form-field>
 
             <div class="row">
-                <textarea [froalaEditor]="options" formControlName="Body"></textarea>
+                <app-tinymce formControlName="Body" [(ngModel)]='content'></app-tinymce>
+                <!-- <textarea [froalaEditor]="options" formControlName="Body"></textarea> -->
             </div>
 
             <div class="col-md-1 col-md-offset-10">
