@@ -37,16 +37,16 @@ export class EmailReaderComponent implements OnInit, AfterViewInit {
     }
 
     onMoveToTrash() {
-        // const cssSnack = 'snack';
-        // this.emailService.toTrash(this.trashArray).then((response: string) => {
-        //     console.log(response);
-        //     this.trashArray = [];
-        //     this.snackBar.open(response, '', {duration: 2000,panelClass: cssSnack});
-        // }).catch(reason => {
-        //     console.log(reason);
-        //     this.trashArray = [];
-        //     this.snackBar.open(reason, '', {duration: 2000,panelClass: cssSnack});
-        // });
+        const cssSnack = 'snack';
+        this.emailService.toTrash(this.trashArray).subscribe(data => {
+            console.log(data);
+            this.trashArray = [];
+            this.snackBar.open(data.success, '', {duration: 2000,panelClass: cssSnack});
+        },error => {
+            console.log(error);
+            this.trashArray = [];
+            this.snackBar.open(error.error, '', {duration: 2000,panelClass: cssSnack});
+        });
 
     }
 
