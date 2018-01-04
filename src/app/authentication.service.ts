@@ -11,6 +11,7 @@ import { User } from './models/user.model';
 import { GGLuser } from './models/GGLuser.model';
 import { error } from 'util';
 import { request } from 'http';
+import {config} from './config'
 
 
 declare const FB: any;
@@ -18,7 +19,6 @@ declare const gapi: any;
 
 @Injectable()
 export class AuthenticationService {
-    callsUrl = 'https://api-storage.herokuapp.com/api/user';
     public auth2: any;
 
     constructor(private http: Http,
@@ -30,7 +30,7 @@ export class AuthenticationService {
         const headers = new Headers({ 'Content-Type': 'application/json' });
         headers.append('Access-Control-Allow-Origin', '*')
         const body = JSON.stringify(user);
-        return this.http.post('http://127.0.0.1:5000/api/user', body, {
+        return this.http.post(config.ApiUrl.concat(config.userAuth), body, {
             'headers': headers
         })
             .map((response: Response) => response.json())
@@ -50,7 +50,7 @@ export class AuthenticationService {
         const headers = new Headers({ 'Content-Type': 'application/json' });
         headers.append('Access-Control-Allow-Origin', '*')
         let instance = this;
-        const requestUrl = 'http://127.0.0.1:5000/api/socialAuth';
+        const requestUrl = config.ApiUrl.concat(config.userSocialAuth);
         const token = localStorage.getItem('token');
         const json_str = {'code': code, 'prov':prov, 'token': token};
         const json = JSON.stringify(json_str);
@@ -93,7 +93,7 @@ export class AuthenticationService {
     }
 
     getUserData(){
-        let requestUrl = 'http://127.0.0.1:5000/api/get-user';
+        let requestUrl =config.ApiUrl.concat(config.getUser) ;
         const token = localStorage.getItem('token');
         if ( token ){
             requestUrl = requestUrl.concat('?token=', token);
@@ -105,7 +105,7 @@ export class AuthenticationService {
 
     get_URI() {
         let response: string;
-        const requestUrl = 'http://127.0.0.1:5000/api/socialAuth'
+        const requestUrl = config.ApiUrl.concat(config.userSocialAuth);
         return this.http.get(requestUrl)
             .map((response: Response) => response.json())
             .catch((error: Response) => Observable.throw(error.json()))
