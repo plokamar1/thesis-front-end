@@ -39,10 +39,12 @@
                     <mat-expansion-panel-header>
                         <mat-panel-title>
                             <p style="font-size: 12px">
-                                <strong>{{feed.title}}</strong>
+                                <strong>{{(feed.title.length>32)? (feed.title | slice:0:32)+'..':(feed.title)}}</strong>
                             </p>
                         </mat-panel-title>
                     </mat-expansion-panel-header>
+                    <strong>{{feed.title}}</strong>
+                    <br>
                     <span [innerHTML]="feed.description"></span>
                     <hr>
                     <a [href]="feed.guid">Read the story!</a>
