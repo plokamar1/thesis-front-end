@@ -80,6 +80,7 @@
         </div>
     </ng-template>
     <ng-template ngSwitchCase="sender">
+        <i class="fa fa-times-circle-o"  style="font-size: 32px" aria-hidden="true" (click)="onChangeState('viewer')"></i>            
         <app-email-sender></app-email-sender>
     </ng-template>
 
