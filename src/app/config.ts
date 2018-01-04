@@ -6,6 +6,7 @@ export const config={
     'modifyRss': '/api/rss',
     'getMails': '/api/getmails',
     'modifyMails': '/api/modifymails',
-    'sendMail': '/api/sendmail'
+    'sendMail': '/api/sendmail',
+    'trashMails': '/api/trash'
 
 }
