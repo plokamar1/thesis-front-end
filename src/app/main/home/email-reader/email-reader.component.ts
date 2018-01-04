@@ -29,8 +29,10 @@ export class EmailReaderComponent implements OnInit, AfterViewInit {
                 private route: ActivatedRoute,
                 private snackBar: MatSnackBar) {
         //this.containerHeight = (window.screen.height * 0.85) + 'px';
-        console.log(this.trashArray);
-        emailService.getMail();
+        //console.log(this.trashArray);
+        if(emailService.messagesList.length == 0){
+            emailService.getMail();
+        }
 
     }
 
