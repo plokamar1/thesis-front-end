@@ -7,6 +7,7 @@ import { request } from 'https';
 import { Http, Headers, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
+import {config} from '../../../config'
 
 declare const gapi: any;
 
@@ -49,12 +50,22 @@ export class EmailService {
 
     }
 
-    createMessage(f: NgForm) {
-        const receivers = f.form.value.To.split(',');
-        let message = [];
-        message['to'] = receivers;
-        message['subject'] = f.form.value.Subject;
-        console.log(message);
+    sendMessage(f: NgForm) {
+        const receivers = f.form.value.To;
+        const headers = new Headers({ 'Content-Type': 'application/json' });
+        
+        const body = {
+            "to": receivers,
+            "subject": f.form.value.Subject,
+            "body": f.form.value.Body,
+        }
+        const request_message = JSON.stringify(body);
+        const request_url = config.ApiUrl.concat(config.sendMail,'?token=',localStorage.getItem('token')) 
+        return this.http.post(request_url,request_message,{
+            "headers": headers
+        })
+        .map((response: Response) => response.json())
+        .catch((error: Response) => Observable.throw(error.json()))
     }
 
     toTrash(emails) {
@@ -195,5 +206,8 @@ export class EmailService {
 
     decode(string) {
         return (base64url.decode(string.replace(/\-/g, '+').replace(/\_/g, '/')));
+    }
+    encode(string){
+        return (base64url.encode(string))
     }
 }
