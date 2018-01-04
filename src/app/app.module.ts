@@ -29,12 +29,12 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MalihuCustomScrollerModule } from 'ngx-malihu-scroller';
 import {MatCardModule, MatAutocomplete} from '@angular/material';
 import { EmailSenderComponent } from './main/home/email-reader/email-sender/email-sender.component';
-import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { SpinnerComponent } from './spinner/spinner.component';
 import {AuthGuard} from './auth.guard';
 import { ApisResolverService } from 'app/apis-resolver.service';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {TinymceModule} from 'angular2-tinymce'
 
 
 @NgModule({
@@ -51,7 +51,9 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
         MatProgressSpinnerModule,MatInputModule,MatProgressBarModule,MatCardModule,MatCheckboxModule,MatSnackBarModule,
 
         MalihuCustomScrollerModule,
-        FroalaEditorModule.forRoot(), FroalaViewModule.forRoot()
+
+        TinymceModule.withConfig({
+        })
     ],
     declarations: [
         AppComponent,
@@ -66,7 +68,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
         RssReaderComponent,
         EmailReaderComponent,
         EmailSenderComponent,
-        SpinnerComponent
+        SpinnerComponent,
     ],
     providers: [
         DataService,
