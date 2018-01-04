@@ -2,7 +2,7 @@
     <form [formGroup]="emailForm"
           #f="ngForm"
           method="post"
-          (ngSubmit)="emailService.createMessage(f)">
+          (ngSubmit)="onSend(f)">
         <div class="form-group">
             <mat-form-field>
 
