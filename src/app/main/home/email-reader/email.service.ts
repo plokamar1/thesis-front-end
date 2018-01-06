@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { EmailModel } from "../../../models/email.model";
 import base64url from "base64url";
 import { DataService } from "../../../data.service";
 import { FormGroup, NgForm } from "@angular/forms";
@@ -14,35 +13,59 @@ declare const gapi: any;
 @Injectable()
 export class EmailService {
     private googleAccounts = [];
-    private nextPageToken = '';
+    public nextPageToken = '';
     public messagesList = [];
     public firstLoadFlag = true;
     private pageTokens = [];
+    public selectedMail;
 
     constructor(private dataService: DataService,
         private http: Http,
         private router: Router) {
+    }
+    setMail(mail:any){
+        this.selectedMail = mail;
     }
 
     onSend(f: NgForm) {
         console.log(f);
     }
 
-    getMail() {
+    getMail(nextPageToken='') {
+        const headers = new Headers({ 'Content-Type': 'application/json; charset=UTF-8' });
         const token = 'token='.concat(localStorage.getItem('token'))
-        const request_url = 'http://127.0.0.1:5000/api/getmails?'.concat(token)
+    
+        let request_url = 'http://127.0.0.1:5000/api/getmails?'.concat(token)
+        if(nextPageToken){
+            request_url = request_url.concat('&nextPageToken=', nextPageToken);
+        }
 
-        this.http.get(request_url)
+        this.http.get(request_url,{
+            "headers": headers
+        })
             .map((response: Response) => response.json())
             .catch((error: Response) => Observable.throw(error.json()))
             .subscribe(data => {
-                this.messagesList = data.messages;
-                this.pageTokens.push(data.nextPageToken);
-                this.messagesList.sort((a, b) => {
+                // const messageCounter = 0;
+                // for(var i = 0;; i ++){
+                //     for( var y=0; y < 10; y++){
+
+                //     }
+
+                // }
+                console.log(data);
+                this.nextPageToken = data.nextPageToken;
+                //this.pageTokens.push(data.nextPageToken);
+                data.messages.sort((a, b) => {
                     if (a.Timestamp < b.Timestamp) return 1;
                     if (a.Timestamp > b.Timestamp) return -1;
                     return 0;
                 });
+                if(this.messagesList.length){
+                    this.messagesList.push(data.messages);
+                }else{
+                    this.messagesList = data.messages;
+                }
             }, error => {
                 this.router.navigateByUrl('/main/home');
             })

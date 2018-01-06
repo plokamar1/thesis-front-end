@@ -4,3 +4,15 @@
 .emailTemp{
     padding-top: 20%;
 }
+.stick{
+    position: relative;
+    z-index: 999;
+}
+.mailRow{
+    height: 3vh;
+}
+.mail:hover {
+    background-color:rgb(233, 231, 231);
+    cursor: pointer;
+}
+

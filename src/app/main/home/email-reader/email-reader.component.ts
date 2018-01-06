@@ -3,9 +3,7 @@ import {DataService} from '../../../data.service';
 import {AuthenticationService} from "../../../authentication.service";
 import {ActivatedRoute, Params} from "@angular/router";
 import {EmailService} from "./email.service";
-import {EmailModel} from "../../../models/email.model";
 import {MatSnackBar} from "@angular/material";
-import { error } from 'selenium-webdriver';
 
 declare const gapi: any;
 
@@ -22,26 +20,38 @@ export class EmailReaderComponent implements OnInit, AfterViewInit {
     trashArray = [];
     state :string;
     gglAuth: string;
+    arrayNumbers = [];
+    currentPage = 1;
+    pageSize =30;
 
     constructor(private dataService: DataService,
                 public emailService: EmailService,
                 private authService: AuthenticationService,
                 private route: ActivatedRoute,
                 private snackBar: MatSnackBar) {
-        //this.containerHeight = (window.screen.height * 0.85) + 'px';
-        //console.log(this.trashArray);
-        if(emailService.messagesList.length == 0){
-            emailService.getMail();
-        }
 
     }
+
+    loadMore(){
+        const pages =  Math.ceil(this.emailService.messagesList.length / this.pageSize);
+        if(this.currentPage>=( pages-2) && this.emailService.nextPageToken){
+            this.emailService.getMail(this.emailService.nextPageToken);
+        }
+    }
+
 
     onMoveToTrash() {
         const cssSnack = 'snack';
         this.emailService.toTrash(this.trashArray).subscribe(data => {
-            console.log(data);
-            this.trashArray = [];
+            // this.trashArray = [];
+            this.emailService.getMail();
             this.snackBar.open(data.success, '', {duration: 2000,panelClass: cssSnack});
+            for(let deleted of this.trashArray){
+                const deletedItem = this.emailService.messagesList.find(x=> x.id === deleted.id);
+                const index = this.emailService.messagesList.indexOf(deletedItem);
+                this.emailService.messagesList.splice(index, 1);
+            }
+            this.trashArray = []
         },error => {
             console.log(error);
             this.trashArray = [];
@@ -50,7 +60,7 @@ export class EmailReaderComponent implements OnInit, AfterViewInit {
 
     }
 
-    insertToTrashArray($event, mail: EmailModel) {
+    insertToTrashArray($event, mail) {
         if ($event.checked) {
             this.trashArray.push(mail.Id);
         } else {
@@ -59,7 +69,6 @@ export class EmailReaderComponent implements OnInit, AfterViewInit {
             console.log(index);
             this.trashArray.splice(index, 1);
         }
-        console.log(this.trashArray);
     }
 
     onChangeState(state: string){
@@ -76,7 +85,11 @@ export class EmailReaderComponent implements OnInit, AfterViewInit {
 
     ngOnInit() {
         if (this.dataService.checkIfConnected('google')) {
-            this.state = 'viewer'
+            this.state = 'mails'
+            if(this.emailService.messagesList.length == 0){
+                this.emailService.getMail();
+            }
+            
             //this.emailService.getMail();
         } else {
             this.authService.get_URI()

@@ -1,33 +1,75 @@
-<div class="col-lg-6 emailReader " 
-     malihuCustomScroller [scrollOptions]="scrollOptions"
-     [ngSwitch]="state">
-    <ng-template ngSwitchCase="viewer">
-        <div class="col-lg-12">
+<div class="col-lg-6 emailReader "  [ngSwitch]="state" malihuCustomScroller [scrollOptions]="scrollOptions">
+
+    <ng-template ngSwitchCase="mails">
+        <div class="col-lg-12 stick">
             <div class="row">
-                <i class="fa fa-envelope" aria-hidden="true" style="font-size: 54px"></i>
+                <div class="col-lg-7">
+                    <i class="fa fa-envelope" aria-hidden="true" style="font-size: 54px"></i>
+                </div>
+                <div class="col-lg-2 text-right">
+                    <button class="btn btn-success " (click)="onChangeState('sender')">Send</button>
+
+                </div>
+                <div class="col-lg-3 text-right">
+                    <button [disabled]="!trashArray.length" class="btn btn-danger " (click)="onMoveToTrash()">Move to Trash</button>
+
+                </div>
             </div>
         </div>
-        <button class="btn btn-success " (click)="onChangeState('sender')" >Send</button>
-        <button [disabled]="!trashArray.length" class="btn btn-danger" (click)="onMoveToTrash()">Move to Trash</button>
+        <div class="col-lg-12">
+                <div class="row text-center">
+                    <!-- <button class="btn-lg moreMail" (click)="emailService.getMail()">
+                        <div class="row">
+                            <i class="fa fa-plus-square" aria-hidden="true"></i>
+                        </div>
+                        <div class="row">
+                            More mail...
+                        </div>
+                    </button> -->
+                    <button [disabled]="currentPage == 1" (click)="currentPage = currentPage - 1">PREV</button>
+                    <span>Page {{currentPage}}</span>
+                    <button [disabled]="currentPage >= emailService.messagesList.length/pageSize" (click)="currentPage = currentPage + 1">NEXT</button>
+                </div>
+            </div>
         <div>
             <br>
         </div>
         <div class="col-lg-12 ">
-            <div class="row" *ngIf="emailService.messagesList">
-                <mat-accordion>
-                    <div class="row" *ngFor="let mail of emailService.messagesList">
+            <div class="row" *ngIf="emailService.messagesList" >
+                <div class="row " *ngFor="let mail of emailService.messagesList | slice: (currentPage * pageSize) - pageSize :currentPage * pageSize">
+                        <div class="col-md-1">
+                                <mat-checkbox (change)="insertToTrashArray($event, mail)"></mat-checkbox>
+                        </div>
+                        <div class="col-md-11 mail "(click)="emailService.setMail(mail); onChangeState('viewer')">
+                            <div class="col-md-7" style="font-size: 16px">
+                                <span *ngIf="mail.Unread else read">
+                                        <i class="fa fa-envelope" aria-hidden="true"></i> {{(mail.From.length>24)? (mail.From | slice:0:24)+'..':(mail.From)}}</span>
+
+                                    <ng-template #read>
+                                        <i class="fa fa-envelope-open-o" aria-hidden="true"></i>
+                                        {{(mail.From.length>24)? (mail.From | slice:0:24)+'..':(mail.From)}}
+                                    </ng-template>
+                                </div>
+                                <div class="col-md-5" style="font-size: 14px">
+                                    <i> <span innerHtml="{{(mail.Subject.length>18)? (mail.Subject | slice:0:18)+'..':(mail.Subject)}}"></span></i>
+                                </div>
+                        </div>
+                </div>
+                            
+                <!-- <mat-accordion>
+                    <div class="row" *ngFor="let mail of emailService.messagesList | slice: (currentPage * pageSize) - pageSize :currentPage * pageSize">
                         <div class="col-md-1">
                             <mat-checkbox (change)="insertToTrashArray($event, mail)"></mat-checkbox>
                         </div>
                         <div class="col-md-11">
                             <mat-expansion-panel>
-                                <mat-expansion-panel-header
-                                    (click)="emailService.emailModify(mail,'UNREAD'); mail.Unread= false">
+                                <mat-expansion-panel-header (click)="emailService.emailModify(mail,'UNREAD'); mail.Unread= false">
                                     <mat-panel-title>
-                                    <span *ngIf="mail.Unread else read"><i class="fa fa-envelope"
-                                                                           aria-hidden="true"></i> {{(mail.From.length>24)? (mail.From | slice:0:24)+'..':(mail.From)}}</span>
+                                        <span *ngIf="mail.Unread else read">
+                                            <i class="fa fa-envelope" aria-hidden="true"></i> {{(mail.From.length>24)? (mail.From | slice:0:24)+'..':(mail.From)}}</span>
 
-                                        <ng-template #read><i class="fa fa-envelope-open-o" aria-hidden="true"></i>
+                                        <ng-template #read>
+                                            <i class="fa fa-envelope-open-o" aria-hidden="true"></i>
                                             {{(mail.From.length>24)? (mail.From | slice:0:24)+'..':(mail.From)}}
                                         </ng-template>
                                     </mat-panel-title>
@@ -35,11 +77,15 @@
                                         <span innerHtml="{{(mail.Subject.length>24)? (mail.Subject | slice:0:24)+'..':(mail.Subject)}}"></span>
                                     </mat-panel-description>
                                 </mat-expansion-panel-header>
-                                <p><strong>Received at:</strong> {{mail.Date}}</p>
-                                <p><strong>From:</strong> {{mail.From}}</p>
-                                <p><strong>Subject:</strong> {{mail.Subject}}</p>
-                                
-                                
+
+                                <p>
+                                    <strong>Received at:</strong> {{mail.Date}}</p>
+                                <p>
+                                    <strong>From:</strong> {{mail.From}}</p>
+                                <p>
+                                    <strong>Subject:</strong> {{mail.Subject}}</p>
+
+
                                 <div class="container" malihuCustomScroller [scrollOptions]="scrollOptions2">
                                     <span [innerHTML]="emailService.decode(mail.Body)"></span>
                                 </div>
@@ -48,25 +94,14 @@
 
                     </div>
 
-                </mat-accordion>
+                </mat-accordion> -->
 
             </div>
         </div>
-        <div class="col-lg-12">
-            <div class="row">
-                <button class="btn-lg moreMail" (click)="emailService.getMail()">
-                    <div class="row">
-                        <i class="fa fa-plus-square" aria-hidden="true"></i>
-                    </div>
-                    <div class="row">
-                        More mail...
-                    </div>
-                </button>
-            </div>
-        </div>
+        
     </ng-template>
     <ng-template ngSwitchCase="notConnected">
-        <div class="emailTemp" >
+        <div class="emailTemp">
             <div class="col-lg-2 col-lg-offset-5">
                 <div class="row text-center">
                     <i class="fa fa-plug" aria-hidden="true" style="font-size: 54px"></i>
@@ -74,17 +109,23 @@
             </div>
             <div class="col-lg-12">
                 <div class="row text-center">
-                    <a [href]="gglAuth"><h4>You haven't connected with your Google account yet!</h4></a>
+                    <a [href]="gglAuth">
+                        <h4>You haven't connected with your Google account yet!</h4>
+                    </a>
                 </div>
             </div>
         </div>
     </ng-template>
     <ng-template ngSwitchCase="sender">
-        <i class="fa fa-times-circle-o"  style="font-size: 32px" aria-hidden="true" (click)="onChangeState('viewer')"></i>            
+        <i class="fa fa-times-circle-o" style="font-size: 32px" aria-hidden="true" (click)="onChangeState('mails')"></i>
         <app-email-sender></app-email-sender>
+    </ng-template>
+
+    <ng-template ngSwitchCase="viewer" >
+            <i class="fa fa-times-circle-o" style="font-size: 32px" aria-hidden="true" (click)="onChangeState('mails')"></i>
+            <app-email-viewer></app-email-viewer>
     </ng-template>
 
 </div>
 
 
-<ng-template #shit></ng-template>
