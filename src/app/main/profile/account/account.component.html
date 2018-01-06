@@ -1,14 +1,14 @@
-<div class="col-md-12 accountContainer">
+<div class="col-sm-12 accountContainer">
     <div *ngFor="let account of dataService.userData.user_accounts">
         <div class="row">
             <mat-card class="accountCard">
                 <mat-card-content>
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-sm-4">
                             <i class="fa" [ngClass]="{'fa-facebook-official':account.provider === 'facebook','fa-google':account.provider === 'google', 'fa-twitter':account.provider === 'twitter'}"
                                style="font-size: 82px"></i>
                         </div>
-                        <div class="col-md-8">
+                        <div class="col-sm-8">
                             <div class="row">
                                 Email: {{account.email}}
                             </div>

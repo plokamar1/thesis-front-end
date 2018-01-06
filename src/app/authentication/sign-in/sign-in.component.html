@@ -1,7 +1,7 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-lg-4 col-md-4 col-sm-4 col-lg-offset-4 col-md-offset-4 col-sm-offset-4">
+        <div class="col-sm-4 col-sm-offset-4 ">
             <div class="panel panel-default">
                 <div class="panel-body" >
                     <p>
@@ -9,34 +9,34 @@
                     </p>
 
                     <div class="row">
-                        <div class="col-md-12">
-                            <a href="{{fbURL}}"> <button [disabled]="!fbURL" class="btn col-md-10 col-sm-10 col-xs-10  col-md-offset-1 col-sm-offset-1 col-xs-offset-1 fbButton"
+                        <div class="col-sm-12">
+                            <a href="{{fbURL}}"> <button [disabled]="!fbURL" class="btn col-sm-10  col-sm-offset-1 fbButton"
                                     ><i class="fa fa-facebook-official" style="font-size: 24px;" aria-hidden="true"></i></button></a>
                         </div>
                     </div>
                     <br />
                     <div class="row">
-                        <div class="col-md-12">
-                           <a href="{{gglURL}}"> <button [disabled]="!gglURL"  class="btn col-md-10 col-sm-10 col-xs-10  col-md-offset-1 col-sm-offset-1 col-xs-offset-1 gglButton"
+                        <div class="col-sm-12">
+                           <a href="{{gglURL}}"> <button [disabled]="!gglURL"  class="btn col-sm-10  col-sm-offset-1 gglButton"
                                     ><i class="fa fa-google" style="font-size: 24px;" aria-hidden="true" (click)="show()" ></i></button></a>
                         </div>
                     </div>
                     <br />
                     <div class="row">
-                        <div class="col-md-12">
-                            <a href="{{ttrURL}}"> <button [disabled]="!ttrURL" class="btn col-md-10 col-sm-10 col-xs-10  col-md-offset-1 col-sm-offset-1 col-xs-offset-1 ttrButton"
+                        <div class="col-sm-12">
+                            <a href="{{ttrURL}}"> <button [disabled]="!ttrURL" class="btn col-sm-10  col-sm-offset-1 ttrButton"
                                     ><i class="fa fa-twitter" style="font-size: 24px;" aria-hidden="true"></i></button></a> 
                         </div>
                     </div>
                     <br />
                     <div class="row">
-                        <div class="col-md-5">
+                        <div class="col-sm-5">
                             <hr>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-sm-2">
 
                         </div>
-                        <div class="col-md-5">
+                        <div class="col-sm-5">
                             <hr>
                         </div>
                     </div>
@@ -51,7 +51,7 @@
                         <div class="form-group">
 
                             <div class="row">
-                                <div class="col-md-10 col-md-offset-1">
+                                <div class="col-sm-10 col-sm-offset-1">
                                     <input type="email"
                                            class="form-control"
                                            placeholder="Username"
@@ -63,7 +63,7 @@
                             <br />
 
                             <div class="row">
-                                <div class="col-md-10 col-md-offset-1">
+                                <div class="col-sm-10 col-sm-offset-1">
                                     <input type="password"
                                            class="form-control"
                                            placeholder="Password"
@@ -71,17 +71,17 @@
                                 </div>
                             </div>
                             <div class="row" *ngIf="wrongInput" >
-                                <div class="col-md-10 col-md-offset-1">
+                                <div class="col-sm-10 col-sm-offset-1">
                                     <p class="text-danger">Your username or password was incorrect. Please try again.</p>
                                 </div>
                             </div>
                             <div class="row" *ngIf="noAccount" >
-                                <div class="col-md-10 col-md-offset-1">
+                                <div class="col-sm-10 col-sm-offset-1">
                                     <p class="text-danger">There is not such user.</p>
                                 </div>
                             </div>
                             <hr>
-                            <button class="btn col-md-8 col-md-offset-2 submitButton" type="submit" [disabled]="!signInForm.valid"><strong>Sign In!</strong></button>
+                            <button class="btn col-sm-8 col-sm-offset-2 submitButton" type="submit" [disabled]="!signInForm.valid"><strong>Sign In!</strong></button>
                         </div>
                     </form>
                 </div>
