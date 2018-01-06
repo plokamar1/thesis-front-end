@@ -1,5 +1,5 @@
 import {APP_INITIALIZER, Injector, NgModule} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
+import {BrowserModule, DomSanitizer} from '@angular/platform-browser';
 
 import {AppComponent} from './app.component';
 import {AuthenticationComponent} from './authentication/authentication.component';
@@ -34,8 +34,9 @@ import { SpinnerComponent } from './spinner/spinner.component';
 import {AuthGuard} from './auth.guard';
 import { ApisResolverService } from 'app/apis-resolver.service';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
-import {TinymceModule} from 'angular2-tinymce'
-
+import {TinymceModule} from 'angular2-tinymce';
+import { EmailViewerComponent } from './main/home/email-reader/email-viewer/email-viewer.component';
+import { SafehtmlPipe } from './main/home/email-reader/safehtml.pipe'
 
 @NgModule({
     imports: [
@@ -46,6 +47,7 @@ import {TinymceModule} from 'angular2-tinymce'
         routing,
         HttpModule,
         NgbModule.forRoot(),
+
 
         MatExpansionModule,MatAutocompleteModule,
         MatProgressSpinnerModule,MatInputModule,MatProgressBarModule,MatCardModule,MatCheckboxModule,MatSnackBarModule,
@@ -69,6 +71,8 @@ import {TinymceModule} from 'angular2-tinymce'
         EmailReaderComponent,
         EmailSenderComponent,
         SpinnerComponent,
+        EmailViewerComponent,
+        SafehtmlPipe,
     ],
     providers: [
         DataService,

@@ -1,0 +1,21 @@
+<div class="row emailReader" >
+  <div class="row">
+    <p>
+      <strong>Received at:</strong> {{emailService.selectedMail.Date}}</p>
+
+  </div>
+  <div class="row">
+    <p>
+      <strong>From:</strong> {{emailService.selectedMail.From}}</p>
+
+  </div>
+  <div class="row">
+    <p>
+      <strong>Subject:</strong> {{emailService.selectedMail.Subject}}</p>
+  </div>
+  <div class="row">
+      <div class="container mailContent" malihuCustomScroller [scrollOptions]="scrollOptions2">
+          <span [innerHTML]="emailService.decode(emailService.selectedMail.Body) | safehtml"></span>
+      </div>
+  </div>
+</div>
