@@ -9,6 +9,8 @@ import {HomeComponent} from './main/home/home.component';
 import {SpinnerComponent} from './spinner/spinner.component'
 import { AuthGuard } from './auth.guard';
 import { ApisResolverService } from './apis-resolver.service'
+import { LoadUrisResolver } from 'app/loadUris-resolver.service';
+
 
 const APP_ROUTES: Routes = [
     {path: '', redirectTo: '/auth/sign-in', pathMatch: 'full'},
@@ -16,7 +18,7 @@ const APP_ROUTES: Routes = [
     {
         path: 'auth', component: AuthenticationComponent,
         children: [
-            {path: 'sign-in', component: SignInComponent},
+            {path: 'sign-in', component: SignInComponent, resolve: { uris: LoadUrisResolver}},
             {path: 'sign-up', component: SignUpComponent}
         ]
     },

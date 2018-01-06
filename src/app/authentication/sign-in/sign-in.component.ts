@@ -19,6 +19,7 @@ export class SignInComponent implements OnInit {
     gglURL :string;
     fbURL: string;
     ttrURL: string;
+    uris;
 
     constructor(private authService: AuthenticationService,
                 private router: Router,
@@ -34,19 +35,30 @@ export class SignInComponent implements OnInit {
             username: new FormControl(null, Validators.required),
             password: new FormControl(null, Validators.required)
         });
+        this.uris = this.activatedRoute.snapshot.data.uris;
+        console.log(this.uris);
+        if(this.uris.error){
+            this.gglURL = '';
+            this.fbURL = '';
+            this.ttrURL = '';
+        }else{
+            this.gglURL = this.uris.ggl_uri;
+            this.fbURL = this.uris.fb_uri;
+            this.ttrURL = this.uris.ttr_uri;
+        }
         //Here i get all the uris that are binded to the social media buttons
-        this.authService.get_URI()
-            .subscribe(data => {
-                console.log(data);
-                this.gglURL = data.ggl_uri;
-                this.fbURL = data.fb_uri;
-                this.ttrURL = data.ttr_uri;
-            }, error =>{
-                console.log(error);
-                this.gglURL = '';
-                this.fbURL = '';
-                this.ttrURL = '';
-            });
+        // this.authService.get_URI()
+        //     .subscribe(data => {
+        //         console.log(data);
+        //         this.gglURL = data.ggl_uri;
+        //         this.fbURL = data.fb_uri;
+        //         this.ttrURL = data.ttr_uri;
+        //     }, error =>{
+        //         console.log(error);
+        //         this.gglURL = '';
+        //         this.fbURL = '';
+        //         this.ttrURL = '';
+        //     });
 
     }
 

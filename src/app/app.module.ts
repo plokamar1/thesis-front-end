@@ -37,7 +37,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {TinymceModule} from 'angular2-tinymce';
 import { EmailViewerComponent } from './main/home/email-reader/email-viewer/email-viewer.component';
 import { SafehtmlPipe } from './main/home/email-reader/safehtml.pipe'
-
+import {LoadUrisResolver} from './loadUris-resolver.service';
 @NgModule({
     imports: [
         BrowserModule,
@@ -80,6 +80,7 @@ import { SafehtmlPipe } from './main/home/email-reader/safehtml.pipe'
         EmailService,
         AuthGuard,
         ApisResolverService,
+        LoadUrisResolver,
         AuthenticationService,
         ],
     bootstrap: [AppComponent]
