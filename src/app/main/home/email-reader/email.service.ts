@@ -56,11 +56,11 @@ export class EmailService {
                 console.log(data);
                 this.nextPageToken = data.nextPageToken;
                 //this.pageTokens.push(data.nextPageToken);
-                data.messages.sort((a, b) => {
-                    if (a.Timestamp < b.Timestamp) return 1;
-                    if (a.Timestamp > b.Timestamp) return -1;
-                    return 0;
-                });
+                // data.messages.sort((a, b) => {
+                //     if (a.Timestamp < b.Timestamp) return 1;
+                //     if (a.Timestamp > b.Timestamp) return -1;
+                //     return 0;
+                // });
                 if(this.messagesList.length){
                     this.messagesList.push(data.messages);
                 }else{
