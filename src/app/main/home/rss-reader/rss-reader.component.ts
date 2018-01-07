@@ -21,7 +21,6 @@ export class RssReaderComponent implements OnInit {
     constructor(private rssService: RssReaderService,
                 public dataService: DataService) {
         //this.containerHeight = (window.screen.height * 0.85) + 'px';
-        console.log(this.containerHeight);
     }
 
     onResize($event){
@@ -39,7 +38,6 @@ export class RssReaderComponent implements OnInit {
                 this.hideSpinner = false;
                 if (data.status === 'ok') {
                     this.rssService.add_Rss(this.rssUrl);
-                    console.log(data);
                     this.mediaDescription = data.feed;
                     this.feedArray = data.items;
                 }else if (data.status === 'error') {

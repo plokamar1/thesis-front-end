@@ -92,12 +92,13 @@ export class EmailReaderComponent implements OnInit, AfterViewInit {
             
             //this.emailService.getMail();
         } else {
-            this.authService.get_URI()
-                .subscribe(data=>{
-                    this.gglAuth = data.ggl_uri;
-                },error=>{
-                    this.gglAuth='';
-                } ) ;
+            this.gglAuth = this.dataService.uris.ggl_uri;
+            // this.authService.get_URI()
+            //     .subscribe(data=>{
+            //         this.gglAuth = data.ggl_uri;
+            //     },error=>{
+            //         this.gglAuth='';
+            //     } ) ;
             this.state = 'notConnected';
             this.isConnected = false;
         }

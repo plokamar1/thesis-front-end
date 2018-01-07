@@ -28,7 +28,6 @@ export class EmailService {
     }
 
     onSend(f: NgForm) {
-        console.log(f);
     }
 
     getMail(nextPageToken='') {
@@ -108,7 +107,6 @@ export class EmailService {
     emailModify(email, labelId: string) {
         if (email.Unread) {
             let request_url = 'http://127.0.0.1:5000/api/modifymails'.concat('?token=',localStorage.getItem('token'), '&action=remove&label=', labelId, '&id=', email.Id);
-            console.log(request_url);
             this.http.get(request_url)
                 .map((response: Response) => response.json())
                 .catch((error: Response) => Observable.throw(error.json()))

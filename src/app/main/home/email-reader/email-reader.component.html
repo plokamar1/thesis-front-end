@@ -1,4 +1,4 @@
-<div class="col-sm-6 emailReader "  [ngSwitch]="state" malihuCustomScroller [scrollOptions]="scrollOptions">
+<div class="col-sm-5 emailReader " [ngSwitch]="state" malihuCustomScroller [scrollOptions]="scrollOptions">
 
     <ng-template ngSwitchCase="mails">
         <div class="col-sm-12 stick">
@@ -17,8 +17,8 @@
             </div>
         </div>
         <div class="col-sm-12">
-                <div class="row text-center">
-                    <!-- <button class="btn-lg moreMail" (click)="emailService.getMail()">
+            <div class="row text-center">
+                <!-- <button class="btn-lg moreMail" (click)="emailService.getMail()">
                         <div class="row">
                             <i class="fa fa-plus-square" aria-hidden="true"></i>
                         </div>
@@ -26,79 +26,42 @@
                             More mail...
                         </div>
                     </button> -->
-                    <button [disabled]="currentPage == 1" (click)="currentPage = currentPage - 1">PREV</button>
-                    <span>Page {{currentPage}}</span>
-                    <button [disabled]="currentPage >= emailService.messagesList.length/pageSize" (click)="currentPage = currentPage + 1">NEXT</button>
-                </div>
+                <button [disabled]="currentPage == 1" (click)="currentPage = currentPage - 1">PREV</button>
+                <span>Page {{currentPage}}</span>
+                <button [disabled]="currentPage >= emailService.messagesList.length/pageSize" (click)="currentPage = currentPage + 1">NEXT</button>
             </div>
+        </div>
         <div>
             <br>
         </div>
         <div class="col-sm-12 ">
-            <div class="row" *ngIf="emailService.messagesList" >
+            <div class="row" *ngIf="emailService.messagesList">
                 <div class="row " *ngFor="let mail of emailService.messagesList | slice: (currentPage * pageSize) - pageSize :currentPage * pageSize">
-                        <div class="col-sm-1">
-                                <mat-checkbox (change)="insertToTrashArray($event, mail)"></mat-checkbox>
-                        </div>
-                        <div class="col-sm-11 mail "(click)="emailService.setMail(mail); onChangeState('viewer')">
-                            <div class="col-sm-7" style="font-size: 16px">
-                                <span *ngIf="mail.Unread else read">
-                                        <i class="fa fa-envelope" aria-hidden="true"></i> {{(mail.From.length>24)? (mail.From | slice:0:24)+'..':(mail.From)}}</span>
-
-                                    <ng-template #read>
-                                        <i class="fa fa-envelope-open-o" aria-hidden="true"></i>
-                                        {{(mail.From.length>24)? (mail.From | slice:0:24)+'..':(mail.From)}}
-                                    </ng-template>
-                                </div>
-                                <div class="col-sm-5" style="font-size: 14px">
-                                    <i> <span innerHtml="{{(mail.Subject.length>18)? (mail.Subject | slice:0:18)+'..':(mail.Subject)}}"></span></i>
-                                </div>
-                        </div>
-                </div>
-                            
-                <!-- <mat-accordion>
-                    <div class="row" *ngFor="let mail of emailService.messagesList | slice: (currentPage * pageSize) - pageSize :currentPage * pageSize">
-                        <div class="col-sm-1">
-                            <mat-checkbox (change)="insertToTrashArray($event, mail)"></mat-checkbox>
-                        </div>
-                        <div class="col-sm-11">
-                            <mat-expansion-panel>
-                                <mat-expansion-panel-header (click)="emailService.emailModify(mail,'UNREAD'); mail.Unread= false">
-                                    <mat-panel-title>
-                                        <span *ngIf="mail.Unread else read">
-                                            <i class="fa fa-envelope" aria-hidden="true"></i> {{(mail.From.length>24)? (mail.From | slice:0:24)+'..':(mail.From)}}</span>
-
-                                        <ng-template #read>
-                                            <i class="fa fa-envelope-open-o" aria-hidden="true"></i>
-                                            {{(mail.From.length>24)? (mail.From | slice:0:24)+'..':(mail.From)}}
-                                        </ng-template>
-                                    </mat-panel-title>
-                                    <mat-panel-description>
-                                        <span innerHtml="{{(mail.Subject.length>24)? (mail.Subject | slice:0:24)+'..':(mail.Subject)}}"></span>
-                                    </mat-panel-description>
-                                </mat-expansion-panel-header>
-
-                                <p>
-                                    <strong>Received at:</strong> {{mail.Date}}</p>
-                                <p>
-                                    <strong>From:</strong> {{mail.From}}</p>
-                                <p>
-                                    <strong>Subject:</strong> {{mail.Subject}}</p>
-
-
-                                <div class="container" malihuCustomScroller [scrollOptions]="scrollOptions2">
-                                    <span [innerHTML]="emailService.decode(mail.Body)"></span>
-                                </div>
-                            </mat-expansion-panel>
-                        </div>
-
+                    <div class="col-sm-1">
+                        <mat-checkbox (change)="insertToTrashArray($event, mail)"></mat-checkbox>
                     </div>
+                    <div class="col-sm-11 mail " (click)="emailService.setMail(mail); onChangeState('viewer')">
+                        <div class="col-sm-7" style="font-size: 16px">
+                            <span *ngIf="mail.Unread else read">
+                                <i class="fa fa-envelope" aria-hidden="true"></i> {{(mail.From.length>24)? (mail.From | slice:0:24)+'..':(mail.From)}}</span>
 
-                </mat-accordion> -->
+                            <ng-template #read>
+                                <i class="fa fa-envelope-open-o" aria-hidden="true"></i>
+                                {{(mail.From.length>24)? (mail.From | slice:0:24)+'..':(mail.From)}}
+                            </ng-template>
+                        </div>
+                        <div class="col-sm-5" style="font-size: 14px">
+                            <i>
+                                <span innerHtml="{{(mail.Subject.length>18)? (mail.Subject | slice:0:18)+'..':(mail.Subject)}}"></span>
+                            </i>
+                        </div>
+                    </div>
+                </div>
 
+                <!-- <p *ngIf="!emailService.nextPageToken" class="text-center">No more messages!</p> -->
             </div>
         </div>
-        
+
     </ng-template>
     <ng-template ngSwitchCase="notConnected">
         <div class="emailTemp">
@@ -121,11 +84,9 @@
         <app-email-sender></app-email-sender>
     </ng-template>
 
-    <ng-template ngSwitchCase="viewer" >
-            <i class="fa fa-times-circle-o" style="font-size: 32px" aria-hidden="true" (click)="onChangeState('mails')"></i>
-            <app-email-viewer></app-email-viewer>
+    <ng-template ngSwitchCase="viewer">
+        <i class="fa fa-times-circle-o" style="font-size: 32px" aria-hidden="true" (click)="onChangeState('mails')"></i>
+        <app-email-viewer></app-email-viewer>
     </ng-template>
 
 </div>
-
-

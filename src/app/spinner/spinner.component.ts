@@ -22,14 +22,12 @@ export class SpinnerComponent implements OnInit {
             }
             if (prov === 'fb') {
                 const code = this.router.parseUrl(this.router.url).queryParams["code"];
-                console.log(code);
                 this.authService.postCode(code, 'fb');
             }
             if (prov === 'ttr') {
                 let code = this.router.url
                 code = 'http://localhost:4200'.concat(code)
                 this.authService.postCode(code, 'ttr');
-                console.log(code)
             }
         } else {
             this.router.navigateByUrl('/auth/sing-in')

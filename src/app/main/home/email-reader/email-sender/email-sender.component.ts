@@ -28,7 +28,6 @@ export class EmailSenderComponent implements OnInit {
     onSend(f) {
         const cssSnack = 'snack';
         this.emailService.sendMessage(f).subscribe(data=>{
-            console.log(data);
             this.snackBar.open(data.success, '', {duration: 2000,panelClass: cssSnack});
         },error=>{
             this.snackBar.open(error.error, '', {duration: 2000,panelClass: cssSnack});
