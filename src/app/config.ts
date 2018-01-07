@@ -7,6 +7,7 @@ export const config={
     'getMails': '/api/getmails',
     'modifyMails': '/api/modifymails',
     'sendMail': '/api/sendmail',
-    'trashMails': '/api/trash'
+    'trashMails': '/api/trash',
+    'getTwits': '/api/gettwits',
 
 }
