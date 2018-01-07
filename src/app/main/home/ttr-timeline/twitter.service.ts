@@ -48,6 +48,8 @@ export class TwitterService {
          }
          this.lastId = this.getLastId();
       },error=>{
+        this.loading = false;
+        
         console.log(error);
       });
 
