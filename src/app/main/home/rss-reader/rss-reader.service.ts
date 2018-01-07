@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {Http, Response} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import { DataService } from 'app/data.service';
+import {config} from '../../../config'
 
 @Injectable()
 export class RssReaderService {
@@ -24,7 +25,7 @@ export class RssReaderService {
         const token = 'token='.concat(localStorage.getItem('token'));
         const action = 'action=add';
         const rss = 'rss='.concat(rssUrl);
-        const request_url = 'http://127.0.0.1:5000/api/rss?'.concat(token,'&',action,'&',rss)
+        const request_url = config.ApiUrl.concat(config.modifyRss,'?',token,'&',action,'&',rss)
         this.http.get(request_url)
             .map((response: Response) => response.json())
             .catch(err => Observable.throw(err.json()))
