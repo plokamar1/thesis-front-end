@@ -18,6 +18,7 @@ export class MainComponent implements OnInit {
     ngOnInit() {
         this.data = this.route.snapshot.data;
         this.dataService.userData = this.data.data;
+        this.dataService.uris = this.data.uris;
         //console.log(this.data.data);
     }
 

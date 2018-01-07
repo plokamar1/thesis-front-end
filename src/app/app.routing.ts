@@ -23,7 +23,7 @@ const APP_ROUTES: Routes = [
         ]
     },
     {
-        path: 'main', component: MainComponent, canActivate:[AuthGuard], resolve: {data:ApisResolverService },
+        path: 'main', component: MainComponent, canActivate:[AuthGuard], resolve: {data:ApisResolverService, uris:LoadUrisResolver },
         children: [
             {path: 'profile', component: ProfileComponent},
             {path: 'home', component: HomeComponent}

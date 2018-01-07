@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import base64url from 'base64url';
-import {EmailModel} from "./models/email.model";
 import {Subject} from "rxjs/Subject";
 import {AuthenticationService} from "./authentication.service";
 
@@ -10,7 +9,7 @@ declare const FB: any;
 @Injectable()
 export class DataService {
     public userData;
-
+    public uris;
 
     constructor() {
     }
