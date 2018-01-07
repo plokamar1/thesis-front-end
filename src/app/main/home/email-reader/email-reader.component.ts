@@ -35,6 +35,7 @@ export class EmailReaderComponent implements OnInit, AfterViewInit {
     loadMore(){
         const pages =  Math.ceil(this.emailService.messagesList.length / this.pageSize);
         if(this.currentPage>=( pages-2) && this.emailService.nextPageToken){
+            this.emailService.loading = true;
             this.emailService.getMail(this.emailService.nextPageToken);
         }
     }
@@ -44,11 +45,15 @@ export class EmailReaderComponent implements OnInit, AfterViewInit {
         const cssSnack = 'snack';
         this.emailService.toTrash(this.trashArray).subscribe(data => {
             // this.trashArray = [];
-            this.emailService.getMail();
+            //this.emailService.getMail();
             this.snackBar.open(data.success, '', {duration: 2000,panelClass: cssSnack});
             for(let deleted of this.trashArray){
-                const deletedItem = this.emailService.messagesList.find(x=> x.id === deleted.id);
+                console.log(deleted)
+                console.log(this.emailService.messagesList);
+                const deletedItem = this.emailService.messagesList.find(x=> x.Id == deleted);
+                console.log(deletedItem);
                 const index = this.emailService.messagesList.indexOf(deletedItem);
+                console.log(index);
                 this.emailService.messagesList.splice(index, 1);
             }
             this.trashArray = []
@@ -61,6 +66,7 @@ export class EmailReaderComponent implements OnInit, AfterViewInit {
     }
 
     insertToTrashArray($event, mail) {
+
         if ($event.checked) {
             this.trashArray.push(mail.Id);
         } else {
@@ -69,6 +75,7 @@ export class EmailReaderComponent implements OnInit, AfterViewInit {
             console.log(index);
             this.trashArray.splice(index, 1);
         }
+    console.log(this.trashArray);
     }
 
     onChangeState(state: string){

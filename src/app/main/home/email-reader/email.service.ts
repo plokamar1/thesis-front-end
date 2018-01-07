@@ -18,6 +18,7 @@ export class EmailService {
     public firstLoadFlag = true;
     private pageTokens = [];
     public selectedMail;
+    public loading = true;
 
     constructor(private dataService: DataService,
         private http: Http,
@@ -45,27 +46,19 @@ export class EmailService {
             .map((response: Response) => response.json())
             .catch((error: Response) => Observable.throw(error.json()))
             .subscribe(data => {
-                // const messageCounter = 0;
-                // for(var i = 0;; i ++){
-                //     for( var y=0; y < 10; y++){
+                this.loading =false;
 
-                //     }
-
-                // }
-                console.log(data);
                 this.nextPageToken = data.nextPageToken;
-                //this.pageTokens.push(data.nextPageToken);
-                // data.messages.sort((a, b) => {
-                //     if (a.Timestamp < b.Timestamp) return 1;
-                //     if (a.Timestamp > b.Timestamp) return -1;
-                //     return 0;
-                // });
-                if(this.messagesList.length){
-                    this.messagesList.push(data.messages);
+
+                if(this.messagesList.length> 0){
+                    for(let mail of data.messages){
+                        this.messagesList.push(mail);
+                    }
                 }else{
                     this.messagesList = data.messages;
                 }
             }, error => {
+                this.loading = false;
                 this.router.navigateByUrl('/main/home');
             })
 

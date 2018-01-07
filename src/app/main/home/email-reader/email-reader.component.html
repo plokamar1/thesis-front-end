@@ -28,7 +28,7 @@
                     </button> -->
                 <button [disabled]="currentPage == 1" (click)="currentPage = currentPage - 1">PREV</button>
                 <span>Page {{currentPage}}</span>
-                <button [disabled]="currentPage >= emailService.messagesList.length/pageSize" (click)="currentPage = currentPage + 1">NEXT</button>
+                <button [disabled]="currentPage >= emailService.messagesList.length/pageSize" (click)="currentPage = currentPage + 1;loadMore()">NEXT</button>
             </div>
         </div>
         <div>
@@ -40,7 +40,7 @@
                     <div class="col-sm-1">
                         <mat-checkbox (change)="insertToTrashArray($event, mail)"></mat-checkbox>
                     </div>
-                    <div class="col-sm-11 mail " (click)="emailService.setMail(mail); onChangeState('viewer')">
+                    <div class="col-sm-11 mail " (click)="emailService.emailModify(mail,'UNREAD'); mail.Unread= false ;emailService.setMail(mail); onChangeState('viewer')">
                         <div class="col-sm-7" style="font-size: 16px">
                             <span *ngIf="mail.Unread else read">
                                 <i class="fa fa-envelope" aria-hidden="true"></i> {{(mail.From.length>24)? (mail.From | slice:0:24)+'..':(mail.From)}}</span>
@@ -60,6 +60,9 @@
 
                 <!-- <p *ngIf="!emailService.nextPageToken" class="text-center">No more messages!</p> -->
             </div>
+            <div class="row text-center">
+                <mat-progress-spinner color="accent" mode="indeterminate" [diameter]="50" *ngIf="emailService.loading"></mat-progress-spinner>
+              </div>
         </div>
 
     </ng-template>
