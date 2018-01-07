@@ -29,7 +29,7 @@ export class HeaderComponent implements OnInit {
 
     ngOnInit() {
         this.userData = this.dataService.getData();
-        this.userFullname = this.userData.firstname.concat(' ', this.userData.lastname);
+        this.userFullname = this.userData.firstname;
            /* .then(function (response) {
                 that.userData = response;
                 that.userFullname = that.userData.firstname.concat(' ', that.userData.lastname);
