@@ -1,0 +1,21 @@
+.twit{
+    margin:1vh;
+    background: rgb(255, 255, 255);
+    border-radius: 2px;
+}
+.twit img{
+    margin: auto;
+    padding-top: 2vh;
+}
+.Timeline{
+    background: #1DA1F2 !important;
+    overflow-y: scroll;
+}
+
+.emailTemp{
+    padding-top: 30vh;
+}
+a h4{
+    color: #794BC4;
+    
+}

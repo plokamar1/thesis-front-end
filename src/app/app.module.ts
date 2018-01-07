@@ -32,12 +32,16 @@ import { EmailSenderComponent } from './main/home/email-reader/email-sender/emai
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { SpinnerComponent } from './spinner/spinner.component';
 import {AuthGuard} from './auth.guard';
-import { ApisResolverService } from 'app/apis-resolver.service';
+import { ApisResolverService } from './apis-resolver.service';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {TinymceModule} from 'angular2-tinymce';
 import { EmailViewerComponent } from './main/home/email-reader/email-viewer/email-viewer.component';
 import { SafehtmlPipe } from './main/home/email-reader/safehtml.pipe'
 import {LoadUrisResolver} from './loadUris-resolver.service';
+import { TtrTimelineComponent } from './main/home/ttr-timeline/ttr-timeline.component';
+import {TwitterService} from './main/home/ttr-timeline/twitter.service';
+import { LinksPipe } from './main/home/ttr-timeline/links.pipe';
+
 @NgModule({
     imports: [
         BrowserModule,
@@ -73,6 +77,8 @@ import {LoadUrisResolver} from './loadUris-resolver.service';
         SpinnerComponent,
         EmailViewerComponent,
         SafehtmlPipe,
+        TtrTimelineComponent,
+        LinksPipe,
     ],
     providers: [
         DataService,
@@ -81,6 +87,7 @@ import {LoadUrisResolver} from './loadUris-resolver.service';
         AuthGuard,
         ApisResolverService,
         LoadUrisResolver,
+        TwitterService,
         AuthenticationService,
         ],
     bootstrap: [AppComponent]
