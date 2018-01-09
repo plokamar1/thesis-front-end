@@ -1,4 +1,7 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation,AfterViewInit } from '@angular/core';
+import { AuthenticationService } from 'app/authentication.service';
+import {MatSnackBar} from "@angular/material";
+
 
 @Component({
   selector: 'app-home',
@@ -6,11 +9,18 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
   styleUrls: ['./home.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements AfterViewInit {
 
-  constructor() { }
+  constructor(private authService: AuthenticationService,
+    private snackBar: MatSnackBar) { }
 
-  ngOnInit() {
+  ngAfterViewInit() {
+    if(this.authService.error){
+      const errorSnack = 'errorSnack';
+      this.snackBar.open(this.authService.error.error, '', {duration: 2000,panelClass: errorSnack});
+      this.authService.error = null;
+    }
+
   }
 
 }

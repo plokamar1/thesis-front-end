@@ -1,0 +1,7 @@
+.errorSnack{
+    border-color: rgb(224, 69, 69);
+    border-width: 3px;
+    border-radius: 7px;
+    border-style: solid;
+    box-shadow: 0px -10px 5px #515151;
+}
