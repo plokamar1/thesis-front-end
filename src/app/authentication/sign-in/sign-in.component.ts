@@ -4,6 +4,7 @@ import {Router, ActivatedRoute, Params} from '@angular/router';
 import {AuthenticationService} from '../../authentication.service'
 import {User} from '../../models/user.model';
 import {DataService} from '../../data.service';
+import {config} from '../../config'
 
 
 @Component({
@@ -64,7 +65,7 @@ export class SignInComponent implements OnInit {
 
     onSignIn(form) {
         const that = this;
-        const callsUrl = 'http://127.0.0.1:5000/api/user';
+        const callsUrl = config.ApiUrl.concat(config.userAuth);
         const user = new User(form.value.username, form.value.password);
         this.authService.signIn(user, callsUrl)
             .subscribe(

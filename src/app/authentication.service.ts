@@ -20,6 +20,7 @@ declare const gapi: any;
 @Injectable()
 export class AuthenticationService {
     public auth2: any;
+    public error = null;
 
     constructor(private http: Http,
         private router: Router,
@@ -69,6 +70,7 @@ export class AuthenticationService {
                 //     })
             },error=>{
                 this.router.navigateByUrl('main/home');
+                this.error = error;
                 console.log(error);
                 //instance.router.navigateByUrl('/auth/sign-in');
             });
@@ -124,7 +126,7 @@ export class AuthenticationService {
         const userToken = localStorage.getItem('token')
         const user = new User(userToken, '');
         if (localStorage.getItem('token')) {
-            return this.signIn(user, 'http://127.0.0.1:5000/api/user')
+            return this.signIn(user, config.ApiUrl.concat(config.userAuth))
                 .subscribe(data => {
                     this.dataService.setData(data);
                     return true;

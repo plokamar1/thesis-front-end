@@ -35,7 +35,7 @@ export class EmailService {
         const headers = new Headers({ 'Content-Type': 'application/json; charset=UTF-8' });
         const token = 'token='.concat(localStorage.getItem('token'))
     
-        let request_url = 'http://127.0.0.1:5000/api/getmails?'.concat(token)
+        let request_url = config.ApiUrl.concat(config.getMails,'?',token)
         if(nextPageToken){
             request_url = request_url.concat('&nextPageToken=', nextPageToken);
         }
@@ -99,7 +99,7 @@ export class EmailService {
 
     emailModify(email, labelId: string) {
         if (email.Unread) {
-            let request_url = 'http://127.0.0.1:5000/api/modifymails'.concat('?token=',localStorage.getItem('token'), '&action=remove&label=', labelId, '&id=', email.Id);
+            let request_url = config.ApiUrl.concat(config.modifyMails,'?token=',localStorage.getItem('token'), '&action=remove&label=', labelId, '&id=', email.Id);
             this.http.get(request_url)
                 .map((response: Response) => response.json())
                 .catch((error: Response) => Observable.throw(error.json()))
