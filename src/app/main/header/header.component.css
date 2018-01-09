@@ -27,3 +27,12 @@
     cursor: pointer;
 
 }
+.NORMAL:hover{
+    background: #177e89; 
+    box-shadow: 0px 5px 0px #177e89;
+}
+
+.LOGOUT:hover{
+    background: #db3a34; 
+    box-shadow: 0px 5px 0px #db3a34;
+}
