@@ -11,7 +11,7 @@
             </mat-form-field> -->
             <!-- <p *ngFor="let rss of dataService.userData.rss_feeds">{{rss}}</p> -->
             <mat-form-field class="example-full-width">
-                <input type="text" placeholder="Enter an Rss url" aria-label="Number" matInput (keyup.enter)="receiveRss(rssUrl)" [(ngModel)]="rssUrl" [matAutocomplete]="auto">
+                <input type="text" placeholder="Enter an Rss url" aria-label="Number" matInput (keyup.enter)="receiveRss()" [(ngModel)]="rssUrl" [matAutocomplete]="auto">
                 <mat-autocomplete #auto="matAutocomplete">
                     <mat-option *ngFor="let rss of dataService.userData.rss_feeds" [value]="rss">
                         {{ rss }}

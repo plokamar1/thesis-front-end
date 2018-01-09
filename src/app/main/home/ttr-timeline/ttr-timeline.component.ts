@@ -15,7 +15,7 @@ export class TtrTimelineComponent implements OnInit {
 
 
 
-  private scrollOptions = { axis: 'y', theme: 'minimal-dark', scrollButtons: { enable: true }, scrollInertia: 0 };
+  scrollOptions = { axis: 'y', theme: 'minimal-dark', scrollButtons: { enable: true }, scrollInertia: 0 };
   state = 'viewer';
   ttrAuth = '';
   constructor(private dataService: DataService, public twitterService: TwitterService) { }

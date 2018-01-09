@@ -10,13 +10,13 @@ import { DataService } from 'app/data.service';
     encapsulation: ViewEncapsulation.None
 })
 export class RssReaderComponent implements OnInit {
-    private hideSpinner = false;
-    private hideError = false;
-    private rssUrl: string;
-    private feedArray: any;
-    private mediaDescription: any;
-    private containerHeight: string;
-    private scrollOptions = {axis: 'y', theme: 'minimal-dark', scrollButtons: {enable: true},scrollInertia: 0};
+    hideSpinner = false;
+    hideError = false;
+    rssUrl: string;
+    feedArray: any;
+    mediaDescription: any;
+    containerHeight: string;
+    scrollOptions = {axis: 'y', theme: 'minimal-dark', scrollButtons: {enable: true},scrollInertia: 0};
 
     constructor(private rssService: RssReaderService,
                 public dataService: DataService) {
